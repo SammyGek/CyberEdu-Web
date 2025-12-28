@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuaderno 1 - Fundamentos de Redes | CyberEdu</title>
+    
+    <!-- External Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Shared Styles -->
+    <link href="../assets/styles.css" rel="stylesheet">
+    
+    <style>
+        /* Landing specific styles */
+        .section-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+        .section-card:hover {
+            border-color: #38bdf8;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(56, 189, 248, 0.15);
+        }
+        .section-card:hover .card-icon {
+            transform: scale(1.1);
+            color: #38bdf8;
+        }
+        .card-icon {
+            transition: all 0.3s ease;
+        }
+        .level-badge {
+            font-size: 0.7rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+        }
+        .level-basic { background: #22c55e; color: white; }
+        .level-intermediate { background: #f59e0b; color: white; }
+        .level-advanced { background: #ef4444; color: white; }
+        .level-mixed-bi { background: linear-gradient(90deg, #22c55e 50%, #f59e0b 50%); color: white; }
+        .level-mixed-ia { background: linear-gradient(90deg, #f59e0b 50%, #ef4444 50%); color: white; }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(129, 140, 248, 0.05) 100%);
+        }
+        
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-200 min-h-screen">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-slate-950/80 backdrop-blur-sm border-b border-slate-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="../index.html" class="flex items-center gap-3 text-slate-300 hover:text-white transition-colors">
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="hidden sm:inline">Volver a Cuadernos</span>
+                </a>
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded bg-sky-500 flex items-center justify-center text-white font-bold shadow-lg shadow-sky-500/30">
+                        <i class="fas fa-network-wired text-sm"></i>
+                    </div>
+                    <span class="font-semibold text-sky-400">CyberEdu</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-gradient border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <!-- Icon & Title -->
+                <div class="flex-shrink-0">
+                    <div class="w-24 h-24 md:w-32 md:h-32 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center shadow-2xl shadow-sky-500/30 animate-float">
+                        <i class="fas fa-network-wired text-4xl md:text-5xl text-white"></i>
+                    </div>
+                </div>
+                
+                <!-- Info -->
+                <div class="text-center md:text-left flex-1">
+                    <div class="flex items-center justify-center md:justify-start gap-3 mb-3">
+                        <span class="px-3 py-1 bg-sky-500/20 text-sky-400 rounded-full text-sm font-medium">
+                            Fase 1: Fundamentos
+                        </span>
+                        <span class="px-3 py-1 bg-slate-700 text-slate-300 rounded-full text-sm">
+                            10-12 semanas
+                        </span>
+                    </div>
+                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+                        Cuaderno 1
+                    </h1>
+                    <p class="text-xl md:text-2xl text-sky-400 font-semibold mb-4">
+                        Fundamentos de Redes y Arquitectura
+                    </p>
+                    <p class="text-slate-400 max-w-2xl text-lg">
+                        Domina los conceptos esenciales de networking: desde el hardware hasta los protocolos, 
+                        pasando por el modelo OSI, subnetting, y análisis de tráfico. La base sólida que todo 
+                        profesional de ciberseguridad necesita.
+                    </p>
+                </div>
+
+                <!-- Progress Circle -->
+                <div class="flex-shrink-0 hidden lg:block">
+                    <div class="relative w-32 h-32">
+                        <svg class="w-32 h-32 progress-ring">
+                            <circle cx="64" cy="64" r="56" stroke="#1e293b" stroke-width="8" fill="none"/>
+                            <circle cx="64" cy="64" r="56" stroke="#38bdf8" stroke-width="8" fill="none" 
+                                    stroke-linecap="round" stroke-dasharray="352" stroke-dashoffset="352"
+                                    id="progress-circle"/>
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <span class="text-2xl font-bold text-white" id="progress-percent">0%</span>
+                            <span class="text-xs text-slate-500">completado</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Stats Bar -->
+    <div class="bg-slate-950 border-b border-slate-800 py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div>
+                    <div class="text-2xl font-bold text-white">10</div>
+                    <div class="text-sm text-slate-500">Secciones</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold text-emerald-400">4</div>
+                    <div class="text-sm text-slate-500">Nivel Básico</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold text-amber-400">4</div>
+                    <div class="text-sm text-slate-500">Nivel Intermedio</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold text-red-400">2</div>
+                    <div class="text-sm text-slate-500">Nivel Avanzado</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
+        <!-- Level Legend -->
+        <div class="flex flex-wrap items-center justify-center gap-4 mb-10 text-sm">
+            <span class="text-slate-500">Niveles:</span>
+            <span class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                <span class="text-slate-400">Básico</span>
+            </span>
+            <span class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                <span class="text-slate-400">Intermedio</span>
+            </span>
+            <span class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                <span class="text-slate-400">Avanzado</span>
+            </span>
+        </div>
+
+        <!-- Sections Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- 1.0 Hardware -->
+            <a href="1-0-hardware.html" class="section-card rounded-xl p-6 block group">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-slate-800 flex items-center justify-center">
+                        <i class="fas fa-microchip text-xl text-slate-400 card-icon"></i>
+                    </div>
+                    <span class="level-badge level-basic">Básico</span>
+                </div>
+                <div class="text-xs text-sky-400 font-mono mb-2">Sección 1.0</div>
+                <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-sky-400 transition-colors">
+                    Hardware Esencial y Arquitectura IT
+                </h3>
+                <p class="text-sm text-slate-400 mb-4">
+                    CPU, RAM, almacenamiento, arquitectura Von Neumann. Ataques físicos: Cold Boot, DMA, USB malicioso.
+                </p>
+                <div class="flex items-center text-sky-400 text-sm font-medium">
+                    <span>Comenzar</span>
+                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
+
+            <!-- 1.1 Modelo OSI -->
+            <a href="1-1-modelo-osi.html" class="section-card rounded-xl p-6 block group">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-slate-800 flex items-center justify-center">
+                        <i class="fas fa-layer-group text-xl text-slate-400 card-icon"></i>
+                    </div>
+                    <span class="level-badge level-basic">Básico</span>
+                </div>
+                <div class="text-xs text-sky-400 font-mono mb-2">Sección 1.1</div>
+                <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-sky-400 transition-colors">
+                    Modelo OSI y TCP/IP
+                </h3>
+                <p class="text-sm text-slate-400 mb-4">
+                    Las 7 capas OSI, encapsulación de datos, comparación con TCP/IP. Relación con ataques por capa.
+                </p>
+                <div class="flex items-center text-sky-400 text-sm font-medium">
+                    <span>Comenzar</span>
+                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
+
+            <!-- 1.2 Protocolos -->
+            <a href="1-2-protocolos.html" class="section-card rounded-xl p-6 block group">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-slate-800 flex items-center justify-center">
+                        <i class="fas fa-exchange-alt text-xl text-slate-400 card-icon"></i>
+                    </div>
+                    <span class="level-badge level-basic">Básico</span>
+                </div>
+                <div class="text-xs text-sky-400 font-mono mb-2">Sección 1.2</div>
+                <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-sky-400 transition-colors">
+                    Protocolos de Red Esenciales
+                </h3>
+                <p class="text-sm text-slate-400 mb-4">
+                    ARP, RSTP, VLANs, IP, ICMP, NAT, IPsec, TCP, UDP, HTTP/S, DNS, DHCP, SMB, SSH, FTP y más.
+                </p>
+                <div class="flex items-center text-sky-400 text-sm font-medium">
+                    <span>Comenzar</span>
+                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
+
+            <!-- 1.3 Subnetting -->
+            <a href="1-3-subnetting.html" class="section-card rounded-xl p-6 block group">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-slate-800 flex items-center justify-center">
+                        <i class="fas fa-project-diagram text-xl text-slate-400 card-icon"></i>
+                    </div>
+                    <span class="level-badge level-mixed-bi">Básico-Intermedio</span>
+                </div>
+                <div class="text-xs text-sky-400 font-mono mb-2">Sección 1.3</div>
+                <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-sky-400 transition-colors">
+                    Direccionamiento IP y Subnetting
+                </h3>
+                <p class="text-sm text-slate-400 mb-4">
+                    IPv4, IPv6, notación CIDR, máscaras de subred, cálculo de subredes. Práctica esencial.
+                </p>
+                <div class="flex items-center text-sky-400 text-sm font-medium">
+                    <span>Comenzar</span>
+                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
+
+            <!-- 1.4 Routing & Switching -->
+            <a href="1-4-routing-switching.html" class="section-card rounded-xl p-6 block group">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-slate-800 flex items-center justify-center">
+                        <i class="fas fa-route text-xl text-slate-400 card-icon"></i>
+                    </div>
+                    <span class="level-badge level-intermediate">Intermedio</span>
+                </div>
+                <div class="text-xs text-sky-400 font-mono mb-2">Sección 1.4</div>
+                <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-sky-400 transition-colors">
+                    Enrutamiento, Switching y Topologías
+                </h3>
+                <p class="text-sm text-slate-400 mb-4">
+                    Cómo viajan los paquetes, Spanning Tree, VLANs, Trunking, topologías de red comunes.
+                </p>
+                <div class="flex items-center text-sky-400 text-sm font-medium">
+                    <span>Comenzar</span>
+                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
+
+            <!-- 1.5 Servicios de Red -->
+            <a href="1-5-servicios-red.html" class="section-card rounded-xl p-6 block group">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-slate-800 flex items-center justify-center">
+                        <i class="fas fa-server text-xl text-slate-400 card-icon"></i>
+                    </div>
+                    <span class="level-badge level-mixed-bi">Básico-Intermedio</span>
+                </div>
+                <div class="text-xs text-sky-400 font-mono mb-2">Sección 1.5</div>
+                <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-sky-400 transition-colors">
+                    Servicios de Red
+                </h3>
+                <p class="text-sm text-slate-400 mb-4">
+                    DNS profundo, DHCP, NTP, Active Directory básico. Herramientas: dig, nslookup, host.
+                </p>
+                <div class="flex items-center text-sky-400 text-sm font-medium">
+                    <span>Comenzar</span>
+                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
+
+            <!-- 1.6 Virtualización -->
+            <a href="1-6-virtualizacion.html" class="section-card rounded-xl p-6 block group">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-slate-800 flex items-center justify-center">
+                        <i class="fas fa-cubes text-xl text-slate-400 card-icon"></i>
+                    </div>
+                    <span class="level-badge level-intermediate">Intermedio</span>
+                </div>
+                <div class="text-xs text-sky-400 font-mono mb-2">Sección 1.6</div>
+                <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-sky-400 transition-colors">
+                    Virtualización y Redes Virtuales
+                </h3>
+                <p class="text-sm text-slate-400 mb-4">
+                    Hypervisors Tipo 1/2, modos de red: NAT vs Bridged vs Host-only, contenedores vs VMs.
+                </p>
+                <div class="flex items-center text-sky-400 text-sm font-medium">
+                    <span>Comenzar</span>
+                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
+
+            <!-- 1.7 Wireshark -->
+            <a href="1-7-wireshark.html" class="section-card rounded-xl p-6 block group">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-slate-800 flex items-center justify-center">
+                        <i class="fas fa-search text-xl text-slate-400 card-icon"></i>
+                    </div>
+                    <span class="level-badge level-mixed-ia">Intermedio-Avanzado</span>
+                </div>
+                <div class="text-xs text-sky-400 font-mono mb-2">Sección 1.7</div>
+                <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-sky-400 transition-colors">
+                    Análisis de Tráfico con Wireshark
+                </h3>
+                <p class="text-sm text-slate-400 mb-4">
+                    Captura de paquetes, filtros de visualización, análisis de protocolos, detección de anomalías.
+                </p>
+                <div class="flex items-center text-sky-400 text-sm font-medium">
+                    <span>Comenzar</span>
+                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
+
+            <!-- 1.8 Seguridad Redes -->
+            <a href="1-8-seguridad-redes.html" class="section-card rounded-xl p-6 block group">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-slate-800 flex items-center justify-center">
+                        <i class="fas fa-shield-alt text-xl text-slate-400 card-icon"></i>
+                    </div>
+                    <span class="level-badge level-intermediate">Intermedio</span>
+                </div>
+                <div class="text-xs text-sky-400 font-mono mb-2">Sección 1.8</div>
+                <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-sky-400 transition-colors">
+                    Seguridad Básica de Redes
+                </h3>
+                <p class="text-sm text-slate-400 mb-4">
+                    Firewalls stateful/stateless, sistemas IDS/IPS, VPNs, segmentación de red.
+                </p>
+                <div class="flex items-center text-sky-400 text-sm font-medium">
+                    <span>Comenzar</span>
+                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
+
+            <!-- 1.9 Wireless -->
+            <a href="1-9-wireless.html" class="section-card rounded-xl p-6 block group">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-slate-800 flex items-center justify-center">
+                        <i class="fas fa-wifi text-xl text-slate-400 card-icon"></i>
+                    </div>
+                    <span class="level-badge level-mixed-ia">Intermedio-Avanzado</span>
+                </div>
+                <div class="text-xs text-sky-400 font-mono mb-2">Sección 1.9</div>
+                <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-sky-400 transition-colors">
+                    Redes Inalámbricas
+                </h3>
+                <p class="text-sm text-slate-400 mb-4">
+                    Estándar 802.11, WPA2/WPA3, ataques wireless, Bluetooth, seguridad IoT.
+                </p>
+                <div class="flex items-center text-sky-400 text-sm font-medium">
+                    <span>Comenzar</span>
+                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
+
+        </div>
+
+        <!-- Prerequisites & Next Steps -->
+        <div class="mt-16 grid md:grid-cols-2 gap-8">
+            
+            <!-- Prerequisites -->
+            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                        <i class="fas fa-clipboard-check text-emerald-400"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white">Prerrequisitos</h3>
+                </div>
+                <ul class="space-y-3 text-slate-400">
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check text-emerald-400 mt-1"></i>
+                        <span>Conocimientos básicos de computación</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check text-emerald-400 mt-1"></i>
+                        <span>Familiaridad con el uso de terminales (recomendado)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fas fa-check text-emerald-400 mt-1"></i>
+                        <span>Curiosidad y ganas de aprender</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- What's Next -->
+            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-lg bg-sky-500/20 flex items-center justify-center">
+                        <i class="fas fa-rocket text-sky-400"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white">Siguiente Paso</h3>
+                </div>
+                <p class="text-slate-400 mb-4">
+                    Al completar este cuaderno, estarás listo para avanzar a:
+                </p>
+                <a href="../cuaderno-2/index.html" class="flex items-center gap-4 p-4 bg-slate-900 rounded-lg border border-slate-700 hover:border-sky-500 transition-colors group">
+                    <div class="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                        <i class="fab fa-linux text-emerald-400 text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="text-white font-semibold group-hover:text-sky-400 transition-colors">
+                            Cuaderno 2: Linux
+                        </div>
+                        <div class="text-sm text-slate-500">
+                            Arquitectura de SO y línea de comandos
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right text-slate-500 group-hover:text-sky-400 transition-colors"></i>
+                </a>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded bg-sky-500 flex items-center justify-center">
+                        <i class="fas fa-shield-alt text-white text-sm"></i>
+                    </div>
+                    <span class="font-semibold text-slate-300">CyberEdu</span>
+                </div>
+                <div class="flex items-center gap-6 text-sm text-slate-500">
+                    <a href="../index.html" class="hover:text-sky-400 transition-colors">Inicio</a>
+                    <a href="../glosario.html" class="hover:text-sky-400 transition-colors">Glosario</a>
+                    <a href="../complementario/index.html" class="hover:text-sky-400 transition-colors">Recursos</a>
+                </div>
+                <div class="text-sm text-slate-600">
+                    Documentación técnica de ciberseguridad
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Progress Script -->
+    <script>
+        const CUADERNO_ID = 'cuaderno-1';
+        const TOTAL_SECTIONS = 10;
+        
+        function updateProgress() {
+            const visited = JSON.parse(localStorage.getItem(`visited_${CUADERNO_ID}`) || '[]');
+            const count = visited.length;
+            const percent = Math.round((count / TOTAL_SECTIONS) * 100);
+            
+            // Update circle
+            const circle = document.getElementById('progress-circle');
+            const percentText = document.getElementById('progress-percent');
+            
+            if (circle && percentText) {
+                const circumference = 2 * Math.PI * 56; // r=56
+                const offset = circumference - (percent / 100) * circumference;
+                circle.style.strokeDashoffset = offset;
+                percentText.textContent = percent + '%';
+            }
+        }
+        
+        // Run on load
+        updateProgress();
+    </script>
+
+</body>
+</html>
