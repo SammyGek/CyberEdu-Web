@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glosario | CyberEdu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="assets/styles.css" rel="stylesheet">
+    <style>
+        .term-card {
+            scroll-margin-top: 100px;
+        }
+        .term-card:target {
+            animation: highlight 2s ease;
+        }
+        @keyframes highlight {
+            0%, 100% { background-color: rgba(56, 189, 248, 0); }
+            30% { background-color: rgba(56, 189, 248, 0.2); }
+        }
+        .alpha-nav a:hover, .alpha-nav a.active {
+            background-color: #38bdf8;
+            color: #0f172a;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-200 min-h-screen">
+
+    <!-- Header -->
+    <header class="border-b border-slate-800 bg-slate-950 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <a href="index.html" class="w-10 h-10 rounded-lg bg-sky-500 flex items-center justify-center text-white shadow-lg shadow-sky-500/30 hover:bg-sky-400 transition-colors">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <div>
+                        <h1 class="text-xl font-bold text-white">Glosario de Términos</h1>
+                        <p class="text-slate-500 text-xs">Terminología de ciberseguridad</p>
+                    </div>
+                </div>
+                <div class="relative">
+                    <i class="fas fa-search absolute left-3 top-3 text-slate-500"></i>
+                    <input type="text" id="search-input" placeholder="Buscar término..." 
+                        class="bg-slate-800 border border-slate-700 rounded-lg py-2 pl-10 pr-4 text-sm text-slate-300 focus:outline-none focus:border-sky-500 w-64">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navegación alfabética -->
+        <div class="bg-slate-900 border-t border-slate-800 py-2 overflow-x-auto">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="alpha-nav flex gap-1 text-xs font-mono" id="alpha-nav">
+                    <!-- Generado por JS -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-6 py-8">
+        <div id="terms-container" class="space-y-4">
+            <!-- Términos generados por JS -->
+        </div>
+        
+        <div id="no-results" class="hidden text-center py-12 text-slate-500">
+            <i class="fas fa-search text-4xl mb-4"></i>
+            <p>No se encontraron términos</p>
+        </div>
+    </main>
+
+    <script>
+        // --- BASE DE DATOS DEL GLOSARIO ---
+        const glossary = [
+            // === A ===
+            {
+                term: "ACL",
+                aka: "Access Control List",
+                category: "Windows",
+                definition: "Lista que define qué usuarios o grupos tienen permisos sobre un recurso. En Windows, cada objeto tiene una DACL (permisos) y una SACL (auditoría).",
+                related: ["DACL", "SID", "Token"]
+            },
+            {
+                term: "Anycast",
+                aka: null,
+                category: "Redes",
+                definition: "Tipo de transmisión donde el paquete se entrega al host más cercano (en términos de topología de red) de un grupo que comparte la misma dirección. Común en IPv6 y CDNs.",
+                related: ["Unicast", "Multicast", "IPv6"]
+            },
+            {
+                term: "APIPA",
+                aka: "Automatic Private IP Addressing",
+                category: "Redes",
+                definition: "Mecanismo de auto-asignación de direcciones IP en el rango 169.254.0.0/16 cuando un cliente no puede obtener una IP por DHCP. Común en Windows y macOS.",
+                related: ["DHCP", "Link-Local", "Zeroconf"]
+            },
+            {
+                term: "APT",
+                aka: "Advanced Persistent Threat",
+                category: "Actores",
+                definition: "Grupo de atacantes sofisticados, generalmente patrocinados por estados, que mantienen acceso prolongado a redes objetivo para espionaje o sabotaje.",
+                related: ["Threat Actor", "Lateral Movement"]
+            },
+            {
+                term: "arp",
+                aka: null,
+                category: "Herramientas",
+                definition: "Comando para visualizar y manipular la tabla ARP del sistema, mostrando el mapeo entre direcciones IP y MAC. En sistemas modernos se usa 'ip neigh'.",
+                related: ["ARP", "MAC", "ip neigh"]
+            },
+            {
+                term: "ARP Spoofing",
+                aka: "ARP Poisoning",
+                category: "Ataques",
+                definition: "Ataque que envía mensajes ARP falsos a una red local para asociar la dirección MAC del atacante con la IP de otro host (típicamente el gateway), permitiendo interceptar tráfico.",
+                related: ["MITM", "ARP", "Spoofing"]
+            },
+            {
+                term: "ASN",
+                aka: "Autonomous System Number",
+                category: "Administración",
+                definition: "Número único de 16 o 32 bits que identifica un sistema autónomo en el protocolo de enrutamiento BGP. Los ISPs y grandes organizaciones necesitan ASN para enrutar tráfico en Internet.",
+                related: ["BGP", "Routing", "IANA"]
+            },
+            // === B ===
+            {
+                term: "Backdoor",
+                aka: "Puerta trasera",
+                category: "Malware",
+                definition: "Método de acceso oculto a un sistema que bypasea la autenticación normal. Puede ser instalado por malware o dejado intencionalmente por desarrolladores.",
+                related: ["RAT", "Persistencia", "C2"]
+            },
+            {
+                term: "Big-endian",
+                aka: "Network Byte Order",
+                category: "Sistemas",
+                definition: "Orden de bytes donde el byte más significativo (MSB) se almacena primero en la dirección de memoria más baja. Es el estándar usado en protocolos de red.",
+                related: ["Little-endian", "Byte Order", "Endianness"]
+            },
+            {
+                term: "Binario",
+                aka: "Base 2",
+                category: "Sistemas",
+                definition: "Sistema numérico de base 2 que usa únicamente los dígitos 0 y 1. Es el sistema fundamental usado internamente por las computadoras para representar y procesar información.",
+                related: ["Decimal", "Hexadecimal", "Bit"]
+            },
+            {
+                term: "Bit",
+                aka: "Binary Digit",
+                category: "Sistemas",
+                definition: "Unidad mínima de información en sistemas digitales, que puede tener solo dos valores: 0 o 1. Es la base de toda la computación digital.",
+                related: ["Byte", "Binario", "Bit rate"]
+            },
+            {
+                term: "Bogon",
+                aka: null,
+                category: "Redes",
+                definition: "Direcciones IP que no deberían aparecer en el tráfico de Internet público, incluyendo rangos no asignados, reservados, privados o de documentación.",
+                related: ["RFC 1918", "Martian packets", "Direcciones privadas"]
+            },
+            {
+                term: "Broadcast",
+                aka: null,
+                category: "Redes",
+                definition: "Tipo de transmisión donde un paquete se envía a todos los hosts de una red simultáneamente. Común en protocolos como ARP y DHCP. En Ethernet, la dirección broadcast es FF:FF:FF:FF:FF:FF.",
+                related: ["Unicast", "Multicast", "Dirección de broadcast"]
+            },
+            {
+                term: "Buffer Overflow",
+                aka: "Desbordamiento de buffer",
+                category: "Exploits",
+                definition: "Vulnerabilidad donde un programa escribe datos más allá del espacio de memoria asignado, permitiendo sobrescribir datos adyacentes como direcciones de retorno.",
+                related: ["Stack", "Heap", "ROP", "Shellcode"]
+            },
+            {
+                term: "Byte",
+                aka: null,
+                category: "Sistemas",
+                definition: "Conjunto de 8 bits que forma la unidad básica de almacenamiento de datos. Puede representar 256 valores diferentes (0-255).",
+                related: ["Bit", "Octeto", "Kilobyte"]
+            },
+            // === C ===
+            {
+                term: "C2",
+                aka: "Command and Control",
+                category: "Ataques",
+                definition: "Infraestructura usada por atacantes para enviar comandos a sistemas comprometidos y recibir datos exfiltrados. Puede usar HTTP, DNS, u otros protocolos.",
+                related: ["Backdoor", "RAT", "Beacon"]
+            },
+            {
+                term: "CGNAT",
+                aka: "Carrier-Grade NAT, NAT444",
+                category: "Redes",
+                definition: "NAT implementado por proveedores de Internet (ISPs) que usa el rango 100.64.0.0/10 para compartir direcciones públicas entre múltiples clientes, añadiendo una capa adicional de NAT.",
+                related: ["NAT", "RFC 6598", "Direcciones privadas"]
+            },
+            {
+                term: "Challenge-Response",
+                aka: null,
+                category: "Autenticación",
+                definition: "Método de autenticación donde el servidor envía un valor aleatorio (challenge) y el cliente debe responder con un cálculo que demuestre conocimiento del secreto sin transmitirlo.",
+                related: ["NTLM", "Kerberos", "Hash"]
+            },
+            {
+                term: "CIDR",
+                aka: "Classless Inter-Domain Routing",
+                category: "Redes",
+                definition: "Método moderno de asignación de direcciones IP que usa notación /XX para indicar el número de bits de red (por ejemplo: 192.168.1.0/24), eliminando las limitaciones de las clases de red tradicionales.",
+                related: ["Subnet", "Máscara de subred", "VLSM"]
+            },
+            {
+                term: "Cifrado",
+                aka: "Encryption",
+                category: "Criptografía",
+                definition: "Proceso de transformar datos legibles (plaintext) en datos ilegibles (ciphertext) usando un algoritmo y una clave. Puede ser simétrico o asimétrico.",
+                related: ["AES", "RSA", "TLS"]
+            },
+            {
+                term: "Compresión de ceros",
+                aka: "Zero Compression",
+                category: "Redes",
+                definition: "Regla de notación IPv6 que permite abreviar grupos consecutivos de ceros usando :: (solo una vez por dirección). Por ejemplo: 2001:0db8:0000:0000:0000:0000:0000:0001 se puede escribir como 2001:db8::1.",
+                related: ["IPv6", "Hextet"]
+            },
+            {
+                term: "Cracker",
+                aka: null,
+                category: "Actores",
+                definition: "Persona que rompe sistemas de seguridad con intención maliciosa. A diferencia del hacker ético, su objetivo es causar daño o beneficio propio ilícito.",
+                related: ["Hacker", "Script Kiddie"]
+            },
+            {
+                term: "CSRF",
+                aka: "Cross-Site Request Forgery",
+                category: "Web",
+                definition: "Ataque que engaña al navegador de un usuario autenticado para que ejecute acciones no deseadas en una aplicación web donde está logueado.",
+                related: ["XSS", "Token", "SameSite"]
+            },
+            // === D ===
+            {
+                term: "DDoS",
+                aka: "Distributed Denial of Service",
+                category: "Ataques",
+                definition: "Ataque de denegación de servicio ejecutado desde múltiples orígenes simultáneamente, típicamente usando una botnet, para saturar los recursos del objetivo.",
+                related: ["DoS", "Botnet", "Amplification"]
+            },
+            {
+                term: "Decimal",
+                aka: "Base 10",
+                category: "Sistemas",
+                definition: "Sistema numérico de base 10 (dígitos 0-9) usado en la notación dotted-decimal de direcciones IPv4 y en la comunicación humana común.",
+                related: ["Binario", "IPv4", "Hexadecimal"]
+            },
+            {
+                term: "DHCP",
+                aka: "Dynamic Host Configuration Protocol",
+                category: "Redes",
+                definition: "Protocolo que asigna automáticamente direcciones IP y otra configuración de red (gateway, DNS, máscara) a dispositivos cliente cuando se conectan a la red.",
+                related: ["IP", "Gateway", "DNS"]
+            },
+            {
+                term: "Dirección de broadcast",
+                aka: "Broadcast Address",
+                category: "Redes",
+                definition: "La última dirección de una subred, que se utiliza para enviar paquetes a todos los hosts de la red simultáneamente. Se obtiene cuando todos los bits de host están en 1.",
+                related: ["Network Address", "Unicast", "Multicast"]
+            },
+            {
+                term: "Dirección de red",
+                aka: "Network Address",
+                category: "Redes",
+                definition: "La primera dirección de una subred, que representa la red completa. Se obtiene cuando todos los bits de host están en 0. No puede asignarse a ningún dispositivo.",
+                related: ["Broadcast", "Subnet", "Host"]
+            },
+            {
+                term: "Dirección IP",
+                aka: "IP Address",
+                category: "Redes",
+                definition: "Identificador numérico de 32 bits (IPv4) o 128 bits (IPv6) que identifica una interfaz de red de manera única en una red IP.",
+                related: ["IPv4", "IPv6", "CIDR"]
+            },
+            {
+                term: "Direcciones privadas",
+                aka: "Private IP",
+                category: "Redes",
+                definition: "Rangos de direcciones IP definidos por RFC 1918 que no son enrutables en Internet y se utilizan en redes locales. Requieren NAT para acceder a Internet.",
+                related: ["RFC 1918", "NAT", "Direcciones públicas"]
+            },
+            {
+                term: "Direcciones públicas",
+                aka: "Public IP, Routable IP",
+                category: "Redes",
+                definition: "Direcciones IP únicas y globalmente enrutables en Internet, asignadas por organizaciones regionales (RIRs). Son necesarias para que los dispositivos sean accesibles desde Internet.",
+                related: ["Direcciones privadas", "NAT", "IANA"]
+            },
+            {
+                term: "DNS",
+                aka: "Domain Name System",
+                category: "Redes",
+                definition: "Sistema distribuido que traduce nombres de dominio legibles (ejemplo.com) a direcciones IP numéricas, funcionando como la 'guía telefónica' de Internet.",
+                related: ["IP", "Resolución", "FQDN"]
+            },
+            {
+                term: "DoS",
+                aka: "Denial of Service",
+                category: "Ataques",
+                definition: "Ataque que busca hacer inaccesible un servicio saturando sus recursos (CPU, memoria, ancho de banda) o explotando vulnerabilidades que causan crashes.",
+                related: ["DDoS", "SYN Flood"]
+            },
+            {
+                term: "Dual Stack",
+                aka: null,
+                category: "Redes",
+                definition: "Implementación simultánea de IPv4 e IPv6 en un mismo sistema o red, permitiendo comunicación con ambos tipos de redes durante el período de transición.",
+                related: ["IPv4", "IPv6", "Transición"]
+            },
+            // === E ===
+            {
+                term: "Encapsulación",
+                aka: "Encapsulation",
+                category: "Redes",
+                definition: "Proceso de envolver datos con headers de cada capa del modelo OSI conforme descienden por la pila de protocolos, añadiendo información de control necesaria para la transmisión.",
+                related: ["OSI", "PDU", "Protocolo"]
+            },
+            {
+                term: "EUI-64",
+                aka: "Extended Unique Identifier",
+                category: "Redes",
+                definition: "Método para generar automáticamente el identificador de interfaz de 64 bits en una dirección IPv6 a partir de la dirección MAC de 48 bits del dispositivo.",
+                related: ["IPv6", "SLAAC", "MAC"]
+            },
+            {
+                term: "Exploit",
+                aka: null,
+                category: "Exploits",
+                definition: "Código, técnica o secuencia de comandos diseñada para aprovechar una vulnerabilidad específica en software o hardware para lograr un objetivo no autorizado.",
+                related: ["Vulnerability", "Payload", "PoC"]
+            },
+            // === F ===
+            {
+                term: "Fragmentación",
+                aka: "IP Fragmentation",
+                category: "Redes",
+                definition: "Proceso de dividir paquetes IP grandes en fragmentos más pequeños para que cumplan con el MTU de la red. Los fragmentos se reensamblan en el destino.",
+                related: ["MTU", "IP", "Reassembly"]
+            },
+            // === G ===
+            {
+                term: "Gateway",
+                aka: "Default Gateway, Router",
+                category: "Redes",
+                definition: "Dispositivo (generalmente un router) que conecta diferentes redes y enruta el tráfico entre ellas. Es la puerta de salida de una red local hacia otras redes.",
+                related: ["Routing", "NAT", "IP"]
+            },
+            // === H ===
+            {
+                term: "Hacker",
+                aka: null,
+                category: "Actores",
+                definition: "Persona con profundo conocimiento técnico que busca entender sistemas y encontrar formas creativas de resolver problemas. Puede ser ético (white hat) o malicioso (black hat).",
+                related: ["Cracker", "White Hat", "Black Hat"]
+            },
+            {
+                term: "Hash",
+                aka: "Función hash",
+                category: "Criptografía",
+                definition: "Función matemática unidireccional que transforma datos de longitud arbitraria en un valor fijo de tamaño predeterminado. Se usa para integridad y autenticación.",
+                related: ["MD5", "SHA", "HMAC"]
+            },
+            {
+                term: "Hexadecimal",
+                aka: "Base 16, Hex",
+                category: "Sistemas",
+                definition: "Sistema numérico de base 16 que usa dígitos 0-9 y letras A-F. Se utiliza en direcciones IPv6, direcciones MAC y representación compacta de datos binarios.",
+                related: ["IPv6", "MAC Address", "Binario"]
+            },
+            {
+                term: "Hextet",
+                aka: null,
+                category: "Redes",
+                definition: "Cada uno de los 8 grupos de 16 bits (4 dígitos hexadecimales) en una dirección IPv6, separados por dos puntos (:). Equivalente al octeto en IPv4.",
+                related: ["IPv6", "Octeto", "Hexadecimal"]
+            },
+            {
+                term: "Host",
+                aka: null,
+                category: "Redes",
+                definition: "Cualquier dispositivo con dirección IP conectado a una red, capaz de enviar o recibir datos. Incluye computadoras, servidores, impresoras, etc.",
+                related: ["Interface", "Endpoint", "Dirección IP"]
+            },
+            // === I ===
+            {
+                term: "IANA",
+                aka: "Internet Assigned Numbers Authority",
+                category: "Administración",
+                definition: "Organización global responsable de coordinar la asignación de direcciones IP, números de sistemas autónomos (ASN), nombres de protocolo y otros recursos de Internet.",
+                related: ["RIR", "ICANN", "IP Allocation"]
+            },
+            {
+                term: "ifconfig",
+                aka: null,
+                category: "Herramientas",
+                definition: "Herramienta legacy (deprecada) para configurar y mostrar información de interfaces de red. Reemplazada por 'ip' en distribuciones modernas de Linux.",
+                related: ["ip", "Interface", "Deprecated"]
+            },
+            {
+                term: "Interface",
+                aka: "Interfaz de red, NIC",
+                category: "Redes",
+                definition: "Punto de conexión física o lógica de un dispositivo a una red. Puede ser una tarjeta de red física (NIC) o una interfaz virtual.",
+                related: ["Host", "MAC Address", "IP"]
+            },
+            {
+                term: "ip",
+                aka: "iproute2",
+                category: "Herramientas",
+                definition: "Suite moderna de comandos para configuración y administración de redes en Linux, que reemplaza herramientas legacy como ifconfig, route y arp.",
+                related: ["ifconfig", "route", "Interface"]
+            },
+            {
+                term: "IP Sweep",
+                aka: "Ping Sweep",
+                category: "Ataques",
+                definition: "Técnica de reconocimiento que envía pings (ICMP Echo Request) a un rango de direcciones IP para descubrir qué hosts están activos en la red.",
+                related: ["Reconocimiento", "Nmap", "ICMP"]
+            },
+            {
+                term: "ipcalc",
+                aka: "IP Calculator",
+                category: "Herramientas",
+                definition: "Herramienta de línea de comandos para calcular información de subredes IPv4, incluyendo dirección de red, broadcast, rango de hosts utilizables y más.",
+                related: ["Subnetting", "CIDR", "sipcalc"]
+            },
+            {
+                term: "IPv4",
+                aka: "Internet Protocol version 4",
+                category: "Redes",
+                definition: "Protocolo de Internet que usa direcciones de 32 bits representadas en formato decimal punteado (por ejemplo: 192.168.1.1). Es la versión más utilizada actualmente del protocolo IP.",
+                related: ["IPv6", "Dirección IP", "CIDR"]
+            },
+            {
+                term: "IPv6",
+                aka: "Internet Protocol version 6",
+                category: "Redes",
+                definition: "Protocolo de Internet que usa direcciones de 128 bits representadas en formato hexadecimal con dos puntos como separadores (por ejemplo: 2001:db8::1). Diseñado para reemplazar IPv4 y solucionar el agotamiento de direcciones.",
+                related: ["IPv4", "Dirección IP", "Hextet"]
+            },
+            // === K ===
+            {
+                term: "Kerberos",
+                aka: null,
+                category: "Autenticación",
+                definition: "Protocolo de autenticación basado en tickets usado en Active Directory. Usa criptografía simétrica y un servidor KDC para emitir tickets TGT y TGS.",
+                related: ["NTLM", "TGT", "KDC"]
+            },
+            // === L ===
+            {
+                term: "Lateral Movement",
+                aka: "Movimiento lateral",
+                category: "Ataques",
+                definition: "Técnicas usadas por atacantes para moverse de un sistema comprometido a otros dentro de la misma red, escalando privilegios y expandiendo el control.",
+                related: ["Pivoting", "Pass-the-Hash", "PSExec"]
+            },
+            {
+                term: "LFI",
+                aka: "Local File Inclusion",
+                category: "Web",
+                definition: "Vulnerabilidad que permite a un atacante incluir archivos locales del servidor en la respuesta de la aplicación, potencialmente exponiendo código fuente o archivos sensibles.",
+                related: ["RFI", "Path Traversal", "File Upload"]
+            },
+            {
+                term: "Link-Local",
+                aka: null,
+                category: "Redes",
+                definition: "Direcciones IP válidas únicamente en el enlace local sin capacidad de enrutamiento. En IPv4 es el rango 169.254.0.0/16 (APIPA) y en IPv6 es fe80::/10.",
+                related: ["APIPA", "Zeroconf", "IPv6"]
+            },
+            {
+                term: "Loopback",
+                aka: "Localhost",
+                category: "Redes",
+                definition: "Interfaz virtual que apunta a la propia máquina. En IPv4 es 127.0.0.1 y en IPv6 es ::1. Se utiliza para pruebas y comunicación interna de procesos.",
+                related: ["Interface", "IPv4", "IPv6"]
+            },
+            // === M ===
+            {
+                term: "Máscara de subred",
+                aka: "Subnet Mask, Netmask",
+                category: "Redes",
+                definition: "Valor de 32 bits que define qué porción de una dirección IP identifica la red y qué porción identifica el host. Se representa en formato decimal (255.255.255.0) o notación CIDR (/24).",
+                related: ["CIDR", "Subnet", "IPv4"]
+            },
+            {
+                term: "MITM",
+                aka: "Man-in-the-Middle",
+                category: "Ataques",
+                definition: "Tipo de ataque donde el atacante se posiciona entre dos partes que se comunican, interceptando, leyendo y potencialmente modificando el tráfico sin que las víctimas lo detecten.",
+                related: ["ARP Spoofing", "Spoofing", "TLS"]
+            },
+            {
+                term: "mtr",
+                aka: "My Traceroute",
+                category: "Herramientas",
+                definition: "Herramienta que combina la funcionalidad de ping y traceroute, mostrando estadísticas en tiempo real de latencia y pérdida de paquetes para cada salto.",
+                related: ["traceroute", "ping", "Latencia"]
+            },
+            {
+                term: "MTU",
+                aka: "Maximum Transmission Unit",
+                category: "Redes",
+                definition: "Tamaño máximo de un paquete que puede transmitirse en una red sin fragmentación. El valor típico para Ethernet es 1500 bytes.",
+                related: ["Fragmentación", "Jumbo Frames", "IP"]
+            },
+            {
+                term: "Multicast",
+                aka: null,
+                category: "Redes",
+                definition: "Tipo de transmisión dirigida a un grupo específico de hosts que se han suscrito para recibir el tráfico. Eficiente para streaming y distribución de contenido.",
+                related: ["Unicast", "Broadcast", "IGMP"]
+            },
+            // === N ===
+            {
+                term: "NAT",
+                aka: "Network Address Translation",
+                category: "Redes",
+                definition: "Tecnología que traduce direcciones IP privadas a públicas (y viceversa), permitiendo que múltiples dispositivos en una red local compartan una única IP pública.",
+                related: ["RFC 1918", "PAT", "Gateway"]
+            },
+            {
+                term: "NDP",
+                aka: "Neighbor Discovery Protocol",
+                category: "Redes",
+                definition: "Protocolo de IPv6 que reemplaza a ARP para el descubrimiento de vecinos, detección de direcciones duplicadas y configuración automática. Opera sobre ICMPv6.",
+                related: ["IPv6", "ARP", "ICMPv6"]
+            },
+            {
+                term: "netstat",
+                aka: null,
+                category: "Herramientas",
+                definition: "Herramienta legacy para mostrar conexiones de red activas, puertos en escucha, tablas de enrutamiento y estadísticas de interfaces. Deprecada en favor de 'ss' en sistemas modernos.",
+                related: ["ss", "Conexiones", "Puertos"]
+            },
+            {
+                term: "Nmap",
+                aka: "Network Mapper",
+                category: "Herramientas",
+                definition: "Herramienta de código abierto para escaneo de redes, descubrimiento de hosts, detección de servicios y puertos, y análisis de seguridad. Es el estándar de facto en pentesting.",
+                related: ["Port Scanning", "Reconocimiento", "NSE"]
+            },
+            {
+                term: "NTLM",
+                aka: "NT LAN Manager",
+                category: "Windows",
+                definition: "Suite de protocolos de autenticación de Microsoft que incluye el hash NTLM (MD4 de la contraseña) y el protocolo challenge-response. Usado antes de Kerberos en redes Windows.",
+                related: ["Kerberos", "Challenge-Response", "Pass-the-Hash"]
+            },
+            // === O ===
+            {
+                term: "Octeto",
+                aka: "Byte",
+                category: "Redes",
+                definition: "Cada uno de los 4 grupos de 8 bits que conforman una dirección IPv4. Por ejemplo, en 192.168.1.1, cada número (192, 168, 1, 1) es un octeto.",
+                related: ["IPv4", "Binario", "Byte"]
+            },
+            // === P ===
+            {
+                term: "PAT",
+                aka: "Port Address Translation, NAT Overload",
+                category: "Redes",
+                definition: "Tipo específico de NAT que usa números de puerto además de direcciones IP para multiplexar múltiples conexiones internas en una única dirección IP pública.",
+                related: ["NAT", "Ports", "Gateway"]
+            },
+            {
+                term: "Payload",
+                aka: "Carga útil",
+                category: "Exploits",
+                definition: "Código malicioso que se ejecuta después de explotar una vulnerabilidad. Puede ser un shellcode, reverse shell, o cualquier instrucción que el atacante desee ejecutar.",
+                related: ["Exploit", "Shellcode", "RCE"]
+            },
+            {
+                term: "Persistencia",
+                aka: null,
+                category: "Ataques",
+                definition: "Técnicas usadas por atacantes para mantener acceso a un sistema comprometido incluso después de reinicios, cambios de contraseña o actualizaciones.",
+                related: ["Backdoor", "Lateral Movement", "Registry Run Keys"]
+            },
+            {
+                term: "Phishing",
+                aka: null,
+                category: "Ataques",
+                definition: "Técnica de ingeniería social que engaña a usuarios para que revelen información sensible o ejecuten acciones maliciosas, típicamente usando correos electrónicos fraudulentos.",
+                related: ["Spear Phishing", "Social Engineering"]
+            },
+            {
+                term: "ping",
+                aka: "Packet Internet Groper",
+                category: "Herramientas",
+                definition: "Utilidad que verifica la conectividad IP enviando mensajes ICMP Echo Request y esperando Echo Reply. Mide también latencia y pérdida de paquetes.",
+                related: ["ICMP", "Conectividad", "traceroute"]
+            },
+            {
+                term: "Pivoting",
+                aka: null,
+                category: "Ataques",
+                definition: "Técnica de usar un sistema comprometido como punto intermedio para atacar otros sistemas no accesibles directamente desde el origen del ataque.",
+                related: ["Lateral Movement", "Port Forwarding", "Tunneling"]
+            },
+            // === R ===
+            {
+                term: "RAT",
+                aka: "Remote Access Trojan",
+                category: "Malware",
+                definition: "Malware que permite control remoto completo de un sistema comprometido, incluyendo acceso a archivos, cámara, micrófono y keylogger.",
+                related: ["Backdoor", "C2", "Trojan"]
+            },
+            {
+                term: "RCE",
+                aka: "Remote Code Execution",
+                category: "Exploits",
+                definition: "Vulnerabilidad crítica que permite a un atacante ejecutar código arbitrario en un sistema remoto sin autenticación previa. La categoría más peligrosa de vulnerabilidades.",
+                related: ["Payload", "Shellcode", "Exploit"]
+            },
+            {
+                term: "RFC 1918",
+                aka: null,
+                category: "Redes",
+                definition: "Estándar que define los tres rangos de direcciones IP privadas no enrutables en Internet: 10.0.0.0/8, 172.16.0.0/12 y 192.168.0.0/16.",
+                related: ["NAT", "Direcciones privadas", "CGNAT"]
+            },
+            {
+                term: "RFI",
+                aka: "Remote File Inclusion",
+                category: "Web",
+                definition: "Vulnerabilidad que permite a un atacante incluir archivos remotos en la respuesta de una aplicación, potencialmente ejecutando código PHP malicioso desde un servidor externo.",
+                related: ["LFI", "File Upload", "RCE"]
+            },
+            {
+                term: "RIR",
+                aka: "Regional Internet Registry",
+                category: "Administración",
+                definition: "Organizaciones regionales que gestionan la asignación de direcciones IP y ASN en sus respectivas regiones: ARIN (Norteamérica), RIPE (Europa), APNIC (Asia-Pacífico), LACNIC (Latinoamérica), AFRINIC (África).",
+                related: ["IANA", "IP Allocation", "ASN"]
+            },
+            // === S ===
+            {
+                term: "Script Kiddie",
+                aka: null,
+                category: "Actores",
+                definition: "Persona con conocimientos técnicos limitados que usa herramientas y scripts desarrollados por otros sin entender su funcionamiento. Generalmente causa daño no sofisticado.",
+                related: ["Hacker", "Cracker"]
+            },
+            {
+                term: "Shellcode",
+                aka: null,
+                category: "Exploits",
+                definition: "Código de máquina (assembly) diseñado para ser inyectado en un proceso comprometido, típicamente para abrir una shell o realizar acciones específicas del atacante.",
+                related: ["Buffer Overflow", "Payload", "RCE"]
+            },
+            {
+                term: "sipcalc",
+                aka: "Subnet IP Calculator",
+                category: "Herramientas",
+                definition: "Alternativa avanzada a ipcalc con soporte para IPv6 y capacidad de calcular múltiples subredes simultáneamente.",
+                related: ["ipcalc", "IPv6", "Subnetting"]
+            },
+            {
+                term: "SLAAC",
+                aka: "Stateless Address Autoconfiguration",
+                category: "Redes",
+                definition: "Método de autoconfiguración de direcciones IPv6 sin necesidad de un servidor DHCP. Los hosts generan sus propias direcciones usando prefijos anunciados por routers.",
+                related: ["IPv6", "DHCPv6", "NDP"]
+            },
+            {
+                term: "Smurf Attack",
+                aka: null,
+                category: "Ataques",
+                definition: "Ataque DDoS que abusa de broadcast ping (ICMP Echo Request) a la dirección de broadcast de una red, amplificando el tráfico hacia la víctima.",
+                related: ["DDoS", "Broadcast", "ICMP"]
+            },
+            {
+                term: "Spoofing",
+                aka: "IP Spoofing",
+                category: "Ataques",
+                definition: "Técnica de falsificación de la dirección IP de origen en paquetes para ocultar la identidad del atacante o suplantar a otro host legítimo.",
+                related: ["MITM", "ARP Spoofing", "Packet Crafting"]
+            },
+            {
+                term: "SQLi",
+                aka: "SQL Injection",
+                category: "Web",
+                definition: "Vulnerabilidad que permite inyectar código SQL malicioso en queries de bases de datos, permitiendo leer, modificar o eliminar datos arbitrarios.",
+                related: ["Database", "Union-based", "Blind SQLi"]
+            },
+            {
+                term: "ss",
+                aka: "Socket Statistics",
+                category: "Herramientas",
+                definition: "Herramienta moderna que reemplaza a netstat para mostrar información detallada sobre sockets de red, conexiones activas y estadísticas. Más rápida y con más funcionalidades.",
+                related: ["netstat", "Conexiones", "Sockets"]
+            },
+            {
+                term: "SSRF",
+                aka: "Server-Side Request Forgery",
+                category: "Web",
+                definition: "Vulnerabilidad que permite a un atacante forzar a un servidor a realizar peticiones HTTP a recursos internos o externos arbitrarios, potencialmente exponiendo servicios internos.",
+                related: ["XSS", "LFI", "Internal IP"]
+            },
+            {
+                term: "Subnet",
+                aka: "Subred",
+                category: "Redes",
+                definition: "División lógica de una red IP en segmentos más pequeños para mejorar la organización, seguridad y eficiencia del uso de direcciones.",
+                related: ["CIDR", "VLSM", "Máscara de subred"]
+            },
+            {
+                term: "Subnetting",
+                aka: "Subneteo",
+                category: "Redes",
+                definition: "Proceso de dividir una red grande en múltiples subredes más pequeñas, permitiendo una mejor administración y segmentación del espacio de direcciones.",
+                related: ["Subnet", "VLSM", "CIDR"]
+            },
+            {
+                term: "Supernetting",
+                aka: "Route Aggregation, Route Summarization",
+                category: "Redes",
+                definition: "Proceso inverso al subnetting que combina múltiples redes contiguas en una única ruta de red más grande, reduciendo el tamaño de las tablas de enrutamiento.",
+                related: ["CIDR", "Routing", "Subnet"]
+            },
+            // === T ===
+            {
+                term: "Threat Actor",
+                aka: null,
+                category: "Actores",
+                definition: "Entidad (individuo, grupo u organización) que realiza o tiene intención de realizar actividades maliciosas contra sistemas de información.",
+                related: ["APT", "Hacker", "Insider Threat"]
+            },
+            {
+                term: "Token",
+                aka: null,
+                category: "Windows",
+                definition: "Objeto de seguridad en Windows que representa la identidad y privilegios de un usuario o proceso. Se crea al autenticarse y se usa para control de acceso.",
+                related: ["SID", "Privileges", "Impersonation"]
+            },
+            {
+                term: "traceroute",
+                aka: "tracert (Windows)",
+                category: "Herramientas",
+                definition: "Herramienta que muestra la ruta que siguen los paquetes hasta un destino, listando cada salto (router) intermedio y midiendo los tiempos de respuesta.",
+                related: ["TTL", "Routing", "mtr"]
+            },
+            {
+                term: "TTL",
+                aka: "Time To Live",
+                category: "Redes",
+                definition: "Campo en el header IP que limita el tiempo de vida de un paquete. Cada router que procesa el paquete decrementa el TTL en 1; si llega a 0, el paquete se descarta.",
+                related: ["IP", "Routing", "traceroute"]
+            },
+            {
+                term: "Tunneling",
+                aka: null,
+                category: "Redes",
+                definition: "Técnica de encapsular tráfico IPv6 dentro de paquetes IPv4 para atravesar redes que solo soportan IPv4. Ejemplos incluyen 6to4 y Teredo.",
+                related: ["IPv6", "6to4", "Teredo"]
+            },
+            // === U ===
+            {
+                term: "Unicast",
+                aka: null,
+                category: "Redes",
+                definition: "Tipo de transmisión punto a punto donde un paquete viaja de un único emisor a un único receptor específico. Es el tipo de comunicación más común en redes IP.",
+                related: ["Broadcast", "Multicast", "Anycast"]
+            },
+            // === V ===
+            {
+                term: "VLSM",
+                aka: "Variable Length Subnet Mask",
+                category: "Redes",
+                definition: "Técnica que permite usar diferentes tamaños de máscara de subred dentro de una misma red para optimizar el uso de direcciones IP y reducir el desperdicio.",
+                related: ["CIDR", "Subnetting", "Máscara de subred"]
+            },
+            // === W ===
+            {
+                term: "WHOIS",
+                aka: null,
+                category: "Administración",
+                definition: "Protocolo y servicio de consulta que proporciona información sobre el registro de nombres de dominio, direcciones IP y sistemas autónomos, incluyendo datos del propietario y contacto.",
+                related: ["DNS", "IP Allocation", "RDAP"]
+            },
+            // === X ===
+            {
+                term: "XSS",
+                aka: "Cross-Site Scripting",
+                category: "Web",
+                definition: "Vulnerabilidad que permite inyectar scripts maliciosos en páginas web vistas por otros usuarios. Puede ser Reflected, Stored o DOM-based.",
+                related: ["CSRF", "Cookie Stealing", "Keylogger"]
+            },
+            
+            // === NUEVOS TÉRMINOS - Redes y Enrutamiento ===
+            {
+                term: "AS",
+                aka: "Autonomous System",
+                category: "Redes",
+                definition: "Conjunto de redes IP bajo el control de una única organización que presenta una política de enrutamiento común hacia Internet. Identificado por un ASN (número único de 16 o 32 bits).",
+                related: ["BGP", "IGP", "Routing"]
+            },
+            {
+                term: "Backbone",
+                aka: null,
+                category: "Redes",
+                definition: "Red troncal de alta capacidad que interconecta redes más pequeñas y transporta grandes volúmenes de tráfico entre diferentes puntos de una infraestructura. Es la 'columna vertebral' de una red.",
+                related: ["Routing", "MPLS", "Core Network"]
+            },
+            {
+                term: "BPDU",
+                aka: "Bridge Protocol Data Unit",
+                category: "Protocolos",
+                definition: "Trama especial utilizada por el protocolo Spanning Tree (STP) para intercambiar información entre switches sobre la topología de la red y prevenir bucles.",
+                related: ["STP", "Root Bridge", "Broadcast Storm"]
+            },
+            {
+                term: "Broadcast Storm",
+                aka: null,
+                category: "Problemas",
+                definition: "Situación anormal en la que hay un número excesivo de tramas broadcast circulando en la red, saturando el ancho de banda y causando degradación o caída del servicio. Común cuando hay bucles sin STP.",
+                related: ["STP", "BPDU", "Loop"]
+            },
+            {
+                term: "Default Gateway",
+                aka: "Puerta de enlace predeterminada",
+                category: "Redes",
+                definition: "Router que actúa como punto de salida de una red local hacia otras redes. Los hosts envían paquetes a esta dirección cuando el destino no está en su subred local.",
+                related: ["Routing", "Gateway", "Router"]
+            },
+            {
+                term: "Distancia Administrativa",
+                aka: "AD - Administrative Distance",
+                category: "Redes",
+                definition: "Valor de confiabilidad (0-255) asignado a rutas aprendidas por diferentes protocolos de enrutamiento. A menor AD, mayor preferencia. Por ejemplo: Connected=0, Static=1, EIGRP=90, OSPF=110, RIP=120.",
+                related: ["Routing", "Métrica", "IGP"]
+            },
+            {
+                term: "ECMP",
+                aka: "Equal-Cost Multi-Path",
+                category: "Redes",
+                definition: "Técnica de enrutamiento que permite balancear tráfico entre múltiples rutas de igual costo hacia un mismo destino, mejorando el uso del ancho de banda y la redundancia.",
+                related: ["Routing", "Load Balancing", "Métrica"]
+            },
+            {
+                term: "Hop",
+                aka: "Salto",
+                category: "Redes",
+                definition: "Cada paso intermedio que da un paquete al atravesar un router en su camino hacia el destino. El número de hops indica cuántos routers debe cruzar un paquete.",
+                related: ["TTL", "Routing", "traceroute"]
+            },
+            {
+                term: "IGP",
+                aka: "Interior Gateway Protocol",
+                category: "Protocolos",
+                definition: "Familia de protocolos de enrutamiento diseñados para funcionar dentro de un mismo AS (sistema autónomo). Ejemplos: RIP, OSPF, EIGRP, IS-IS.",
+                related: ["AS", "BGP", "Routing"]
+            },
+            {
+                term: "Longest Prefix Match",
+                aka: "Coincidencia de prefijo más largo",
+                category: "Redes",
+                definition: "Regla de enrutamiento IP donde un router selecciona la ruta con la máscara de red más específica (más larga) que coincida con la dirección IP de destino.",
+                related: ["Routing", "CIDR", "Subnet"]
+            },
+            {
+                term: "MAC Flooding",
+                aka: null,
+                category: "Ataques",
+                definition: "Ataque que satura la tabla CAM de un switch enviando gran cantidad de tramas con direcciones MAC origen diferentes, causando que el switch opere en modo 'hub' y reenvíe tráfico a todos los puertos.",
+                related: ["Tabla CAM", "Switch", "MITM"]
+            },
+            {
+                term: "Métrica",
+                aka: null,
+                category: "Redes",
+                definition: "Valor numérico asignado a una ruta por un protocolo de enrutamiento para determinar cuál es la mejor ruta hacia un destino. Puede basarse en: hop count, ancho de banda, delay, confiabilidad, etc.",
+                related: ["Routing", "Distancia Administrativa", "ECMP"]
+            },
+            {
+                term: "MPLS",
+                aka: "Multiprotocol Label Switching",
+                category: "Tecnologías",
+                definition: "Tecnología de conmutación de alta velocidad que utiliza etiquetas cortas para dirigir el tráfico a través de rutas predefinidas, evitando la necesidad de consultar tablas de enrutamiento IP en cada salto.",
+                related: ["VPN", "QoS", "Backbone"]
+            },
+            {
+                term: "Native VLAN",
+                aka: null,
+                category: "Redes",
+                definition: "VLAN configurada en un puerto trunk que transporta tráfico sin etiquetar (untagged). Por defecto es la VLAN 1. Representa un riesgo de seguridad si no se configura adecuadamente.",
+                related: ["VLAN", "Trunk", "VLAN Hopping"]
+            },
+            {
+                term: "Root Bridge",
+                aka: "Puente raíz",
+                category: "Protocolos",
+                definition: "Switch elegido por el protocolo Spanning Tree (STP) como punto de referencia central de la topología. Todos los caminos en la red se calculan desde este switch para evitar bucles.",
+                related: ["STP", "BPDU", "Bridge Priority"]
+            },
+            {
+                term: "SD-WAN",
+                aka: "Software-Defined Wide Area Network",
+                category: "Tecnologías",
+                definition: "Arquitectura WAN que utiliza software para controlar la conectividad y gestión entre centros de datos y sucursales remotas, permitiendo optimización dinámica del tráfico y reducción de costos.",
+                related: ["WAN", "VPN", "QoS"]
+            },
+            {
+                term: "SPOF",
+                aka: "Single Point of Failure",
+                category: "Arquitectura",
+                definition: "Componente único cuyo fallo provoca la caída de todo el sistema o servicio. El diseño de alta disponibilidad busca eliminar o minimizar los SPOFs mediante redundancia.",
+                related: ["High Availability", "Redundancia", "Failover"]
+            },
+            {
+                term: "Spine-Leaf",
+                aka: null,
+                category: "Topologías",
+                definition: "Arquitectura de red de dos niveles común en datacenters: switches 'spine' forman la capa superior conectándose a todos los switches 'leaf' de la capa inferior, garantizando latencia predecible y alta capacidad.",
+                related: ["Datacenter", "ECMP", "Fabric"]
+            },
+            {
+                term: "Tabla CAM",
+                aka: "Content Addressable Memory",
+                category: "Hardware",
+                definition: "Tabla en switches que mapea direcciones MAC a puertos físicos, permitiendo el reenvío eficiente de tramas. Tiene tamaño limitado y puede ser vulnerable a ataques de flooding.",
+                related: ["MAC", "Switch", "MAC Flooding"]
+            },
+            {
+                term: "Trunk",
+                aka: null,
+                category: "Redes",
+                definition: "Enlace de red entre switches que transporta tráfico de múltiples VLANs simultáneamente usando etiquetas (típicamente 802.1Q). Permite extender VLANs entre switches.",
+                related: ["VLAN", "802.1Q", "Native VLAN"]
+            },
+            {
+                term: "VLAN Hopping",
+                aka: null,
+                category: "Ataques",
+                definition: "Técnica de ataque que permite a un atacante enviar tráfico a VLANs a las que no debería tener acceso, explotando configuraciones incorrectas de puertos trunk o native VLAN.",
+                related: ["VLAN", "Trunk", "Native VLAN"]
+            }
+        ];
+
+        // Ordenar alfabéticamente
+        glossary.sort((a, b) => a.term.localeCompare(b.term));
+
+        // --- ELEMENTOS DOM ---
+        const termsContainer = document.getElementById('terms-container');
+        const searchInput = document.getElementById('search-input');
+        const alphaNav = document.getElementById('alpha-nav');
+        const noResults = document.getElementById('no-results');
+
+        // --- RENDERIZAR NAVEGACIÓN ALFABÉTICA ---
+        function renderAlphaNav() {
+            const letters = [...new Set(glossary.map(t => t.term[0].toUpperCase()))].sort();
+            alphaNav.innerHTML = letters.map(letter => 
+                `<a href="#letter-${letter}" class="px-2 py-1 rounded hover:bg-sky-500 transition-colors">${letter}</a>`
+            ).join('');
+        }
+
+        // --- RENDERIZAR TÉRMINOS ---
+        function renderTerms(terms) {
+            if (terms.length === 0) {
+                termsContainer.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            }
+            
+            noResults.classList.add('hidden');
+            
+            let currentLetter = '';
+            let html = '';
+            
+            terms.forEach(term => {
+                const firstLetter = term.term[0].toUpperCase();
+                
+                if (firstLetter !== currentLetter) {
+                    currentLetter = firstLetter;
+                    html += `
+                        <div id="letter-${firstLetter}" class="pt-4">
+                            <h2 class="text-2xl font-bold text-sky-400 mb-4 border-b border-slate-700 pb-2">${firstLetter}</h2>
+                        </div>
+                    `;
+                }
+                
+                const termId = term.term.toLowerCase().replace(/[^a-z0-9]/g, '-');
+                const akaText = term.aka ? `<span class="text-slate-500 text-sm ml-2">(${term.aka})</span>` : '';
+                const categoryColor = getCategoryColor(term.category);
+                
+                html += `
+                    <div id="${termId}" class="term-card bg-slate-800/50 rounded-lg p-4 border border-slate-700 hover:border-slate-600 transition-colors">
+                        <div class="flex items-start justify-between gap-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <h3 class="text-lg font-bold text-white">${term.term}</h3>
+                                    ${akaText}
+                                    <span class="text-xs px-2 py-0.5 rounded ${categoryColor}">${term.category}</span>
+                                </div>
+                                <p class="text-slate-300 text-sm leading-relaxed">${term.definition}</p>
+                                ${term.related ? `
+                                    <div class="mt-3 flex flex-wrap gap-2">
+                                        <span class="text-xs text-slate-500">Ver también:</span>
+                                        ${term.related.map(r => {
+                                            const rid = r.toLowerCase().replace(/[^a-z0-9]/g, '-');
+                                            return `<a href="#${rid}" class="text-xs text-sky-400 hover:underline">${r}</a>`;
+                                        }).join(', ')}
+                                    </div>
+                                ` : ''}
+                            </div>
+                            <button onclick="copyLink('${termId}')" class="text-slate-500 hover:text-sky-400 transition-colors" title="Copiar enlace">
+                                <i class="fas fa-link"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            termsContainer.innerHTML = html;
+        }
+
+        // --- COLORES POR CATEGORÍA ---
+        function getCategoryColor(category) {
+            const colors = {
+                'Criptografía': 'bg-purple-500/20 text-purple-400',
+                'Redes': 'bg-sky-500/20 text-sky-400',
+                'Web': 'bg-rose-500/20 text-rose-400',
+                'Exploits': 'bg-red-500/20 text-red-400',
+                'Ataques': 'bg-orange-500/20 text-orange-400',
+                'Windows': 'bg-blue-500/20 text-blue-400',
+                'Linux': 'bg-green-500/20 text-green-400',
+                'Autenticación': 'bg-amber-500/20 text-amber-400',
+                'Actores': 'bg-slate-500/20 text-slate-400',
+                'Malware': 'bg-pink-500/20 text-pink-400',
+                'Herramientas': 'bg-cyan-500/20 text-cyan-400',
+                'Sistemas': 'bg-indigo-500/20 text-indigo-400',
+                'Administración': 'bg-teal-500/20 text-teal-400'
+            };
+            return colors[category] || 'bg-slate-500/20 text-slate-400';
+        }
+
+        // --- BÚSQUEDA ---
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filtered = glossary.filter(t => 
+                t.term.toLowerCase().includes(query) ||
+                (t.aka && t.aka.toLowerCase().includes(query)) ||
+                t.definition.toLowerCase().includes(query) ||
+                t.category.toLowerCase().includes(query)
+            );
+            renderTerms(filtered);
+        });
+
+        // --- COPIAR ENLACE ---
+        window.copyLink = function(termId) {
+            const url = `${window.location.origin}${window.location.pathname}#${termId}`;
+            navigator.clipboard.writeText(url).then(() => {
+                // Feedback visual
+                const btn = event.target.closest('button');
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i>';
+                setTimeout(() => btn.innerHTML = originalHTML, 1500);
+            });
+        };
+
+        // --- SCROLL TO HASH ON LOAD ---
+        function scrollToHash() {
+            if (window.location.hash) {
+                const element = document.querySelector(window.location.hash);
+                if (element) {
+                    setTimeout(() => {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
+                }
+            }
+        }
+
+        // --- INIT ---
+        renderAlphaNav();
+        renderTerms(glossary);
+        scrollToHash();
+        
+        // Handle hash changes
+        window.addEventListener('hashchange', scrollToHash);
+    </script>
+</body>
+</html>

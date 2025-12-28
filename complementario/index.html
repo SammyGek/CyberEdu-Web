@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material Complementario | CyberEdu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="../assets/styles.css" rel="stylesheet">
+</head>
+<body class="bg-slate-900 text-slate-200 min-h-screen">
+
+    <!-- Header -->
+    <header class="border-b border-slate-800 bg-slate-950 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-5">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <a href="../index.html" class="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white shadow-lg shadow-amber-500/30 hover:scale-105 transition-transform">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <div>
+                        <h1 class="text-xl font-bold text-white">Material Complementario</h1>
+                        <p class="text-slate-500 text-xs">Recursos de referencia y profundización</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="bg-gradient-to-b from-slate-950 to-slate-900 py-12 border-b border-slate-800">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <div class="w-16 h-16 rounded-full bg-amber-500/20 flex items-center justify-center mx-auto mb-6 border border-amber-500/30">
+                <i class="fas fa-books text-3xl text-amber-400"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-white mb-4">Recursos de Referencia</h2>
+            <p class="text-lg text-slate-400 max-w-2xl mx-auto">
+                Documentación técnica de profundización, cheatsheets y guías de laboratorio que complementan el currículum principal.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-6 py-12">
+
+        <!-- Referencias Técnicas -->
+        <section class="mb-16">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white">Referencias Técnicas</h3>
+                    <p class="text-slate-500 text-sm">Profundización en temas específicos</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Auth Windows -->
+                <a href="auth-windows-ntlm-kerberos.html" class="block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-purple-500/50 transition-all hover:shadow-lg hover:shadow-purple-500/10 group">
+                    <div class="p-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 flex-shrink-0">
+                                <i class="fab fa-windows text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-lg font-bold text-white mb-1 group-hover:text-purple-400 transition-colors">Autenticación Windows</h4>
+                                <p class="text-slate-500 text-xs mb-3">NTLM, Kerberos, HMAC y Criptografía</p>
+                                <p class="text-slate-400 text-sm">Explicación profunda de los mecanismos de autenticación de Windows con analogías y detalles técnicos.</p>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-700 flex flex-wrap gap-2">
+                            <span class="text-xs px-2 py-1 rounded bg-slate-700 text-slate-400">Hash</span>
+                            <span class="text-xs px-2 py-1 rounded bg-slate-700 text-slate-400">NTLM</span>
+                            <span class="text-xs px-2 py-1 rounded bg-slate-700 text-slate-400">Kerberos</span>
+                            <span class="text-xs px-2 py-1 rounded bg-slate-700 text-slate-400">HMAC</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800/80 px-6 py-3 border-t border-slate-700 rounded-b-xl">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="text-slate-500">Relacionado: 3.7, 6.8</span>
+                            <span class="text-purple-400 font-medium group-hover:translate-x-1 transition-transform inline-flex items-center">
+                                Leer <i class="fas fa-arrow-right ml-1"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Criptografía TLS -->
+                <a href="fundamentos-criptografia-tls.html" class="block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-purple-500/50 transition-all hover:shadow-lg hover:shadow-purple-500/10 group">
+                    <div class="p-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-lg bg-green-500/20 flex items-center justify-center text-green-400 flex-shrink-0">
+                                <i class="fas fa-lock text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-lg font-bold text-white mb-1 group-hover:text-purple-400 transition-colors">Fundamentos de Criptografía</h4>
+                                <p class="text-slate-500 text-xs mb-3">Cifrado simétrico, asimétrico y TLS</p>
+                                <p class="text-slate-400 text-sm">Conceptos esenciales de criptografía necesarios para entender HTTPS, certificados y comunicaciones seguras.</p>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-700 flex flex-wrap gap-2">
+                            <span class="text-xs px-2 py-1 rounded bg-slate-700 text-slate-400">AES</span>
+                            <span class="text-xs px-2 py-1 rounded bg-slate-700 text-slate-400">RSA</span>
+                            <span class="text-xs px-2 py-1 rounded bg-slate-700 text-slate-400">TLS</span>
+                            <span class="text-xs px-2 py-1 rounded bg-slate-700 text-slate-400">Certificados</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800/80 px-6 py-3 border-t border-slate-700 rounded-b-xl">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="text-slate-500">Relacionado: 1.2, 1.8</span>
+                            <span class="text-purple-400 font-medium group-hover:translate-x-1 transition-transform inline-flex items-center">
+                                Leer <i class="fas fa-arrow-right ml-1"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Cheatsheets -->
+        <section class="mb-16">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-400">
+                    <i class="fas fa-scroll"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white">Cheatsheets</h3>
+                    <p class="text-slate-500 text-sm">Guías rápidas de comandos y sintaxis</p>
+                </div>
+            </div>
+            
+            <div class="bg-slate-800/30 rounded-xl border border-dashed border-slate-700 p-8 text-center">
+                <i class="fas fa-plus-circle text-4xl text-slate-600 mb-4"></i>
+                <p class="text-slate-500">Próximamente: cheatsheets de Nmap, SQLi, Linux, etc.</p>
+            </div>
+        </section>
+
+        <!-- Labs -->
+        <section class="mb-16">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-lg bg-rose-500/20 flex items-center justify-center text-rose-400">
+                    <i class="fas fa-flask"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white">Guías de Laboratorio</h3>
+                    <p class="text-slate-500 text-sm">Ejercicios prácticos paso a paso</p>
+                </div>
+            </div>
+            
+            <div class="bg-slate-800/30 rounded-xl border border-dashed border-slate-700 p-8 text-center">
+                <i class="fas fa-plus-circle text-4xl text-slate-600 mb-4"></i>
+                <p class="text-slate-500">Próximamente: labs de HackTheBox, TryHackMe, etc.</p>
+            </div>
+        </section>
+
+        <!-- Quick Links -->
+        <section>
+            <div class="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
+                <h3 class="text-lg font-bold text-white mb-4">
+                    <i class="fas fa-link mr-2 text-sky-400"></i>Relación con el Currículum
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <h4 class="text-slate-400 font-semibold mb-2">Este material apoya:</h4>
+                        <ul class="space-y-1 text-slate-500">
+                            <li>• <a href="../cuaderno-1/1-2-protocolos.html" class="text-sky-400 hover:underline">1.2 Protocolos</a> - Criptografía TLS</li>
+                            <li>• <a href="../cuaderno-3/3-7-autenticacion.html" class="text-sky-400 hover:underline">3.7 Autenticación Windows</a> - NTLM/Kerberos</li>
+                            <li>• <a href="../cuaderno-6/6-8-ad-attacks.html" class="text-sky-400 hover:underline">6.8 AD Attacks</a> - Ataques a autenticación</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-slate-400 font-semibold mb-2">Otros recursos:</h4>
+                        <ul class="space-y-1 text-slate-500">
+                            <li>• <a href="../glosario.html" class="text-sky-400 hover:underline"><i class="fas fa-book-open mr-1"></i>Glosario de términos</a></li>
+                            <li>• <a href="../index.html" class="text-sky-400 hover:underline"><i class="fas fa-home mr-1"></i>Volver al currículum</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 mt-16">
+        <div class="max-w-6xl mx-auto px-6 py-6 text-center text-slate-600 text-sm">
+            <p>Material complementario para el roadmap de Ciberseguridad</p>
+        </div>
+    </footer>
+
+</body>
+</html>
