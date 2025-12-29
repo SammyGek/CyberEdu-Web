@@ -1,4 +1,4 @@
-/* CyberEdu Documentation Platform - App Logic (FREEMIUM) */
+/* CyberEdu Documentation Platform - App Logic (FREEMIUM + AUTH UI) */
 /* Requiere: const lessons = [...] definido antes de cargar este script */
 
 (function() {
@@ -20,13 +20,300 @@
     const progressBar = document.getElementById('progress-bar');
     const progressText = document.getElementById('progress-text');
 
-    // --- RENDER NAV ---
+    // ============================================================
+    // AUTH UI - MODALS Y PAYWALL
+    // ============================================================
+
+    // --- CREAR MODALS EN EL DOM ---
+    function createModals() {
+        const modalsHTML = `
+            <!-- Modal de Login/Register -->
+            <div id="auth-modal" class="modal-overlay hidden">
+                <div class="modal-container">
+                    <button onclick="closeAuthModal()" class="modal-close">&times;</button>
+                    
+                    <div id="login-form" class="auth-form">
+                        <h2 class="text-2xl font-bold text-white mb-6 text-center">Iniciar Sesión</h2>
+                        
+                        <div id="login-error" class="error-message hidden"></div>
+                        
+                        <form onsubmit="handleLogin(event)">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="login-email" required class="form-input" placeholder="tu@email.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Contraseña</label>
+                                <input type="password" id="login-password" required class="form-input" placeholder="••••••••">
+                            </div>
+                            
+                            <button type="submit" class="btn-primary w-full">
+                                <i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión
+                            </button>
+                        </form>
+                        
+                        <p class="text-center text-sm text-slate-400 mt-4">
+                            ¿No tienes cuenta? <button onclick="switchToRegister()" class="text-sky-400 hover:underline">Regístrate</button>
+                        </p>
+                    </div>
+                    
+                    <div id="register-form" class="auth-form hidden">
+                        <h2 class="text-2xl font-bold text-white mb-6 text-center">Crear Cuenta</h2>
+                        
+                        <div id="register-error" class="error-message hidden"></div>
+                        <div id="register-success" class="success-message hidden"></div>
+                        
+                        <form onsubmit="handleRegister(event)">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="register-email" required class="form-input" placeholder="tu@email.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Contraseña</label>
+                                <input type="password" id="register-password" required class="form-input" placeholder="Mínimo 6 caracteres" minlength="6">
+                            </div>
+                            
+                            <button type="submit" class="btn-primary w-full">
+                                <i class="fas fa-user-plus mr-2"></i>Crear Cuenta
+                            </button>
+                        </form>
+                        
+                        <p class="text-center text-sm text-slate-400 mt-4">
+                            ¿Ya tienes cuenta? <button onclick="switchToLogin()" class="text-sky-400 hover:underline">Inicia sesión</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Paywall Premium -->
+            <div id="paywall-modal" class="modal-overlay hidden">
+                <div class="modal-container max-w-lg">
+                    <button onclick="closePaywall()" class="modal-close">&times;</button>
+                    
+                    <div class="text-center">
+                        <div class="text-6xl mb-4">👑</div>
+                        <h2 class="text-3xl font-bold text-white mb-2">Contenido Premium</h2>
+                        <p class="text-slate-400 mb-6">Desbloquea acceso completo al curso de ciberseguridad</p>
+                        
+                        <div class="bg-slate-800 rounded-lg p-6 mb-6">
+                            <div class="flex items-baseline justify-center mb-4">
+                                <span class="text-4xl font-bold text-white">€6.99</span>
+                                <span class="text-slate-400 ml-2">/mes</span>
+                            </div>
+                            <p class="text-sm text-slate-400">o €49/año (ahorra 30%)</p>
+                        </div>
+                        
+                        <div class="text-left space-y-3 mb-6">
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-check text-emerald-500 mt-1"></i>
+                                <div>
+                                    <p class="text-white font-semibold">Acceso completo</p>
+                                    <p class="text-sm text-slate-400">8 cuadernos con +100 lecciones</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-check text-emerald-500 mt-1"></i>
+                                <div>
+                                    <p class="text-white font-semibold">Actualizado mensualmente</p>
+                                    <p class="text-sm text-slate-400">Contenido nuevo cada mes</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-check text-emerald-500 mt-1"></i>
+                                <div>
+                                    <p class="text-white font-semibold">Soporte prioritario</p>
+                                    <p class="text-sm text-slate-400">Dudas resueltas en 24h</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button onclick="handleUpgrade()" class="btn-premium w-full mb-3">
+                            <i class="fas fa-crown mr-2"></i>Hazte Premium
+                        </button>
+                        
+                        <button onclick="closePaywall()" class="text-sm text-slate-400 hover:text-white">
+                            Continuar con plan gratuito
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Menú de Usuario -->
+            <div id="user-menu" class="hidden">
+                <button id="user-menu-btn" class="user-menu-btn">
+                    <i class="fas fa-user-circle text-2xl"></i>
+                </button>
+                
+                <div id="user-dropdown" class="user-dropdown hidden">
+                    <div class="px-4 py-3 border-b border-slate-700">
+                        <p id="user-email" class="text-sm text-white font-semibold"></p>
+                        <p id="user-plan" class="text-xs text-slate-400"></p>
+                    </div>
+                    
+                    <button onclick="handleLogout()" class="dropdown-item">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        document.body.insertAdjacentHTML('beforeend', modalsHTML);
+    }
+
+    // --- FUNCIONES DE MODAL ---
+    window.openAuthModal = function() {
+        document.getElementById('auth-modal').classList.remove('hidden');
+        document.getElementById('login-form').classList.remove('hidden');
+        document.getElementById('register-form').classList.add('hidden');
+    };
+
+    window.closeAuthModal = function() {
+        document.getElementById('auth-modal').classList.add('hidden');
+        clearAuthErrors();
+    };
+
+    window.switchToRegister = function() {
+        document.getElementById('login-form').classList.add('hidden');
+        document.getElementById('register-form').classList.remove('hidden');
+        clearAuthErrors();
+    };
+
+    window.switchToLogin = function() {
+        document.getElementById('register-form').classList.add('hidden');
+        document.getElementById('login-form').classList.remove('hidden');
+        clearAuthErrors();
+    };
+
+    function clearAuthErrors() {
+        document.getElementById('login-error').classList.add('hidden');
+        document.getElementById('register-error').classList.add('hidden');
+        document.getElementById('register-success').classList.add('hidden');
+    }
+
+    // --- PAYWALL ---
+    window.openPaywall = function() {
+        document.getElementById('paywall-modal').classList.remove('hidden');
+    };
+
+    window.closePaywall = function() {
+        document.getElementById('paywall-modal').classList.add('hidden');
+    };
+
+    window.handleUpgrade = function() {
+        // TODO: Integrar Stripe
+        alert('🚧 Integración con Stripe próximamente.\n\nPor ahora, contacta a admin@cyberedu.com para upgrade manual.');
+    };
+
+    // --- AUTH HANDLERS ---
+    window.handleLogin = async function(event) {
+        event.preventDefault();
+        
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+        const errorEl = document.getElementById('login-error');
+        
+        errorEl.classList.add('hidden');
+        
+        if (!window.cyberEduAuth) {
+            errorEl.textContent = 'Sistema de autenticación no disponible';
+            errorEl.classList.remove('hidden');
+            return;
+        }
+        
+        const result = await window.cyberEduAuth.signIn(email, password);
+        
+        if (result.success) {
+            closeAuthModal();
+            updateUserMenu();
+            // Recargar lección actual por si ahora tiene acceso
+            loadLesson(lessons[currentLessonIndex].id);
+        } else {
+            errorEl.textContent = result.error || 'Error al iniciar sesión';
+            errorEl.classList.remove('hidden');
+        }
+    };
+
+    window.handleRegister = async function(event) {
+        event.preventDefault();
+        
+        const email = document.getElementById('register-email').value;
+        const password = document.getElementById('register-password').value;
+        const errorEl = document.getElementById('register-error');
+        const successEl = document.getElementById('register-success');
+        
+        errorEl.classList.add('hidden');
+        successEl.classList.add('hidden');
+        
+        if (!window.cyberEduAuth) {
+            errorEl.textContent = 'Sistema de autenticación no disponible';
+            errorEl.classList.remove('hidden');
+            return;
+        }
+        
+        const result = await window.cyberEduAuth.signUp(email, password);
+        
+        if (result.success) {
+            successEl.textContent = '¡Cuenta creada! Verifica tu email para continuar.';
+            successEl.classList.remove('hidden');
+            
+            setTimeout(() => {
+                switchToLogin();
+            }, 2000);
+        } else {
+            errorEl.textContent = result.error || 'Error al crear cuenta';
+            errorEl.classList.remove('hidden');
+        }
+    };
+
+    window.handleLogout = async function() {
+        if (!confirm('¿Cerrar sesión?')) return;
+        
+        await window.cyberEduAuth.signOut();
+        updateUserMenu();
+    };
+
+    // --- USER MENU ---
+    function updateUserMenu() {
+        const userMenuEl = document.getElementById('user-menu');
+        
+        if (!window.cyberEduAuth || !window.cyberEduAuth.user) {
+            userMenuEl.classList.add('hidden');
+            return;
+        }
+        
+        userMenuEl.classList.remove('hidden');
+        
+        document.getElementById('user-email').textContent = window.cyberEduAuth.user.email;
+        
+        const plan = window.cyberEduAuth.subscription?.plan || 'free';
+        const planText = plan === 'premium' ? 'Premium 👑' : 'Gratuito';
+        document.getElementById('user-plan').textContent = planText;
+    }
+
+    // Toggle dropdown
+    document.addEventListener('click', function(e) {
+        const userMenuBtn = document.getElementById('user-menu-btn');
+        const userDropdown = document.getElementById('user-dropdown');
+        
+        if (!userMenuBtn || !userDropdown) return;
+        
+        if (e.target.closest('#user-menu-btn')) {
+            userDropdown.classList.toggle('hidden');
+        } else if (!e.target.closest('#user-dropdown')) {
+            userDropdown.classList.add('hidden');
+        }
+    });
+
+    // ============================================================
+    // RENDER NAV (Con badges premium)
+    // ============================================================
     function renderNav(items) {
         navList.innerHTML = items.map((lesson) => {
             const isVisited = visitedLessons.has(lesson.id);
             const isPremium = lesson.isPremium || false;
             
-            // Badge premium si la lección es premium
             const premiumBadge = isPremium 
                 ? '<span class="premium-badge" title="Contenido Premium">👑</span>' 
                 : '';
@@ -43,8 +330,10 @@
         `}).join('');
     }
 
-    // --- LOAD LESSON ---
-    window.loadLesson = function(id) {
+    // ============================================================
+    // LOAD LESSON (Con lógica premium)
+    // ============================================================
+    window.loadLesson = async function(id) {
         const idx = lessons.findIndex(l => l.id === id);
         if (idx === -1) return;
 
@@ -57,6 +346,112 @@
         localStorage.setItem(`last_${storageKey}`, id);
         updateProgress();
 
+        // ============================================================
+        // LÓGICA PREMIUM
+        // ============================================================
+        
+        // Si la lección es premium y el content está vacío
+        if (lesson.isPremium && (!lesson.content || lesson.content.trim() === '')) {
+            // Verificar si el usuario está autenticado
+            if (!window.cyberEduAuth || !window.cyberEduAuth.user) {
+                // No logueado → Mostrar modal de login
+                contentArea.classList.add('opacity-0');
+                setTimeout(() => {
+                    contentArea.innerHTML = `
+                        <div class="text-center py-20">
+                            <div class="text-6xl mb-4">🔒</div>
+                            <h2 class="text-2xl font-bold text-white mb-2">Contenido Bloqueado</h2>
+                            <p class="text-slate-400 mb-6">Inicia sesión para acceder a este contenido</p>
+                            <button onclick="openAuthModal()" class="btn-primary">
+                                <i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión
+                            </button>
+                        </div>
+                    `;
+                    contentArea.classList.remove('opacity-0');
+                }, 150);
+                
+                updateActiveNav(id);
+                return;
+            }
+            
+            // Logueado pero no premium → Mostrar paywall
+            if (!window.cyberEduAuth.isPremium) {
+                contentArea.classList.add('opacity-0');
+                setTimeout(() => {
+                    contentArea.innerHTML = `
+                        <div class="text-center py-20">
+                            <div class="text-6xl mb-4">👑</div>
+                            <h2 class="text-2xl font-bold text-white mb-2">Contenido Premium</h2>
+                            <p class="text-slate-400 mb-6">Actualiza a Premium para acceder</p>
+                            <button onclick="openPaywall()" class="btn-premium">
+                                <i class="fas fa-crown mr-2"></i>Ver Planes
+                            </button>
+                        </div>
+                    `;
+                    contentArea.classList.remove('opacity-0');
+                }, 150);
+                
+                updateActiveNav(id);
+                return;
+            }
+            
+            // Usuario ES premium → Cargar desde Supabase
+            contentArea.classList.add('opacity-0');
+            contentArea.innerHTML = `
+                <div class="text-center py-20">
+                    <div class="spinner mb-4"></div>
+                    <p class="text-slate-400">Cargando contenido premium...</p>
+                </div>
+            `;
+            
+            try {
+                const premiumLessons = await window.cyberEduAuth.fetchPremiumLessons(storageKey);
+                const premiumLesson = premiumLessons.find(pl => pl.lesson_id === id);
+                
+                if (premiumLesson && premiumLesson.html_content) {
+                    lesson.content = premiumLesson.html_content;
+                    
+                    setTimeout(() => {
+                        contentArea.innerHTML = lesson.content;
+                        contentArea.classList.remove('opacity-0');
+                        mainScroll.scrollTop = 0;
+                        
+                        if (typeof Prism !== 'undefined') {
+                            Prism.highlightAll();
+                        }
+                        
+                        updateNavButtons();
+                    }, 150);
+                } else {
+                    contentArea.innerHTML = `
+                        <div class="text-center py-20">
+                            <div class="text-6xl mb-4">⚠️</div>
+                            <h2 class="text-2xl font-bold text-white mb-2">Contenido no disponible</h2>
+                            <p class="text-slate-400">No se pudo cargar este contenido premium</p>
+                        </div>
+                    `;
+                    contentArea.classList.remove('opacity-0');
+                }
+            } catch (error) {
+                console.error('Error cargando contenido premium:', error);
+                contentArea.innerHTML = `
+                    <div class="text-center py-20">
+                        <div class="text-6xl mb-4">❌</div>
+                        <h2 class="text-2xl font-bold text-white mb-2">Error</h2>
+                        <p class="text-slate-400">No se pudo cargar el contenido. Intenta de nuevo.</p>
+                    </div>
+                `;
+                contentArea.classList.remove('opacity-0');
+            }
+            
+            updateActiveNav(id);
+            return;
+        }
+
+        // ============================================================
+        // LECCIÓN FREE O YA TIENE CONTENIDO
+        // ============================================================
+        
         // Fade animation
         contentArea.classList.add('opacity-0');
         
@@ -73,6 +468,10 @@
             updateNavButtons();
         }, 150);
 
+        updateActiveNav(id);
+    };
+
+    function updateActiveNav(id) {
         // Update active nav
         document.querySelectorAll('.nav-item').forEach(el => {
             el.classList.remove('active-nav', 'bg-slate-800', 'text-white');
@@ -90,7 +489,7 @@
         }
         
         renderNav(lessons);
-    };
+    }
 
     // --- NAVIGATION ---
     window.navigatePrev = function() {
@@ -201,6 +600,9 @@
             navigatePrev();
         } else if (e.key === 'ArrowRight') {
             navigateNext();
+        } else if (e.key === 'Escape') {
+            closeAuthModal();
+            closePaywall();
         }
     });
 
@@ -216,6 +618,15 @@
         if (typeof lessons === 'undefined' || !lessons.length) {
             console.error('CyberEdu: No lessons defined');
             return;
+        }
+        
+        // Crear modals en el DOM
+        createModals();
+        
+        // Actualizar menú de usuario si hay sesión
+        if (window.cyberEduAuth) {
+            window.addEventListener('authStateChanged', updateUserMenu);
+            updateUserMenu();
         }
         
         renderNav(lessons);
