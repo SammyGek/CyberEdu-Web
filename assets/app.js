@@ -277,13 +277,34 @@
     // --- USER MENU ---
     function updateUserMenu() {
         const userMenuEl = document.getElementById('user-menu');
+        const authBtn = document.getElementById('auth-btn');
+        const mobileAuthBtn = document.getElementById('mobile-auth-btn');
         
         if (!window.cyberEduAuth || !window.cyberEduAuth.user) {
-            userMenuEl.classList.add('hidden');
+            // No logueado: Mostrar botón login, ocultar menú usuario
+            if (userMenuEl) userMenuEl.classList.add('hidden');
+            if (authBtn) authBtn.classList.remove('hidden');
+            if (mobileAuthBtn) {
+                mobileAuthBtn.onclick = openAuthModal;
+                mobileAuthBtn.innerHTML = '<i class="fas fa-user-circle text-xl"></i>';
+            }
             return;
         }
         
-        userMenuEl.classList.remove('hidden');
+        // Logueado: Ocultar botón login, mostrar menú usuario
+        if (authBtn) authBtn.classList.add('hidden');
+        if (userMenuEl) userMenuEl.classList.remove('hidden');
+        
+        // Cambiar icono mobile a menú usuario
+        if (mobileAuthBtn) {
+            mobileAuthBtn.onclick = function() {
+                const dropdown = document.getElementById('user-dropdown');
+                if (dropdown) dropdown.classList.toggle('hidden');
+            };
+            const plan = window.cyberEduAuth.subscription?.plan || 'free';
+            const icon = plan === 'premium' ? 'fas fa-crown' : 'fas fa-user-circle';
+            mobileAuthBtn.innerHTML = `<i class="${icon} text-xl text-sky-400"></i>`;
+        }
         
         document.getElementById('user-email').textContent = window.cyberEduAuth.user.email;
         
