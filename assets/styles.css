@@ -1,4 +1,4 @@
-/* CyberEdu Documentation Platform - Styles */
+/* CyberEdu Documentation Platform - Styles (FREEMIUM) */
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap');
 
 /* Base */
@@ -95,6 +95,40 @@ kbd { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
 .category-New { background: #ec4899; color: white; }
 .category-general { background: #64748b; color: white; }
 
+/* ============================================================ */
+/* FREEMIUM - Premium Badge (NUEVO) */
+/* ============================================================ */
+
+.premium-badge {
+    font-size: 0.875rem;
+    opacity: 0.9;
+    transition: opacity 0.2s;
+}
+
+.nav-item:hover .premium-badge {
+    opacity: 1;
+}
+
+/* Premium Link (para enlaces a contenido premium en el contenido) */
+.premium-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.premium-link::after {
+    content: "👑";
+    font-size: 0.75em;
+    opacity: 0.8;
+}
+
+.premium-link:hover::after {
+    opacity: 1;
+}
+
+/* ============================================================ */
+
 /* Print Styles */
 @media print {
     body { background: white; color: black; }
@@ -103,21 +137,5 @@ kbd { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
     .markdown-body p, .markdown-body li { color: #334155; }
     .markdown-body pre { border: 1px solid #e2e8f0; background: #f8fafc; }
     .note-box, .warning-box, .critical-box { border-left-width: 3px; background: #f8fafc; }
-}
-
-/* Glosario References */
-.glosario-ref {
-    color: #38bdf8;
-    text-decoration: none;
-    border-bottom: 1px dotted rgba(56, 189, 248, 0.5);
-    cursor: help;
-}
-.glosario-ref:hover {
-    border-bottom-style: solid;
-    text-decoration: none;
-}
-.glosario-ref sup {
-    color: #38bdf8;
-    font-size: 0.65em;
-    margin-left: 1px;
+    .premium-badge, .premium-link::after { display: none; }
 }

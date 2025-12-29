@@ -1,4 +1,4 @@
-/* CyberEdu Documentation Platform - App Logic */
+/* CyberEdu Documentation Platform - App Logic (FREEMIUM) */
 /* Requiere: const lessons = [...] definido antes de cargar este script */
 
 (function() {
@@ -20,23 +20,24 @@
     const progressBar = document.getElementById('progress-bar');
     const progressText = document.getElementById('progress-text');
 
-    // --- RENDER NAV (Compatible FA + Iconify) ---
+    // --- RENDER NAV ---
     function renderNav(items) {
         navList.innerHTML = items.map((lesson) => {
             const isVisited = visitedLessons.has(lesson.id);
+            const isPremium = lesson.isPremium || false;
             
-            // Detectar si es Font Awesome (tiene espacio) o Iconify (tiene ":")
-            const isFA = lesson.icon.includes(' ');
-            const iconHTML = isFA 
-                ? `<i class="${lesson.icon} w-4 text-center group-hover:text-sky-400 transition-colors ${isVisited ? 'text-emerald-500' : ''}"></i>`
-                : `<i class="iconify w-4 text-center group-hover:text-sky-400 transition-colors ${isVisited ? 'text-emerald-500' : ''}" data-icon="${lesson.icon}"></i>`;
+            // Badge premium si la lección es premium
+            const premiumBadge = isPremium 
+                ? '<span class="premium-badge" title="Contenido Premium">👑</span>' 
+                : '';
             
             return `
             <button onclick="loadLesson('${lesson.id}')" 
                 class="nav-item w-full text-left px-3 py-2 rounded-md text-sm text-slate-400 hover:text-white hover:bg-slate-800 transition-all flex items-center gap-2 group"
                 id="btn-${lesson.id}">
-                ${iconHTML}
+                <i class="${lesson.icon} w-4 text-center group-hover:text-sky-400 transition-colors ${isVisited ? 'text-emerald-500' : ''}"></i>
                 <span class="truncate flex-1">${lesson.title}</span>
+                ${premiumBadge}
                 <span class="category-badge category-${lesson.category}">${lesson.category}</span>
             </button>
         `}).join('');
@@ -171,10 +172,10 @@
     window.copyCode = function(btn) {
         const code = btn.parentElement.querySelector('code').textContent;
         navigator.clipboard.writeText(code).then(() => {
-            btn.innerHTML = '<i class="iconify mr-1" data-icon="mdi:check"></i>Copiado!';
+            btn.innerHTML = '<i class="fas fa-check mr-1"></i>Copiado!';
             btn.classList.add('copied');
             setTimeout(() => {
-                btn.innerHTML = '<i class="iconify mr-1" data-icon="mdi:content-copy"></i>Copiar';
+                btn.innerHTML = '<i class="fas fa-copy mr-1"></i>Copiar';
                 btn.classList.remove('copied');
             }, 2000);
         });
