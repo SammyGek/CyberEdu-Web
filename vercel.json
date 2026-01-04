@@ -1,40 +1,6 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
-    {
-      "source": "/cuaderno-1/:path*",
-      "destination": "/cuaderno-1/:path*.html"
-    },
-    {
-      "source": "/cuaderno-2/:path*",
-      "destination": "/cuaderno-2/:path*.html"
-    },
-    {
-      "source": "/cuaderno-3/:path*",
-      "destination": "/cuaderno-3/:path*.html"
-    },
-    {
-      "source": "/cuaderno-4/:path*",
-      "destination": "/cuaderno-4/:path*.html"
-    },
-    {
-      "source": "/cuaderno-5/:path*",
-      "destination": "/cuaderno-5/:path*.html"
-    },
-    {
-      "source": "/cuaderno-6/:path*",
-      "destination": "/cuaderno-6/:path*.html"
-    },
-    {
-      "source": "/cuaderno-7/:path*",
-      "destination": "/cuaderno-7/:path*.html"
-    },
-    {
-      "source": "/cuaderno-8/:path*",
-      "destination": "/cuaderno-8/:path*.html"
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",
