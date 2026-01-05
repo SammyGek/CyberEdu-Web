@@ -1,0 +1,109 @@
+# robots.txt - Hakiu.es
+# Plataforma de educación en ciberseguridad
+# Generado: 2025-01-04
+
+# ============================================================
+# REGLA GENERAL - Permitir indexación completa
+# ============================================================
+User-agent: *
+Allow: /
+
+# ============================================================
+# BOTS DE IA - Permitidos explícitamente
+# ============================================================
+# Estos bots entrenan modelos de IA y ayudan al posicionamiento
+# en búsquedas conversacionales y recomendaciones
+
+# OpenAI (ChatGPT)
+User-agent: GPTBot
+Allow: /
+
+# Anthropic (Claude)
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Google (Gemini/Bard)
+User-agent: Google-Extended
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Apple Intelligence
+User-agent: Applebot-Extended
+Allow: /
+
+# Common Crawl (usado por múltiples modelos)
+User-agent: CCBot
+Allow: /
+
+# Cohere
+User-agent: cohere-ai
+Allow: /
+
+# Meta AI (Facebook/Instagram)
+User-agent: FacebookBot
+Allow: /
+
+# Diffbot
+User-agent: Diffbot
+Allow: /
+
+# You.com
+User-agent: YouBot
+Allow: /
+
+# Omgili
+User-agent: Omgilibot
+Allow: /
+
+# ============================================================
+# BOTS PERMITIDOS - Buscadores principales
+# ============================================================
+
+# Google
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-Mobile
+Allow: /
+
+# Bing
+User-agent: Bingbot
+Allow: /
+
+# Yahoo
+User-agent: Slurp
+Allow: /
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
+
+# Yandex
+User-agent: Yandex
+Allow: /
+
+# Baidu
+User-agent: Baiduspider
+Allow: /
+
+# ============================================================
+# SITEMAP
+# ============================================================
+Sitemap: https://hakiu.es/sitemap.xml
+
+# ============================================================
+# NOTAS
+# ============================================================
+# - Contenido premium protegido por Supabase RLS (no en HTML)
+# - Indexación completa permitida (free + premium pages)
+# - Bots de IA permitidos para posicionamiento en búsquedas conversacionales
+# - Sin rutas bloqueadas (sin panel admin público)

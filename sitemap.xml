@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- ============================================================ -->
+  <!-- LANDING PRINCIPAL -->
+  <!-- ============================================================ -->
+  <url>
+    <loc>https://hakiu.es/</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- ============================================================ -->
+  <!-- GLOSARIO -->
+  <!-- ============================================================ -->
+  <url>
+    <loc>https://hakiu.es/glosario</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- ============================================================ -->
+  <!-- CUADERNO 1: Fundamentos de Redes -->
+  <!-- ============================================================ -->
+  <url>
+    <loc>https://hakiu.es/cuaderno-1/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-1/1-0-hardware</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-1/1-1-modelo-osi</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-1/1-2-protocolos</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-1/1-3-subnetting</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-1/1-4-routing-switching</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-1/1-5-servicios-red</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-1/1-6-virtualizacion</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-1/1-7-wireshark</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-1/1-8-seguridad-redes</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-1/1-9-wireless</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ============================================================ -->
+  <!-- CUADERNO 2: Linux y Sistemas Operativos -->
+  <!-- ============================================================ -->
+  <url>
+    <loc>https://hakiu.es/cuaderno-2/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-2/2-0-teoria-so</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-2/2-1-linux-intro</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-2/2-2-filesystem-permisos</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-2/2-3-boot</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-2/2-4-procesos-servicios</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-2/2-5-usuarios-grupos</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-2/2-6-bash-basico</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-2/2-7-bash-avanzado</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-2/2-8-administracion</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-2/2-9-redes-linux</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-2/2-10-hardening-linux</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-2/2-11-contenedores</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-2/2-12-troubleshooting</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ============================================================ -->
+  <!-- CUADERNO 3: Windows y Active Directory -->
+  <!-- ============================================================ -->
+  <url>
+    <loc>https://hakiu.es/cuaderno-3/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-3/3-0-arquitectura-windows</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-3/3-1-cmd-powershell</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-3/3-2-powershell-avanzado</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-3/3-3-ntfs</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-3/3-4-usuarios-acceso</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-3/3-5-servicios-procesos</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-3/3-6-ad-fundamentos</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-3/3-7-autenticacion</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-3/3-8-gpo</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-3/3-9-logs-auditoria</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-3/3-10-seguridad-windows</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-3/3-11-powershell-seguridad</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-3/3-12-troubleshooting-win</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ============================================================ -->
+  <!-- CUADERNO 4: Programación para Seguridad -->
+  <!-- ============================================================ -->
+  <url>
+    <loc>https://hakiu.es/cuaderno-4/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-4/4-0-fundamentos-prog</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-4/4-1-python-basico</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-4/4-2-python-redes</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-4/4-3-scraping</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-4/4-4-bases-datos</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-4/4-5-python-pentesting</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-4/4-6-powershell-pentesting</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-4/4-7-bash-avanzado</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-4/4-8-javascript-seguridad</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-4/4-9-assembly</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-4/4-10-devops</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-4/4-11-cloud</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-4/4-12-desarrollo-tools</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ============================================================ -->
+  <!-- CUADERNO 5: Reconocimiento y Enumeración -->
+  <!-- ============================================================ -->
+  <url>
+    <loc>https://hakiu.es/cuaderno-5/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-5/5-0-metodologias</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-5/5-1-osint</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-5/5-2-footprinting</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-5/5-3-escaneo</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-5/5-4-enumeracion</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-5/5-5-analisis-vulns</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-5/5-6-recon-web</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-5/5-7-enum-ad</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-5/5-8-wireless-recon</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-5/5-9-evasion</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-5/5-10-reporting</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ============================================================ -->
+  <!-- CUADERNO 6: Explotación y Post-Explotación -->
+  <!-- ============================================================ -->
+  <url>
+    <loc>https://hakiu.es/cuaderno-6/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-6/6-1-fundamentos-exploit</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-6/6-2-owasp</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-6/6-3-sqli</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-6/6-4-xss-csrf</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-6/6-5-bof</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-6/6-6-privesc-linux</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-6/6-7-privesc-windows</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-6/6-8-ad-attacks</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-6/6-9-pivoting</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-6/6-10-persistencia</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-6/6-11-av-evasion</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-6/6-12-exfiltration</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ============================================================ -->
+  <!-- CUADERNO 7: Herramientas Profesionales -->
+  <!-- ============================================================ -->
+  <url>
+    <loc>https://hakiu.es/cuaderno-7/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-7/7-1-metasploit</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-7/7-2-burp</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-7/7-3-cobalt-c2</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-7/7-4-bloodhound-empire</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-7/7-5-wireshark-avanzado</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-7/7-6-nessus-openvas</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-7/7-7-cracking</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-7/7-8-mobile-tools</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-7/7-9-cloud-tools</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-7/7-10-forensics</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ============================================================ -->
+  <!-- CUADERNO 8: Especialización y Carrera -->
+  <!-- ============================================================ -->
+  <url>
+    <loc>https://hakiu.es/cuaderno-8/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-8/8-1-redteam-blueteam</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-8/8-2-cloud-security</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-8/8-3-mobile-security</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-8/8-4-iot-security</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-8/8-5-incident-response</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-8/8-6-threat-hunting</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-8/8-7-malware-analysis</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-8/8-8-prep-oscp</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-8/8-9-prep-ejpt</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-8/8-10-prep-pnpt</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-8/8-11-homelab</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/cuaderno-8/8-12-carrera</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ============================================================ -->
+  <!-- MATERIAL COMPLEMENTARIO -->
+  <!-- ============================================================ -->
+  <url>
+    <loc>https://hakiu.es/complementario/</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/complementario/auth-windows-ntlm-kerberos</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://hakiu.es/complementario/fundamentos-criptografia-tls</loc>
+    <priority>0.6</priority>
+  </url>
+
+</urlset>
