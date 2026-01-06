@@ -289,6 +289,16 @@ kbd { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
     transform: translateY(0);
 }
 
+/* Animación del menú móvil */
+#mobile-menu.open {
+    max-height: 400px;
+    opacity: 1;
+}
+
+body.menu-open {
+    overflow: hidden; /* Previene scroll cuando menú abierto */
+}
+
 /* ============================================================ */
 /* MESSAGES
 /* ============================================================ */
