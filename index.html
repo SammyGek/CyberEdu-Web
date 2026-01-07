@@ -6,16 +6,13 @@
     <title>Hakiu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="assets/styles.css" rel="stylesheet">
-
-    <!-- Google Tag Manager -->
-     <script src="assets/analytics.js"></script>
+    <link href="/assets/styles.css" rel="stylesheet">
 
     <!-- Supabase Config -->
-    <script src="assets/supabase-config.js"></script>
+    <script src="/assets/supabase-config.js"></script>
     
     <!-- Auth System (LÓGICA) -->
-    <script type="module" src="assets/auth.js"></script>
+    <script type="module" src="/assets/auth.js"></script>
 
     <style>
         /* Animación de subsecciones */
@@ -861,11 +858,16 @@
     <!-- SCRIPTS EN ORDEN CORRECTO -->
     
     <!-- 1. Interfaz de Usuario Visual (Crea modales y controla botones) -->
-    <script src="assets/auth-ui.js" defer></script>
+    <script src="/assets/auth-ui.js" defer></script>
     
     <!-- 2. Animaciones y Menú -->
-    <script src="assets/logo.js"></script>
-    <script src="assets/mobile-menu.js"></script>
+    <script src="/assets/logo.js"></script>
+    <script src="/assets/mobile-menu.js"></script>
+
+    <!-- Hakiu Cookie System -->
+    <!-- La barra '/' al inicio es IMPORTANTE: asegura que funcione en subcarpetas -->
+    <script src="/assets/cookie-handler.js" defer></script>
+    <script src="/assets/cookie-banner.js" defer></script>
 
 </body>
 </html>
