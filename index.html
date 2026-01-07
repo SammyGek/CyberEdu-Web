@@ -3,9 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hakiu</title>
+    
+    <!-- ========================================
+         FAVICON - TODAS LAS VARIANTES
+    ======================================== -->
+    <link rel="icon" type="image/x-icon" href="/my-favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/my-favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/my-favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/my-favicon/favicon-96x96.png">
+    <link rel="apple-touch-icon" href="/my-favicon/apple-touch-icon.png">
+    <link rel="manifest" href="/my-favicon/site.webmanifest">
+    <meta name="theme-color" content="#0f172a">
+    
+    <!-- ========================================
+         SEO META TAGS
+    ======================================== -->
+    <!-- TITLE: 58 caracteres -->
+    <title>Hakiu - Formación Completa en Ciberseguridad | ~1000h</title>
+    
+    <!-- DESCRIPTION: 158 caracteres -->
+    <meta name="description" content="Aprende ciberseguridad desde cero hasta nivel profesional. 8 cuadernos, ~1000 horas de contenido. Redes, Linux, Windows, Python, Pentesting en español.">
+    
+    <!-- KEYWORDS: 8 keywords -->
+    <meta name="keywords" content="ciberseguridad, pentesting, hacking ético, redes informáticas, linux, windows, python, curso ciberseguridad">
+    
+    <!-- CANONICAL URL -->
+    <link rel="canonical" href="https://hakiu.es/">
+    
+    <!-- OPEN GRAPH -->
+    <meta property="og:title" content="Hakiu - Formación Completa en Ciberseguridad">
+    <meta property="og:description" content="Aprende ciberseguridad desde cero hasta nivel profesional. 8 cuadernos, ~1000 horas de contenido en español.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hakiu.es/">
+    <meta property="og:site_name" content="Hakiu">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:image" content="https://hakiu.es/my-favicon/SocialShares-1200x630.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Hakiu - Formación Completa en Ciberseguridad">
+    <meta name="twitter:description" content="Aprende ciberseguridad desde cero hasta nivel profesional. 8 cuadernos, ~1000 horas de contenido en español.">
+    <meta name="twitter:image" content="https://hakiu.es/my-favicon/SocialShares-1200x630.png">
+    
+    <!-- ========================================
+         EXTERNAL DEPENDENCIES
+    ======================================== -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Iconify (Icons) -->
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    
+    <!-- Shared Styles -->
     <link href="/assets/styles.css" rel="stylesheet">
 
     <!-- Supabase Config -->
@@ -19,12 +67,14 @@
         .cuaderno-card {
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative; /* Aislamiento para fix del bug hover */
         }
         .cuaderno-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 20px 40px -15px rgba(56, 189, 248, 0.2);
         }
-        .cuaderno-card:hover .subsections-container {
+        /* FIX: Usar selector hijo directo > para aislar hover */
+        .cuaderno-card:hover > div > .subsections-container {
             max-height: 500px;
             opacity: 1;
         }
@@ -112,170 +162,130 @@
         <div class="max-w-7xl mx-auto px-4 py-4">
             <div class="flex items-center justify-between">
                 
-                <!-- LOGO + TÍTULO -->
+                <!-- LOGO + ESLOGAN (sin título duplicado) -->
                 <div class="flex items-center gap-3">
                     
                     <!-- SVG LOGO INYECTADO POR JS -->
                     <div id="hakiu-logo-container"></div>
                     
+                    <!-- ESLOGAN (alineado verticalmente al centro) -->
                     <div class="hidden sm:block">
-                        <h1 class="font-bold text-lg text-white">Hakiu</h1>
-                        <p class="text-xs text-slate-400">De 0 a Profesional en Ciberseguridad</p>
+                        <p class="text-sm text-slate-300">De 0 a Profesional en Ciberseguridad</p>
                     </div>
                 </div>
                 
                  <!-- NAVEGACIÓN DESKTOP CON LOGIN -->
                 <nav class="hidden md:flex items-center gap-6" aria-label="Navegación principal">
                     <a href="/glosario" class="text-slate-400 hover:text-sky-400 transition-colors text-sm flex items-center gap-2">
-                        <i class="fas fa-book-open" aria-hidden="true"></i>
+                        <iconify-icon icon="mdi:book-open-page-variant" aria-hidden="true"></iconify-icon>
                         <span>Glosario</span>
                     </a>
                     <a href="/complementario/index" class="text-slate-400 hover:text-amber-400 transition-colors text-sm flex items-center gap-2">
-                        <i class="fas fa-folder-open" aria-hidden="true"></i>
+                        <iconify-icon icon="mdi:folder-open" aria-hidden="true"></iconify-icon>
                         <span>Recursos</span>
                     </a>
                     
                     <span class="text-slate-600" aria-hidden="true">|</span>
                     
                     <span class="text-slate-500 text-sm">
-                        <i class="fas fa-clock mr-1" aria-hidden="true"></i>
+                        <iconify-icon icon="mdi:clock-outline" class="mr-1" aria-hidden="true"></iconify-icon>
                         ~1000h
                     </span>
                     <span class="text-slate-500 text-sm">
-                        <i class="fas fa-book mr-1" aria-hidden="true"></i>
+                        <iconify-icon icon="mdi:book-multiple" class="mr-1" aria-hidden="true"></iconify-icon>
                         8 Cuadernos
                     </span>
                     
                     <!-- BOTÓN LOGIN (Dynamic) -->
                     <button onclick="openAuthModal()" class="auth-btn-dynamic bg-sky-600 hover:bg-sky-500 text-white px-4 py-2 rounded-lg transition-all shadow-lg text-sm font-medium ml-2 flex items-center">
-                        <i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión
+                        <iconify-icon icon="mdi:login" class="mr-2"></iconify-icon>Iniciar Sesión
                     </button>
                 </nav>
             
             <!-- BOTÓN HAMBURGUESA (solo móvil) -->
-            <button 
-                id="mobile-menu-btn"
-                class="md:hidden text-slate-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-sky-500 rounded p-2"
-                aria-label="Menú de navegación"
-                aria-expanded="false"
-            >
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path id="hamburger-icon" class="transition-all duration-300" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    <path id="close-icon" class="hidden transition-all duration-300" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
+            <button id="mobile-menu-btn" class="md:hidden text-slate-200 hover:text-white" aria-label="Menú" aria-expanded="false">
+                <iconify-icon id="hamburger-icon" icon="mdi:menu" class="text-2xl"></iconify-icon>
+                <iconify-icon id="close-icon" icon="mdi:close" class="text-2xl hidden"></iconify-icon>
             </button>
-            
         </div>
         
-        <!-- MENÚ MÓVIL DESPLEGABLE CON LOGIN -->
-        <nav 
-            id="mobile-menu" 
-            class="md:hidden overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0"
-            aria-label="Navegación móvil"
-        >
-            <div class="pt-4 pb-3 space-y-1 border-t border-slate-800 mt-4">
-                
-                <!-- Enlaces principales -->
-                <a href="/glosario" class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-400 hover:text-sky-400 hover:bg-slate-800 transition-all">
-                    <i class="fas fa-book-open w-5 text-center" aria-hidden="true"></i>
-                    <span class="font-medium">Glosario</span>
+        <!-- MENÚ MÓVIL -->
+        <nav id="mobile-menu" class="md:hidden bg-slate-800 border-t border-slate-700 overflow-hidden" aria-label="Navegación móvil">
+            <div class="px-4 py-4 space-y-3">
+                <a href="/glosario" class="block text-slate-300 hover:text-sky-400 transition-colors py-2 flex items-center gap-2">
+                    <iconify-icon icon="mdi:book-open-page-variant"></iconify-icon>
+                    <span>Glosario</span>
                 </a>
-                
-                <a href="/complementario/index" class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-400 hover:text-amber-400 hover:bg-slate-800 transition-all">
-                    <i class="fas fa-folder-open w-5 text-center" aria-hidden="true"></i>
-                    <span class="font-medium">Recursos</span>
+                <a href="/complementario/index" class="block text-slate-300 hover:text-amber-400 transition-colors py-2 flex items-center gap-2">
+                    <iconify-icon icon="mdi:folder-open"></iconify-icon>
+                    <span>Recursos</span>
                 </a>
-                
-                <!-- Separador -->
-                <div class="border-t border-slate-700 my-2"></div>
-                
-                <!-- Info adicional -->
-                <div class="px-3 py-2 space-y-2 text-sm">
-                    <div class="flex items-center gap-3 text-slate-500">
-                        <i class="fas fa-clock w-5 text-center" aria-hidden="true"></i>
-                        <span>~1000 horas de contenido</span>
-                    </div>
-                    <div class="flex items-center gap-3 text-slate-500">
-                        <i class="fas fa-book w-5 text-center" aria-hidden="true"></i>
-                        <span>8 Cuadernos progresivos</span>
-                    </div>
-                </div>
-
-                <!-- BOTÓN LOGIN MÓVIL (Dynamic) -->
-                <div class="px-3 pt-2 pb-2">
-                    <button onclick="openAuthModal()" class="auth-btn-dynamic w-full bg-sky-600 hover:bg-sky-500 text-white px-4 py-3 rounded-lg transition-all shadow-lg text-sm font-medium flex items-center justify-center">
-                        <i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión
+                <div class="border-t border-slate-700 pt-3 mt-3">
+                    <button onclick="openAuthModal()" class="auth-btn-dynamic w-full bg-sky-600 hover:bg-sky-500 text-white px-4 py-2 rounded-lg transition-all text-sm font-medium flex items-center justify-center">
+                        <iconify-icon icon="mdi:login" class="mr-2"></iconify-icon>Iniciar Sesión
                     </button>
                 </div>
-                
             </div>
         </nav>
-        
     </div>
 </header>
 
-    <!-- Hero -->
-    <section class="bg-gradient-to-b from-slate-950 to-slate-900 py-16 border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Roadmap de Ciberseguridad</h2>
-            <p class="text-xl text-slate-400 max-w-3xl mx-auto mb-8">
-                Documentación estructurada desde fundamentos de redes hasta pentesting profesional. 
-                Cada concepto construye sobre el anterior.
+    <!-- Hero Section -->
+    <main class="max-w-7xl mx-auto px-6 py-12 md:py-20">
+        <div class="text-center mb-16">
+            <!-- H1 PRINCIPAL (para SEO) -->
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+                Aprende Ciberseguridad desde Cero
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-400 mb-8 max-w-3xl mx-auto">
+                Más de <span class="text-sky-400 font-semibold">1000 horas</span> de contenido estructurado 
+                para convertirte en un profesional de la ciberseguridad
             </p>
-            
-            <!-- Level Legend -->
-            <div class="flex flex-wrap justify-center gap-4 text-sm">
-                <div class="flex items-center gap-2 bg-slate-800/50 px-4 py-2 rounded-full">
-                    <span class="w-3 h-3 rounded-full bg-green-500"></span>
-                    <span class="text-slate-300">Principiante</span>
-                </div>
-                <div class="flex items-center gap-2 bg-slate-800/50 px-4 py-2 rounded-full">
-                    <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                    <span class="text-slate-300">Intermedio</span>
-                </div>
-                <div class="flex items-center gap-2 bg-slate-800/50 px-4 py-2 rounded-full">
-                    <span class="w-3 h-3 rounded-full bg-red-500"></span>
-                    <span class="text-slate-300">Avanzado</span>
-                </div>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#cuadernos" class="bg-sky-600 hover:bg-sky-500 text-white px-8 py-3 rounded-lg font-semibold transition-all shadow-lg inline-flex items-center justify-center">
+                    <iconify-icon icon="mdi:rocket-launch" class="mr-2"></iconify-icon>
+                    Explorar Cuadernos
+                </a>
+                <a href="/glosario" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-8 py-3 rounded-lg font-semibold transition-all border border-slate-700 inline-flex items-center justify-center">
+                    <iconify-icon icon="mdi:book-open-page-variant" class="mr-2"></iconify-icon>
+                    Ver Glosario
+                </a>
             </div>
         </div>
-    </section>
 
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-6 py-12">
-
-        <!-- FASE 1 -->
-        <div class="mb-16">
-            <div class="phase-header phase-1 mb-6">
-                <span class="text-xs text-sky-400 font-semibold uppercase tracking-wider">Fase 1</span>
-                <h3 class="text-2xl font-bold text-white">Fundamentos de Infraestructura</h3>
-                <p class="text-slate-500 text-sm">La base de todo: cómo funcionan las redes y computadoras</p>
-            </div>
+        <!-- Cuadernos Section -->
+        <div id="cuadernos" class="space-y-16">
             
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- FASE 1: Fundamentos de Infraestructura -->
+            <div>
+                <h2 class="phase-header phase-1 text-2xl font-bold mb-6">
+                    <span class="text-sky-400 text-sm font-semibold uppercase tracking-wider">FASE 1</span>
+                    <div class="text-white text-3xl mt-1">Fundamentos de Infraestructura</div>
+                    <p class="text-slate-400 text-base font-normal mt-2">La base técnica sólida: Redes y Arquitectura IT</p>
+                </h2>
+                
                 <!-- Cuaderno 1 -->
-                <a href="cuaderno-1/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-sky-500/50 relative overflow-hidden">
+                <a href="/cuaderno-1/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-sky-500/50 relative overflow-hidden">
                     <div class="p-6">
                         <div class="flex items-start justify-between mb-4">
                             <div class="flex items-center gap-3">
                                 <div class="w-12 h-12 rounded-lg bg-sky-500/20 flex items-center justify-center text-sky-400">
-                                    <i class="fas fa-network-wired text-xl"></i>
+                                    <iconify-icon icon="mdi:network" class="text-xl"></iconify-icon>
                                 </div>
                                 <div>
                                     <span class="text-xs text-sky-400 font-semibold">Cuaderno 1</span>
-                                    <h4 class="text-lg font-bold text-white">Fundamentos de Redes</h4>
+                                    <h3 class="text-lg font-bold text-white">Fundamentos de Redes y Arquitectura</h3>
                                 </div>
                             </div>
                             <span class="text-xs text-slate-500">10-12 sem</span>
                         </div>
-                        <p class="text-slate-400 text-sm mb-4">Arquitectura de redes, protocolos y comunicaciones desde la perspectiva de seguridad.</p>
+                        <p class="text-slate-400 text-sm mb-4">OSI, TCP/IP, protocolos, subnetting, routing, Wireshark, seguridad básica y wireless.</p>
                         
-                        <!-- Subsections -->
                         <div class="subsections-container">
                             <div class="border-t border-slate-700 pt-4 mt-2 space-y-2">
                                 <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
                                     <span class="level-badge level-green text-white">P</span>
-                                    <span>1.0 Hardware Esencial y Arquitectura IT</span>
+                                    <span>1.0 Hardware y Arquitectura IT</span>
                                 </div>
                                 <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
                                     <span class="level-badge level-green text-white">P</span>
@@ -291,19 +301,15 @@
                                 </div>
                                 <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
                                     <span class="level-badge level-yellow text-white">I</span>
-                                    <span>1.4 Enrutamiento, Switching y Topologías</span>
+                                    <span>1.4 Enrutamiento y Switching</span>
                                 </div>
                                 <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
                                     <span class="level-badge level-yellow text-white">I</span>
-                                    <span>1.5 Servicios de Red</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-yellow text-white">I</span>
-                                    <span>1.6 Virtualización y Redes Virtuales</span>
+                                    <span>1.5-1.6 Servicios y Virtualización</span>
                                 </div>
                                 <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
                                     <span class="level-badge level-red text-white">A</span>
-                                    <span>1.7 Análisis de Tráfico con Wireshark</span>
+                                    <span>1.7 Análisis con Wireshark</span>
                                 </div>
                                 <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
                                     <span class="level-badge level-yellow text-white">I</span>
@@ -317,188 +323,170 @@
                         </div>
                     </div>
                     <div class="scroll-indicator text-sky-400 text-xs">
-                        <i class="fas fa-chevron-down"></i>
+                        <iconify-icon icon="mdi:chevron-down"></iconify-icon>
                     </div>
                     <div class="bg-slate-800/80 px-6 py-3 border-t border-slate-700">
                         <div class="flex justify-between items-center text-xs">
-                            <span class="text-slate-500"><i class="fas fa-list mr-1"></i> 10 secciones</span>
-                            <span class="text-sky-400 font-medium">Entrar <i class="fas fa-arrow-right ml-1"></i></span>
+                            <span class="text-slate-500"><iconify-icon icon="mdi:format-list-bulleted" class="mr-1"></iconify-icon> 10 secciones</span>
+                            <span class="text-sky-400 font-medium">Entrar <iconify-icon icon="mdi:arrow-right" class="ml-1"></iconify-icon></span>
                         </div>
                     </div>
                 </a>
             </div>
-        </div>
 
-        <!-- FASE 2 -->
-        <div class="mb-16">
-            <div class="phase-header phase-2 mb-6">
-                <span class="text-xs text-emerald-400 font-semibold uppercase tracking-wider">Fase 2</span>
-                <h3 class="text-2xl font-bold text-white">Ingeniería de Sistemas Operativos</h3>
-                <p class="text-slate-500 text-sm">El "cerebro" de la máquina: Kernel, Boot, Memoria</p>
-            </div>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Cuaderno 2 -->
-                <a href="cuaderno-2/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-emerald-500/50 relative overflow-hidden">
-                    <div class="p-6">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400">
-                                    <i class="fab fa-linux text-xl"></i>
+            <!-- FASE 2: Ingeniería de Sistemas Operativos -->
+            <div>
+                <h2 class="phase-header phase-2 text-2xl font-bold mb-6">
+                    <span class="text-emerald-400 text-sm font-semibold uppercase tracking-wider">FASE 2</span>
+                    <div class="text-white text-3xl mt-1">Ingeniería de Sistemas Operativos</div>
+                    <p class="text-slate-400 text-base font-normal mt-2">El "cerebro" de la máquina: Kernel, Boot, Memoria</p>
+                </h2>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Cuaderno 2 -->
+                    <a href="/cuaderno-2/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-emerald-500/50 relative overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                                        <iconify-icon icon="mdi:penguin" class="text-xl"></iconify-icon>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs text-emerald-400 font-semibold">Cuaderno 2</span>
+                                        <h3 class="text-lg font-bold text-white">Arquitectura SO & Linux</h3>
+                                    </div>
                                 </div>
-                                <div>
-                                    <span class="text-xs text-emerald-400 font-semibold">Cuaderno 2</span>
-                                    <h4 class="text-lg font-bold text-white">Arquitectura SO & Linux</h4>
-                                </div>
+                                <span class="text-xs text-slate-500">12-14 sem</span>
                             </div>
-                            <span class="text-xs text-slate-500">12-14 sem</span>
-                        </div>
-                        <p class="text-slate-400 text-sm mb-4">Teoría de SO y dominio de Linux. Desde el botón de encendido hasta administración avanzada.</p>
-                        
-                        <div class="subsections-container">
-                            <div class="border-t border-slate-700 pt-4 mt-2 space-y-2">
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-green text-white">P</span>
-                                    <span>2.0 Teoría de Sistemas Operativos</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-green text-white">P</span>
-                                    <span>2.1 Introducción a Linux y Terminal</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-green text-white">P</span>
-                                    <span>2.2 Sistema de Archivos y Permisos</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-yellow text-white">I</span>
-                                    <span>2.3 El Proceso de Boot</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-yellow text-white">I</span>
-                                    <span>2.4 Gestión de Procesos y Servicios</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-yellow text-white">I</span>
-                                    <span>2.5 Usuarios, Grupos y sudo</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-yellow text-white">I</span>
-                                    <span>2.6-2.7 Bash Scripting</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-red text-white">A</span>
-                                    <span>2.8-2.9 Administración y Redes</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-red text-white">A</span>
-                                    <span>2.10-2.12 Hardening y Contenedores</span>
+                            <p class="text-slate-400 text-sm mb-4">Teoría de SO y dominio de Linux. Desde el botón de encendido hasta administración avanzada.</p>
+                            
+                            <div class="subsections-container">
+                                <div class="border-t border-slate-700 pt-4 mt-2 space-y-2">
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-green text-white">P</span>
+                                        <span>2.0 Teoría de Sistemas Operativos</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-green text-white">P</span>
+                                        <span>2.1 Introducción a Linux</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-green text-white">P</span>
+                                        <span>2.2 Sistema de Archivos</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-yellow text-white">I</span>
+                                        <span>2.3-2.5 Boot, Procesos, Usuarios</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-yellow text-white">I</span>
+                                        <span>2.6-2.7 Bash Scripting</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-red text-white">A</span>
+                                        <span>2.8-2.12 Admin, Redes, Hardening</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="scroll-indicator text-emerald-400 text-xs">
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="bg-slate-800/80 px-6 py-3 border-t border-slate-700">
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="text-slate-500"><i class="fas fa-list mr-1"></i> 13 secciones</span>
-                            <span class="text-emerald-400 font-medium">Entrar <i class="fas fa-arrow-right ml-1"></i></span>
+                        <div class="scroll-indicator text-emerald-400 text-xs">
+                            <iconify-icon icon="mdi:chevron-down"></iconify-icon>
                         </div>
-                    </div>
-                </a>
+                        <div class="bg-slate-800/80 px-6 py-3 border-t border-slate-700">
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-slate-500"><iconify-icon icon="mdi:format-list-bulleted" class="mr-1"></iconify-icon> 13 secciones</span>
+                                <span class="text-emerald-400 font-medium">Entrar <iconify-icon icon="mdi:arrow-right" class="ml-1"></iconify-icon></span>
+                            </div>
+                        </div>
+                    </a>
 
-                <!-- Cuaderno 3 -->
-                <a href="cuaderno-3/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-blue-500/50 relative overflow-hidden">
-                    <div class="p-6">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400">
-                                    <i class="fab fa-windows text-xl"></i>
+                    <!-- Cuaderno 3 -->
+                    <a href="/cuaderno-3/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-emerald-500/50 relative overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400">
+                                        <iconify-icon icon="mdi:microsoft-windows" class="text-xl"></iconify-icon>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs text-blue-400 font-semibold">Cuaderno 3</span>
+                                        <h3 class="text-lg font-bold text-white">Windows & Active Directory</h3>
+                                    </div>
                                 </div>
-                                <div>
-                                    <span class="text-xs text-blue-400 font-semibold">Cuaderno 3</span>
-                                    <h4 class="text-lg font-bold text-white">Windows & Active Directory</h4>
-                                </div>
+                                <span class="text-xs text-slate-500">12-14 sem</span>
                             </div>
-                            <span class="text-xs text-slate-500">12-14 sem</span>
-                        </div>
-                        <p class="text-slate-400 text-sm mb-4">Arquitectura Windows y administración empresarial. NT Kernel, PowerShell y AD.</p>
-                        
-                        <div class="subsections-container">
-                            <div class="border-t border-slate-700 pt-4 mt-2 space-y-2">
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-green text-white">P</span>
-                                    <span>3.0 Arquitectura Windows</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-green text-white">P</span>
-                                    <span>3.1 CMD y PowerShell Fundamentos</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-red text-white">A</span>
-                                    <span>3.2 PowerShell Avanzado</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-green text-white">P</span>
-                                    <span>3.3 Sistema de Archivos NTFS</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-yellow text-white">I</span>
-                                    <span>3.4-3.5 Usuarios y Servicios</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-yellow text-white">I</span>
-                                    <span>3.6 Active Directory Fundamentos</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-red text-white">A</span>
-                                    <span>3.7-3.8 Autenticación y GPO</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-red text-white">A</span>
-                                    <span>3.9-3.12 Seguridad y Ofensiva</span>
+                            <p class="text-slate-400 text-sm mb-4">Arquitectura Windows y administración empresarial. NT Kernel, PowerShell y AD.</p>
+                            
+                            <div class="subsections-container">
+                                <div class="border-t border-slate-700 pt-4 mt-2 space-y-2">
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-green text-white">P</span>
+                                        <span>3.0 Arquitectura Windows</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-green text-white">P</span>
+                                        <span>3.1 CMD y PowerShell</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-red text-white">A</span>
+                                        <span>3.2 PowerShell Avanzado</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-green text-white">P</span>
+                                        <span>3.3 NTFS</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-yellow text-white">I</span>
+                                        <span>3.4-3.5 Usuarios y Servicios</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-yellow text-white">I</span>
+                                        <span>3.6 Active Directory</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-red text-white">A</span>
+                                        <span>3.7-3.12 Auth, GPO, Logs, Seguridad</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="scroll-indicator text-blue-400 text-xs">
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="bg-slate-800/80 px-6 py-3 border-t border-slate-700">
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="text-slate-500"><i class="fas fa-list mr-1"></i> 13 secciones</span>
-                            <span class="text-blue-400 font-medium">Entrar <i class="fas fa-arrow-right ml-1"></i></span>
+                        <div class="scroll-indicator text-blue-400 text-xs">
+                            <iconify-icon icon="mdi:chevron-down"></iconify-icon>
                         </div>
-                    </div>
-                </a>
+                        <div class="bg-slate-800/80 px-6 py-3 border-t border-slate-700">
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-slate-500"><iconify-icon icon="mdi:format-list-bulleted" class="mr-1"></iconify-icon> 13 secciones</span>
+                                <span class="text-blue-400 font-medium">Entrar <iconify-icon icon="mdi:arrow-right" class="ml-1"></iconify-icon></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
-        </div>
 
-        <!-- FASE 3 -->
-        <div class="mb-16">
-            <div class="phase-header phase-3 mb-6">
-                <span class="text-xs text-amber-400 font-semibold uppercase tracking-wider">Fase 3</span>
-                <h3 class="text-2xl font-bold text-white">Desarrollo y Automatización</h3>
-                <p class="text-slate-500 text-sm">Creación de herramientas y entendimiento de entornos modernos</p>
-            </div>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- FASE 3: Desarrollo y Automatización -->
+            <div>
+                <h2 class="phase-header phase-3 text-2xl font-bold mb-6">
+                    <span class="text-amber-400 text-sm font-semibold uppercase tracking-wider">FASE 3</span>
+                    <div class="text-white text-3xl mt-1">Desarrollo y Automatización</div>
+                    <p class="text-slate-400 text-base font-normal mt-2">El poder del código: Python, PowerShell, Bash</p>
+                </h2>
+                
                 <!-- Cuaderno 4 -->
-                <a href="cuaderno-4/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-amber-500/50 relative overflow-hidden">
+                <a href="/cuaderno-4/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-amber-500/50 relative overflow-hidden">
                     <div class="p-6">
                         <div class="flex items-start justify-between mb-4">
                             <div class="flex items-center gap-3">
                                 <div class="w-12 h-12 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-400">
-                                    <i class="fas fa-code text-xl"></i>
+                                    <iconify-icon icon="mdi:code-braces" class="text-xl"></iconify-icon>
                                 </div>
                                 <div>
                                     <span class="text-xs text-amber-400 font-semibold">Cuaderno 4</span>
-                                    <h4 class="text-lg font-bold text-white">Programación para Seguridad</h4>
+                                    <h3 class="text-lg font-bold text-white">Programación para Seguridad</h3>
                                 </div>
                             </div>
                             <span class="text-xs text-slate-500">12-14 sem</span>
                         </div>
-                        <p class="text-slate-400 text-sm mb-4">Desarrollo orientado a seguridad: Python, scripting, web y assembly básico.</p>
+                        <p class="text-slate-400 text-sm mb-4">Python, PowerShell, Bash, JavaScript, Assembly, DevOps, Cloud y desarrollo de herramientas.</p>
                         
                         <div class="subsections-container">
                             <div class="border-t border-slate-700 pt-4 mt-2 space-y-2">
@@ -508,7 +496,7 @@
                                 </div>
                                 <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
                                     <span class="level-badge level-yellow text-white">I</span>
-                                    <span>4.2-4.3 Python para Redes y Scraping</span>
+                                    <span>4.2-4.3 Python Redes y Scraping</span>
                                 </div>
                                 <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
                                     <span class="level-badge level-yellow text-white">I</span>
@@ -516,299 +504,303 @@
                                 </div>
                                 <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
                                     <span class="level-badge level-red text-white">A</span>
-                                    <span>4.5-4.6 Python/PS para Pentesting</span>
+                                    <span>4.5-4.6 Python/PowerShell Pentesting</span>
                                 </div>
                                 <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
                                     <span class="level-badge level-yellow text-white">I</span>
-                                    <span>4.7 Bash Scripting Avanzado</span>
+                                    <span>4.7 Bash Avanzado</span>
                                 </div>
                                 <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
                                     <span class="level-badge level-red text-white">A</span>
                                     <span>4.8-4.9 JavaScript y Assembly</span>
                                 </div>
                                 <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                    <span class="level-badge level-yellow text-white">I</span>
+                                    <span>4.10-4.11 DevOps y Cloud</span>
+                                </div>
+                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
                                     <span class="level-badge level-red text-white">A</span>
-                                    <span>4.10-4.12 DevOps, Cloud y Tools</span>
+                                    <span>4.12 Desarrollo de Herramientas</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="scroll-indicator text-amber-400 text-xs">
-                        <i class="fas fa-chevron-down"></i>
+                        <iconify-icon icon="mdi:chevron-down"></iconify-icon>
                     </div>
                     <div class="bg-slate-800/80 px-6 py-3 border-t border-slate-700">
                         <div class="flex justify-between items-center text-xs">
-                            <span class="text-slate-500"><i class="fas fa-list mr-1"></i> 13 secciones</span>
-                            <span class="text-amber-400 font-medium">Entrar <i class="fas fa-arrow-right ml-1"></i></span>
+                            <span class="text-slate-500"><iconify-icon icon="mdi:format-list-bulleted" class="mr-1"></iconify-icon> 13 secciones</span>
+                            <span class="text-amber-400 font-medium">Entrar <iconify-icon icon="mdi:arrow-right" class="ml-1"></iconify-icon></span>
                         </div>
                     </div>
                 </a>
             </div>
-        </div>
 
-        <!-- FASE 4 -->
-        <div class="mb-16">
-            <div class="phase-header phase-4 mb-6">
-                <span class="text-xs text-rose-400 font-semibold uppercase tracking-wider">Fase 4</span>
-                <h3 class="text-2xl font-bold text-white">Seguridad Ofensiva</h3>
-                <p class="text-slate-500 text-sm">Aplicación del conocimiento para atacar sistemas</p>
+            <!-- FASE 4: Seguridad Ofensiva -->
+            <div>
+                <h2 class="phase-header phase-4 text-2xl font-bold mb-6">
+                    <span class="text-red-400 text-sm font-semibold uppercase tracking-wider">FASE 4</span>
+                    <div class="text-white text-3xl mt-1">Seguridad Ofensiva</div>
+                    <p class="text-slate-400 text-base font-normal mt-2">El arte del ataque: Recon, Exploit, Post-Exploit</p>
+                </h2>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Cuaderno 5 -->
+                    <a href="/cuaderno-5/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-red-500/50 relative overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-12 h-12 rounded-lg bg-red-500/20 flex items-center justify-center text-red-400">
+                                        <iconify-icon icon="mdi:magnify" class="text-xl"></iconify-icon>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs text-red-400 font-semibold">Cuaderno 5</span>
+                                        <h3 class="text-lg font-bold text-white">Reconocimiento y Enumeración</h3>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-slate-500">8-10 sem</span>
+                            </div>
+                            <p class="text-slate-400 text-sm mb-4">OSINT, footprinting, escaneo, enumeración, análisis de vulnerabilidades y evasión.</p>
+                            
+                            <div class="subsections-container">
+                                <div class="border-t border-slate-700 pt-4 mt-2 space-y-2">
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-green text-white">P</span>
+                                        <span>5.0-5.1 Metodologías y OSINT</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-yellow text-white">I</span>
+                                        <span>5.2 Footprinting Pasivo</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-yellow text-white">I</span>
+                                        <span>5.3 Escaneo de Redes</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-yellow text-white">I</span>
+                                        <span>5.4 Enumeración de Servicios</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-red text-white">A</span>
+                                        <span>5.5-5.6 Análisis de Vulns y Web</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-red text-white">A</span>
+                                        <span>5.7-5.9 Enum AD, Wireless, Evasión</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-yellow text-white">I</span>
+                                        <span>5.10 Reporting</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="scroll-indicator text-red-400 text-xs">
+                            <iconify-icon icon="mdi:chevron-down"></iconify-icon>
+                        </div>
+                        <div class="bg-slate-800/80 px-6 py-3 border-t border-slate-700">
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-slate-500"><iconify-icon icon="mdi:format-list-bulleted" class="mr-1"></iconify-icon> 11 secciones</span>
+                                <span class="text-red-400 font-medium">Entrar <iconify-icon icon="mdi:arrow-right" class="ml-1"></iconify-icon></span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Cuaderno 6 -->
+                    <a href="/cuaderno-6/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-red-500/50 relative overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-12 h-12 rounded-lg bg-rose-500/20 flex items-center justify-center text-rose-400">
+                                        <iconify-icon icon="mdi:bomb" class="text-xl"></iconify-icon>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs text-rose-400 font-semibold">Cuaderno 6</span>
+                                        <h3 class="text-lg font-bold text-white">Explotación y Post-Explotación</h3>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-slate-500">14-16 sem</span>
+                            </div>
+                            <p class="text-slate-400 text-sm mb-4">OWASP, SQLi, XSS, BoF, PrivEsc, AD Attacks, Pivoting, Persistencia, AV Evasion.</p>
+                            
+                            <div class="subsections-container">
+                                <div class="border-t border-slate-700 pt-4 mt-2 space-y-2">
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-yellow text-white">I</span>
+                                        <span>6.1 Fundamentos de Explotación</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-yellow text-white">I</span>
+                                        <span>6.2 OWASP Top 10</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-red text-white">A</span>
+                                        <span>6.3-6.4 SQLi, XSS, CSRF</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-red text-white">A</span>
+                                        <span>6.5 Buffer Overflows</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-red text-white">A</span>
+                                        <span>6.6-6.7 PrivEsc Linux/Windows</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-red text-white">A</span>
+                                        <span>6.8 Active Directory Attacks</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-red text-white">A</span>
+                                        <span>6.9-6.12 Pivoting, Persist, Evasion</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="scroll-indicator text-rose-400 text-xs">
+                            <iconify-icon icon="mdi:chevron-down"></iconify-icon>
+                        </div>
+                        <div class="bg-slate-800/80 px-6 py-3 border-t border-slate-700">
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-slate-500"><iconify-icon icon="mdi:format-list-bulleted" class="mr-1"></iconify-icon> 12 secciones</span>
+                                <span class="text-rose-400 font-medium">Entrar <iconify-icon icon="mdi:arrow-right" class="ml-1"></iconify-icon></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Cuaderno 5 -->
-                <a href="cuaderno-5/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-rose-500/50 relative overflow-hidden">
-                    <div class="p-6">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 rounded-lg bg-rose-500/20 flex items-center justify-center text-rose-400">
-                                    <i class="fas fa-search text-xl"></i>
-                                </div>
-                                <div>
-                                    <span class="text-xs text-rose-400 font-semibold">Cuaderno 5</span>
-                                    <h4 class="text-lg font-bold text-white">Reconocimiento y Enumeración</h4>
-                                </div>
-                            </div>
-                            <span class="text-xs text-slate-500">8-10 sem</span>
-                        </div>
-                        <p class="text-slate-400 text-sm mb-4">La fase más crítica: recopilación de información, OSINT y escaneo.</p>
-                        
-                        <div class="subsections-container">
-                            <div class="border-t border-slate-700 pt-4 mt-2 space-y-2">
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-green text-white">P</span>
-                                    <span>5.0 Frameworks y Metodologías</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-green text-white">P</span>
-                                    <span>5.1 OSINT</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-yellow text-white">I</span>
-                                    <span>5.2-5.3 Footprinting y Escaneo</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-yellow text-white">I</span>
-                                    <span>5.4 Enumeración de Servicios</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-red text-white">A</span>
-                                    <span>5.5-5.6 Vulnerabilidades y Web</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-red text-white">A</span>
-                                    <span>5.7-5.9 AD, Wireless y Evasión</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-yellow text-white">I</span>
-                                    <span>5.10 Reporting</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="scroll-indicator text-rose-400 text-xs">
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="bg-slate-800/80 px-6 py-3 border-t border-slate-700">
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="text-slate-500"><i class="fas fa-list mr-1"></i> 11 secciones</span>
-                            <span class="text-rose-400 font-medium">Entrar <i class="fas fa-arrow-right ml-1"></i></span>
-                        </div>
-                    </div>
-                </a>
 
-                <!-- Cuaderno 6 -->
-                <a href="cuaderno-6/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-red-500/50 relative overflow-hidden">
-                    <div class="p-6">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 rounded-lg bg-red-500/20 flex items-center justify-center text-red-400">
-                                    <i class="fas fa-skull-crossbones text-xl"></i>
+            <!-- FASE 5: Profesionalización -->
+            <div>
+                <h2 class="phase-header phase-5 text-2xl font-bold mb-6">
+                    <span class="text-violet-400 text-sm font-semibold uppercase tracking-wider">FASE 5</span>
+                    <div class="text-white text-3xl mt-1">Profesionalización</div>
+                    <p class="text-slate-400 text-base font-normal mt-2">El camino profesional: Herramientas, Especialización, Carrera</p>
+                </h2>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Cuaderno 7 -->
+                    <a href="/cuaderno-7/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-violet-500/50 relative overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-12 h-12 rounded-lg bg-violet-500/20 flex items-center justify-center text-violet-400">
+                                        <iconify-icon icon="mdi:tools" class="text-xl"></iconify-icon>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs text-violet-400 font-semibold">Cuaderno 7</span>
+                                        <h3 class="text-lg font-bold text-white">Herramientas Profesionales</h3>
+                                    </div>
                                 </div>
-                                <div>
-                                    <span class="text-xs text-red-400 font-semibold">Cuaderno 6</span>
-                                    <h4 class="text-lg font-bold text-white">Explotación y Post-Explotación</h4>
+                                <span class="text-xs text-slate-500">10-12 sem</span>
+                            </div>
+                            <p class="text-slate-400 text-sm mb-4">Metasploit, Burp Suite, Cobalt Strike, BloodHound, Wireshark avanzado y más.</p>
+                            
+                            <div class="subsections-container">
+                                <div class="border-t border-slate-700 pt-4 mt-2 space-y-2">
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-yellow text-white">I</span>
+                                        <span>7.1 Metasploit Framework</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-yellow text-white">I</span>
+                                        <span>7.2 Burp Suite Professional</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-red text-white">A</span>
+                                        <span>7.3 Cobalt Strike y C2</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-red text-white">A</span>
+                                        <span>7.4 BloodHound y Empire</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-red text-white">A</span>
+                                        <span>7.5-7.7 Wireshark, Nessus, Cracking</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-red text-white">A</span>
+                                        <span>7.8-7.10 Mobile, Cloud, Forensics</span>
+                                    </div>
                                 </div>
                             </div>
-                            <span class="text-xs text-slate-500">14-16 sem</span>
                         </div>
-                        <p class="text-slate-400 text-sm mb-4">Explotar vulnerabilidades y mantener acceso. OWASP, BoF, PrivEsc, AD Attacks.</p>
-                        
-                        <div class="subsections-container">
-                            <div class="border-t border-slate-700 pt-4 mt-2 space-y-2">
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-yellow text-white">I</span>
-                                    <span>6.1 Fundamentos de Explotación</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-yellow text-white">I</span>
-                                    <span>6.2 OWASP Top 10</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-red text-white">A</span>
-                                    <span>6.3-6.4 SQLi, XSS, CSRF</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-red text-white">A</span>
-                                    <span>6.5 Buffer Overflows</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-red text-white">A</span>
-                                    <span>6.6-6.7 Privilege Escalation</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-red text-white">A</span>
-                                    <span>6.8 Active Directory Attacks</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-red text-white">A</span>
-                                    <span>6.9-6.12 Pivoting, Persistencia, Evasión</span>
-                                </div>
+                        <div class="scroll-indicator text-violet-400 text-xs">
+                            <iconify-icon icon="mdi:chevron-down"></iconify-icon>
+                        </div>
+                        <div class="bg-slate-800/80 px-6 py-3 border-t border-slate-700">
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-slate-500"><iconify-icon icon="mdi:format-list-bulleted" class="mr-1"></iconify-icon> 10 secciones</span>
+                                <span class="text-violet-400 font-medium">Entrar <iconify-icon icon="mdi:arrow-right" class="ml-1"></iconify-icon></span>
                             </div>
                         </div>
-                    </div>
-                    <div class="scroll-indicator text-red-400 text-xs">
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="bg-slate-800/80 px-6 py-3 border-t border-slate-700">
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="text-slate-500"><i class="fas fa-list mr-1"></i> 12 secciones</span>
-                            <span class="text-red-400 font-medium">Entrar <i class="fas fa-arrow-right ml-1"></i></span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
+                    </a>
 
-        <!-- FASE 5 -->
-        <div class="mb-16">
-            <div class="phase-header phase-5 mb-6">
-                <span class="text-xs text-violet-400 font-semibold uppercase tracking-wider">Fase 5</span>
-                <h3 class="text-2xl font-bold text-white">Profesionalización</h3>
-                <p class="text-slate-500 text-sm">Herramientas avanzadas y preparación laboral</p>
-            </div>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Cuaderno 7 -->
-                <a href="cuaderno-7/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-violet-500/50 relative overflow-hidden">
-                    <div class="p-6">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 rounded-lg bg-violet-500/20 flex items-center justify-center text-violet-400">
-                                    <i class="fas fa-toolbox text-xl"></i>
+                    <!-- Cuaderno 8 -->
+                    <a href="/cuaderno-8/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-fuchsia-500/50 relative overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-12 h-12 rounded-lg bg-fuchsia-500/20 flex items-center justify-center text-fuchsia-400">
+                                        <iconify-icon icon="mdi:school" class="text-xl"></iconify-icon>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs text-fuchsia-400 font-semibold">Cuaderno 8</span>
+                                        <h3 class="text-lg font-bold text-white">Especialización y Carrera</h3>
+                                    </div>
                                 </div>
-                                <div>
-                                    <span class="text-xs text-violet-400 font-semibold">Cuaderno 7</span>
-                                    <h4 class="text-lg font-bold text-white">Herramientas Profesionales</h4>
-                                </div>
+                                <span class="text-xs text-slate-500">10-12 sem</span>
                             </div>
-                            <span class="text-xs text-slate-500">10-12 sem</span>
-                        </div>
-                        <p class="text-slate-400 text-sm mb-4">Dominio de herramientas enterprise: Metasploit, Burp, Cobalt Strike, BloodHound.</p>
-                        
-                        <div class="subsections-container">
-                            <div class="border-t border-slate-700 pt-4 mt-2 space-y-2">
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-yellow text-white">I</span>
-                                    <span>7.1 Metasploit Framework</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-yellow text-white">I</span>
-                                    <span>7.2 Burp Suite Professional</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-red text-white">A</span>
-                                    <span>7.3 Cobalt Strike y C2</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-red text-white">A</span>
-                                    <span>7.4 BloodHound y Empire</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-red text-white">A</span>
-                                    <span>7.5-7.7 Wireshark, Nessus, Cracking</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-red text-white">A</span>
-                                    <span>7.8-7.10 Mobile, Cloud, Forensics</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="scroll-indicator text-violet-400 text-xs">
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="bg-slate-800/80 px-6 py-3 border-t border-slate-700">
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="text-slate-500"><i class="fas fa-list mr-1"></i> 10 secciones</span>
-                            <span class="text-violet-400 font-medium">Entrar <i class="fas fa-arrow-right ml-1"></i></span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Cuaderno 8 -->
-                <a href="cuaderno-8/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-fuchsia-500/50 relative overflow-hidden">
-                    <div class="p-6">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 rounded-lg bg-fuchsia-500/20 flex items-center justify-center text-fuchsia-400">
-                                    <i class="fas fa-graduation-cap text-xl"></i>
-                                </div>
-                                <div>
-                                    <span class="text-xs text-fuchsia-400 font-semibold">Cuaderno 8</span>
-                                    <h4 class="text-lg font-bold text-white">Especialización y Carrera</h4>
-                                </div>
-                            </div>
-                            <span class="text-xs text-slate-500">10-12 sem</span>
-                        </div>
-                        <p class="text-slate-400 text-sm mb-4">Especialidades, certificaciones (OSCP, eJPT, PNPT) y desarrollo de carrera.</p>
-                        
-                        <div class="subsections-container">
-                            <div class="border-t border-slate-700 pt-4 mt-2 space-y-2">
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-red text-white">A</span>
-                                    <span>8.1 Red Team vs Blue Team</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-red text-white">A</span>
-                                    <span>8.2-8.4 Cloud, Mobile, IoT Security</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-red text-white">A</span>
-                                    <span>8.5-8.7 IR, Threat Hunting, Malware</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-red text-white">A</span>
-                                    <span>8.8 Preparación OSCP</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-yellow text-white">I</span>
-                                    <span>8.9 Preparación eJPT</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-red text-white">A</span>
-                                    <span>8.10 Preparación PNPT</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-yellow text-white">I</span>
-                                    <span>8.11 Building a Home Lab</span>
-                                </div>
-                                <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
-                                    <span class="level-badge level-green text-white">P</span>
-                                    <span>8.12 Carrera en Ciberseguridad</span>
+                            <p class="text-slate-400 text-sm mb-4">Especialidades, certificaciones (OSCP, eJPT, PNPT) y desarrollo de carrera.</p>
+                            
+                            <div class="subsections-container">
+                                <div class="border-t border-slate-700 pt-4 mt-2 space-y-2">
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-red text-white">A</span>
+                                        <span>8.1 Red Team vs Blue Team</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-red text-white">A</span>
+                                        <span>8.2-8.4 Cloud, Mobile, IoT Security</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-red text-white">A</span>
+                                        <span>8.5-8.7 IR, Threat Hunting, Malware</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-red text-white">A</span>
+                                        <span>8.8 Preparación OSCP</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-yellow text-white">I</span>
+                                        <span>8.9 Preparación eJPT</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-red text-white">A</span>
+                                        <span>8.10 Preparación PNPT</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-yellow text-white">I</span>
+                                        <span>8.11 Building a Home Lab</span>
+                                    </div>
+                                    <div class="subsection-item flex items-center gap-2 text-xs text-slate-400">
+                                        <span class="level-badge level-green text-white">P</span>
+                                        <span>8.12 Carrera en Ciberseguridad</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="scroll-indicator text-fuchsia-400 text-xs">
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="bg-slate-800/80 px-6 py-3 border-t border-slate-700">
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="text-slate-500"><i class="fas fa-list mr-1"></i> 12 secciones</span>
-                            <span class="text-fuchsia-400 font-medium">Entrar <i class="fas fa-arrow-right ml-1"></i></span>
+                        <div class="scroll-indicator text-fuchsia-400 text-xs">
+                            <iconify-icon icon="mdi:chevron-down"></iconify-icon>
                         </div>
-                    </div>
-                </a>
+                        <div class="bg-slate-800/80 px-6 py-3 border-t border-slate-700">
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-slate-500"><iconify-icon icon="mdi:format-list-bulleted" class="mr-1"></iconify-icon> 12 secciones</span>
+                                <span class="text-fuchsia-400 font-medium">Entrar <iconify-icon icon="mdi:arrow-right" class="ml-1"></iconify-icon></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -843,9 +835,9 @@
     <div class="max-w-4xl mx-auto px-6 py-8">
         <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
             <div class="flex gap-6">
-                <a href="../privacy-policy" class="hover:text-sky-400 transition-colors">Privacidad</a>
-                <a href="../terms-of-service" class="hover:text-sky-400 transition-colors">Términos de Uso</a>
-                <a href="../cookies-policy" class="hover:text-sky-400 transition-colors">Cookies</a>
+                <a href="/privacy-policy" class="hover:text-sky-400 transition-colors">Privacidad</a>
+                <a href="/terms-of-service" class="hover:text-sky-400 transition-colors">Términos de Uso</a>
+                <a href="/cookies-policy" class="hover:text-sky-400 transition-colors">Cookies</a>
             </div>
             <div class="text-center md:text-right">
                 <p>&copy; 2025 Hakiu. Todos los derechos reservados.</p>
@@ -855,7 +847,9 @@
     </div>
 </footer>
 
-    <!-- SCRIPTS EN ORDEN CORRECTO -->
+    <!-- ========================================
+         SCRIPTS EN ORDEN CORRECTO
+    ======================================== -->
     
     <!-- 1. Interfaz de Usuario Visual (Crea modales y controla botones) -->
     <script src="/assets/auth-ui.js" defer></script>
@@ -864,8 +858,7 @@
     <script src="/assets/logo.js"></script>
     <script src="/assets/mobile-menu.js"></script>
 
-    <!-- Hakiu Cookie System -->
-    <!-- La barra '/' al inicio es IMPORTANTE: asegura que funcione en subcarpetas -->
+    <!-- 3. Hakiu Cookie System (CRÍTICO - AL FINAL) -->
     <script src="/assets/core-data.js" defer></script>
     <script src="/assets/ui-feedback.js" defer></script>
 
