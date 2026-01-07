@@ -79,7 +79,7 @@
                     </h3>
                     <p class="text-slate-300 text-sm leading-relaxed">
                         ${CONFIG.TEXT.DESCRIPTION}
-                        <a href="/legal/cookies" class="text-sky-400 hover:underline ml-1">Leer política</a>.
+                        <a href="/cookies-policy" class="text-sky-400 hover:underline ml-1">Leer política</a>.
                     </p>
                 </div>
                 <div class="flex flex-wrap gap-3 justify-center md:justify-end shrink-0">
