@@ -5,14 +5,14 @@
  * SEGURIDAD:
  * - CORS Check (Origen)
  * - Rate Limiting (IP + Sesión)
- * - Honeypot (Anti-Bot)
+ * - Honeypot Camuflado (Anti-Bot)
  * - Validación de Esquema
  * - Sanitización
  * ==============================================================================
  */
 
 import { createClient } from '@supabase/supabase-js';
-import { incrementRateLimit, checkRateLimit } from '../lib/kv.js'; // Ajusta la ruta relativa según tu estructura
+import { incrementRateLimit, checkRateLimit } from '../lib/kv.js';
 import { sendAlert } from '../lib/alerts.js';
 
 // Inicializar Supabase con SERVICE_ROLE_KEY
@@ -50,6 +50,7 @@ export default async function handler(req, res) {
     const isDev = process.env.NODE_ENV === 'development';
     const allowedPrefix = isDev ? ALLOWED_ORIGINS.development : ALLOWED_ORIGINS.production;
 
+    // Si la petición no viene de nuestra web, la rechazamos.
     if (!origin.startsWith(allowedPrefix)) {
       console.warn(`[SECURITY] Origen inválido detectado: ${origin}`);
       return res.status(403).json({ error: 'Forbidden origin' });
@@ -70,18 +71,21 @@ export default async function handler(req, res) {
     }
 
     // ==================================================================
-    // CAPA 3: HONEYPOT (Anti-Bot)
+    // CAPA 3: HONEYPOT (Anti-Bot Camuflado)
     // ==================================================================
-    const { website_url } = req.body; // Campo trampa invisible
+    // Hemos renombrado el campo a "website" para que parezca legítimo.
+    // Los bots lo rellenarán pensando que es un formulario normal.
+    // Los humanos no lo ven (está oculto por CSS).
+    const { website } = req.body; 
     
-    if (website_url && website_url.trim() !== '') {
-      console.warn(`[HONEYPOT] Bot detectado desde IP: ${ip}`);
+    if (website && website.trim() !== '') {
+      console.warn(`[HONEYPOT] Bot detectado (rellenó 'website') desde IP: ${ip}`);
       
       // Guardamos la detección para análisis futuro
       await supabase.from('honeypot_detections').insert({
         ip_address: ip,
         user_agent: userAgent,
-        honeypot_value: website_url
+        honeypot_value: website // Guardamos qué puso el bot
       });
 
       // Incrementamos contador de detecciones para alertar si hay ataque masivo
@@ -89,7 +93,7 @@ export default async function handler(req, res) {
       if (detections % 10 === 0) { // Alerta cada 10 bots
         await sendAlert({
           type: 'honeypot-triggered',
-          message: `🍯 Honeypot ha atrapado ${detections} bots en la última hora.`,
+          message: `🍯 Honeypot 'website' ha atrapado ${detections} bots en la última hora.`,
           severity: 'low'
         });
       }
@@ -193,7 +197,7 @@ export default async function handler(req, res) {
 
   } catch (err) {
     console.error('[SERVER ERROR]', err);
-    // Alertar solo si es un error interno grave
+    // Alertar solo si es un error interno grave (no errores de validación)
     if (err.code !== 'PGRST116') { // Ignorar errores menores de Supabase
          /* Opcional: sendAlert(...) */ 
     }
