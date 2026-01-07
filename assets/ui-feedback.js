@@ -88,7 +88,7 @@
                     </h3>
                     <p class="text-slate-300 text-sm leading-relaxed">
                         ${UI_CONFIG.TEXT.DESCRIPTION}
-                        <a href="/legal/cookies" class="text-sky-400 hover:underline ml-1">Más info</a>.
+                        <a href="/cookies-policy" class="text-sky-400 hover:underline ml-1">Más info</a>.
                     </p>
                 </div>
                 
