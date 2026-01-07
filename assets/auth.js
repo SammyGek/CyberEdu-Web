@@ -1,4 +1,4 @@
-/* CyberEdu - Authentication System (with Session Timeout) */
+/* Hakiu - Authentication System (with Session Timeout) */
 /* Supabase Auth para login/register/logout */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
@@ -11,7 +11,7 @@ const supabaseUrl = window.SUPABASE_URL;
 const supabaseAnonKey = window.SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
-    console.error('❌ CyberEdu Auth: Falta configurar SUPABASE_URL y SUPABASE_ANON_KEY');
+    console.error('❌ Hakiu Auth: Falta configurar SUPABASE_URL y SUPABASE_ANON_KEY');
 }
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
@@ -30,7 +30,7 @@ const SECURITY_CONFIG = {
 // ESTADO GLOBAL
 // ============================================================
 
-window.cyberEduAuth = {
+window.hakiuAuth = {
     user: null,
     session: null,
     subscription: null,
@@ -47,7 +47,7 @@ window.cyberEduAuth = {
  * Actualizar timestamp de última actividad
  */
 function updateActivity() {
-    window.cyberEduAuth.lastActivity = Date.now();
+    window.hakiuAuth.lastActivity = Date.now();
     localStorage.setItem('lastActivity', Date.now().toString());
 }
 
@@ -60,7 +60,7 @@ function checkSessionTimeout() {
     const timeSinceActivity = now - lastActivity;
     
     // Si hay sesión activa pero el usuario ha estado inactivo
-    if (window.cyberEduAuth.session && timeSinceActivity > SECURITY_CONFIG.SESSION_TIMEOUT) {
+    if (window.hakiuAuth.session && timeSinceActivity > SECURITY_CONFIG.SESSION_TIMEOUT) {
         console.warn('⏱️ Sesión expirada por inactividad');
         signOut();
         
@@ -157,11 +157,11 @@ async function signOut() {
         if (error) throw error;
 
         // Limpiar estado global
-        window.cyberEduAuth.user = null;
-        window.cyberEduAuth.session = null;
-        window.cyberEduAuth.subscription = null;
-        window.cyberEduAuth.isPremium = false;
-        window.cyberEduAuth.lastActivity = 0;
+        window.hakiuAuth.user = null;
+        window.hakiuAuth.session = null;
+        window.hakiuAuth.subscription = null;
+        window.hakiuAuth.isPremium = false;
+        window.hakiuAuth.lastActivity = 0;
         
         // Limpiar localStorage
         localStorage.removeItem('lastActivity');
@@ -207,8 +207,8 @@ async function loadUserSubscription(userId) {
 
         if (error) throw error;
 
-        window.cyberEduAuth.subscription = data;
-        window.cyberEduAuth.isPremium = data.plan === 'premium' && data.status === 'active';
+        window.hakiuAuth.subscription = data;
+        window.hakiuAuth.isPremium = data.plan === 'premium' && data.status === 'active';
 
         console.log('✅ Subscription cargada:', data.plan);
         
@@ -241,8 +241,8 @@ async function createDefaultSubscription(userId) {
 
         if (error) throw error;
 
-        window.cyberEduAuth.subscription = data;
-        window.cyberEduAuth.isPremium = false;
+        window.hakiuAuth.subscription = data;
+        window.hakiuAuth.isPremium = false;
 
         console.log('✅ Subscription FREE creada');
         
@@ -263,7 +263,7 @@ async function fetchPremiumLessons(cuadernoId) {
     }
     
     // Solo si el usuario es premium
-    if (!window.cyberEduAuth.isPremium) {
+    if (!window.hakiuAuth.isPremium) {
         console.log('⚠️ Usuario no premium, no puede cargar lecciones premium');
         return [];
     }
@@ -294,9 +294,9 @@ async function fetchPremiumLessons(cuadernoId) {
  * Inicializar auth system al cargar la página
  */
 async function initAuth() {
-    console.log('🔐 Inicializando CyberEdu Auth...');
+    console.log('🔐 Inicializando Hakiu Auth...');
     
-    window.cyberEduAuth.isLoading = true;
+    window.hakiuAuth.isLoading = true;
 
     // Obtener sesión actual
     const session = await getSession();
@@ -306,14 +306,14 @@ async function initAuth() {
         const expired = checkSessionTimeout();
         
         if (!expired) {
-            window.cyberEduAuth.user = session.user;
-            window.cyberEduAuth.session = session;
+            window.hakiuAuth.user = session.user;
+            window.hakiuAuth.session = session;
 
             // Cargar subscription
             await loadUserSubscription(session.user.id);
 
             console.log('✅ Usuario autenticado:', session.user.email);
-            console.log('📊 Plan:', window.cyberEduAuth.subscription?.plan);
+            console.log('📊 Plan:', window.hakiuAuth.subscription?.plan);
             
             // Configurar listeners de actividad
             setupActivityListeners();
@@ -323,11 +323,11 @@ async function initAuth() {
         console.log('ℹ️ No hay sesión activa');
     }
 
-    window.cyberEduAuth.isLoading = false;
+    window.hakiuAuth.isLoading = false;
 
     // Disparar evento personalizado
     window.dispatchEvent(new CustomEvent('authStateChanged', {
-        detail: window.cyberEduAuth
+        detail: window.hakiuAuth
     }));
 }
 
@@ -338,23 +338,23 @@ supabase.auth.onAuthStateChange(async (event, session) => {
     console.log('🔄 Auth state changed:', event);
 
     if (event === 'SIGNED_IN') {
-        window.cyberEduAuth.user = session.user;
-        window.cyberEduAuth.session = session;
+        window.hakiuAuth.user = session.user;
+        window.hakiuAuth.session = session;
         await loadUserSubscription(session.user.id);
         setupActivityListeners();
         updateActivity();
     } else if (event === 'SIGNED_OUT') {
-        window.cyberEduAuth.user = null;
-        window.cyberEduAuth.session = null;
-        window.cyberEduAuth.subscription = null;
-        window.cyberEduAuth.isPremium = false;
-        window.cyberEduAuth.lastActivity = 0;
+        window.hakiuAuth.user = null;
+        window.hakiuAuth.session = null;
+        window.hakiuAuth.subscription = null;
+        window.hakiuAuth.isPremium = false;
+        window.hakiuAuth.lastActivity = 0;
         localStorage.removeItem('lastActivity');
     }
 
     // Disparar evento personalizado
     window.dispatchEvent(new CustomEvent('authStateChanged', {
-        detail: window.cyberEduAuth
+        detail: window.hakiuAuth
     }));
 });
 
@@ -362,14 +362,14 @@ supabase.auth.onAuthStateChange(async (event, session) => {
 // EXPORTAR API PÚBLICA
 // ============================================================
 
-window.cyberEduAuth.signUp = signUp;
-window.cyberEduAuth.signIn = signIn;
-window.cyberEduAuth.signOut = signOut;
-window.cyberEduAuth.getSession = getSession;
-window.cyberEduAuth.fetchPremiumLessons = fetchPremiumLessons;
-window.cyberEduAuth.loadUserSubscription = loadUserSubscription;
-window.cyberEduAuth.updateActivity = updateActivity;
-window.cyberEduAuth.checkSessionTimeout = checkSessionTimeout;
+window.hakiuAuth.signUp = signUp;
+window.hakiuAuth.signIn = signIn;
+window.hakiuAuth.signOut = signOut;
+window.hakiuAuth.getSession = getSession;
+window.hakiuAuth.fetchPremiumLessons = fetchPremiumLessons;
+window.hakiuAuth.loadUserSubscription = loadUserSubscription;
+window.hakiuAuth.updateActivity = updateActivity;
+window.hakiuAuth.checkSessionTimeout = checkSessionTimeout;
 
 // Auto-inicializar cuando el DOM esté listo
 if (document.readyState === 'loading') {
@@ -378,4 +378,4 @@ if (document.readyState === 'loading') {
     initAuth();
 }
 
-console.log('✅ CyberEdu Auth System cargado (con session timeout)');
+console.log('✅ Hakiu Auth System cargado (con session timeout)');

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="/complementario/">
-    <title>Material Complementario | CyberEdu</title>
+    <title>Material Complementario | Hakiu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="../assets/styles.css" rel="stylesheet">
@@ -124,7 +124,7 @@
         e.preventDefault();
         const email = document.getElementById('login-email').value;
         const password = document.getElementById('login-password').value;
-        const result = await window.cyberEduAuth.signIn(email, password);
+        const result = await window.HakiuAuth.signIn(email, password);
         if (result.success) {
             closeAuthModal();
             updateUserMenu();
@@ -138,7 +138,7 @@
         e.preventDefault();
         const email = document.getElementById('register-email').value;
         const password = document.getElementById('register-password').value;
-        const result = await window.cyberEduAuth.signUp(email, password);
+        const result = await window.HakiuAuth.signUp(email, password);
         if (result.success) {
             document.getElementById('register-success').textContent = '¡Cuenta creada!';
             document.getElementById('register-success').classList.remove('hidden');
@@ -151,9 +151,9 @@
     
     function updateUserMenu() {
         const authBtn = document.getElementById('auth-btn');
-        if (window.cyberEduAuth && window.cyberEduAuth.user) {
-            authBtn.innerHTML = `<i class="fas fa-user-circle mr-2"></i>${window.cyberEduAuth.user.email}`;
-            authBtn.onclick = () => window.cyberEduAuth.signOut();
+        if (window.HakiuAuth && window.HakiuAuth.user) {
+            authBtn.innerHTML = `<i class="fas fa-user-circle mr-2"></i>${window.HakiuAuth.user.email}`;
+            authBtn.onclick = () => window.HakiuAuth.signOut();
         }
     }
     
@@ -164,7 +164,7 @@
         initAuthUI();
     }
     
-    if (window.cyberEduAuth) {
+    if (window.HakiuAuth) {
         window.addEventListener('authStateChanged', updateUserMenu);
         updateUserMenu();
     }
