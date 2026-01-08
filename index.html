@@ -50,7 +50,7 @@
     ======================================== -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Iconify (Icons) -->
+    <!-- Iconify  -->
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     
     <!-- Shared Styles -->
@@ -63,27 +63,39 @@
     <script type="module" src="/assets/auth.js"></script>
 
     <style>
-        /* Animación de subsecciones */
+        /* Logo clickable - cursor pointer */
+        .logo-link {
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .logo-link:hover {
+            opacity: 0.9;
+        }
+        
+        /* Animación de subsecciones - ESTRUCTURA ESCALABLE */
         .cuaderno-card {
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative; /* Aislamiento para fix del bug hover */
+            isolation: isolate; /* Crea stacking context aislado */
         }
         .cuaderno-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 20px 40px -15px rgba(56, 189, 248, 0.2);
         }
-        /* FIX: Usar selector hijo directo > para aislar hover */
-        .cuaderno-card:hover > div > .subsections-container {
+        
+        /* FIX DEFINITIVO: Selector específico para cada card */
+        .cuaderno-card:hover .card-content .subsections-container {
             max-height: 500px;
             opacity: 1;
         }
+        
         .subsections-container {
             max-height: 0;
             opacity: 0;
             overflow: hidden;
             transition: max-height 0.5s ease, opacity 0.4s ease;
         }
+        
         .subsection-item {
             animation: slideIn 0.3s ease forwards;
             opacity: 0;
@@ -162,17 +174,17 @@
         <div class="max-w-7xl mx-auto px-4 py-4">
             <div class="flex items-center justify-between">
                 
-                <!-- LOGO + ESLOGAN (sin título duplicado) -->
-                <div class="flex items-center gap-3">
+                <!-- LOGO + ESLOGAN (clickable, lleva a inicio) -->
+                <a href="/" class="logo-link flex items-center gap-3">
                     
                     <!-- SVG LOGO INYECTADO POR JS -->
                     <div id="hakiu-logo-container"></div>
                     
-                    <!-- ESLOGAN (alineado verticalmente al centro) -->
-                    <div class="hidden sm:block">
+                    <!-- ESLOGAN (alineado verticalmente) -->
+                    <div class="hidden sm:flex items-center">
                         <p class="text-sm text-slate-300">De 0 a Profesional en Ciberseguridad</p>
                     </div>
-                </div>
+                </a>
                 
                  <!-- NAVEGACIÓN DESKTOP CON LOGIN -->
                 <nav class="hidden md:flex items-center gap-6" aria-label="Navegación principal">
@@ -241,12 +253,10 @@
                 Más de <span class="text-sky-400 font-semibold">1000 horas</span> de contenido estructurado 
                 para convertirte en un profesional de la ciberseguridad
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#cuadernos" class="bg-sky-600 hover:bg-sky-500 text-white px-8 py-3 rounded-lg font-semibold transition-all shadow-lg inline-flex items-center justify-center">
-                    <iconify-icon icon="mdi:rocket-launch" class="mr-2"></iconify-icon>
-                    Explorar Cuadernos
-                </a>
-                <a href="/glosario" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-8 py-3 rounded-lg font-semibold transition-all border border-slate-700 inline-flex items-center justify-center">
+            
+            <!-- SOLO BOTÓN GLOSARIO (diseño limpio) -->
+            <div class="flex justify-center">
+                <a href="/glosario" class="bg-sky-600 hover:bg-sky-500 text-white px-8 py-3 rounded-lg font-semibold transition-all shadow-lg inline-flex items-center justify-center">
                     <iconify-icon icon="mdi:book-open-page-variant" class="mr-2"></iconify-icon>
                     Ver Glosario
                 </a>
@@ -266,7 +276,7 @@
                 
                 <!-- Cuaderno 1 -->
                 <a href="/cuaderno-1/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-sky-500/50 relative overflow-hidden">
-                    <div class="p-6">
+                    <div class="card-content p-6">
                         <div class="flex items-start justify-between mb-4">
                             <div class="flex items-center gap-3">
                                 <div class="w-12 h-12 rounded-lg bg-sky-500/20 flex items-center justify-center text-sky-400">
@@ -345,7 +355,7 @@
                 <div class="grid md:grid-cols-2 gap-6">
                     <!-- Cuaderno 2 -->
                     <a href="/cuaderno-2/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-emerald-500/50 relative overflow-hidden">
-                        <div class="p-6">
+                        <div class="card-content p-6">
                             <div class="flex items-start justify-between mb-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400">
@@ -402,7 +412,7 @@
 
                     <!-- Cuaderno 3 -->
                     <a href="/cuaderno-3/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-emerald-500/50 relative overflow-hidden">
-                        <div class="p-6">
+                        <div class="card-content p-6">
                             <div class="flex items-start justify-between mb-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400">
@@ -473,7 +483,7 @@
                 
                 <!-- Cuaderno 4 -->
                 <a href="/cuaderno-4/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-amber-500/50 relative overflow-hidden">
-                    <div class="p-6">
+                    <div class="card-content p-6">
                         <div class="flex items-start justify-between mb-4">
                             <div class="flex items-center gap-3">
                                 <div class="w-12 h-12 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-400">
@@ -548,7 +558,7 @@
                 <div class="grid md:grid-cols-2 gap-6">
                     <!-- Cuaderno 5 -->
                     <a href="/cuaderno-5/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-red-500/50 relative overflow-hidden">
-                        <div class="p-6">
+                        <div class="card-content p-6">
                             <div class="flex items-start justify-between mb-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-12 h-12 rounded-lg bg-red-500/20 flex items-center justify-center text-red-400">
@@ -609,7 +619,7 @@
 
                     <!-- Cuaderno 6 -->
                     <a href="/cuaderno-6/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-red-500/50 relative overflow-hidden">
-                        <div class="p-6">
+                        <div class="card-content p-6">
                             <div class="flex items-start justify-between mb-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-12 h-12 rounded-lg bg-rose-500/20 flex items-center justify-center text-rose-400">
@@ -681,7 +691,7 @@
                 <div class="grid md:grid-cols-2 gap-6">
                     <!-- Cuaderno 7 -->
                     <a href="/cuaderno-7/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-violet-500/50 relative overflow-hidden">
-                        <div class="p-6">
+                        <div class="card-content p-6">
                             <div class="flex items-start justify-between mb-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-12 h-12 rounded-lg bg-violet-500/20 flex items-center justify-center text-violet-400">
@@ -738,7 +748,7 @@
 
                     <!-- Cuaderno 8 -->
                     <a href="/cuaderno-8/index" class="cuaderno-card block bg-slate-800/50 rounded-xl border border-slate-700 hover:border-fuchsia-500/50 relative overflow-hidden">
-                        <div class="p-6">
+                        <div class="card-content p-6">
                             <div class="flex items-start justify-between mb-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-12 h-12 rounded-lg bg-fuchsia-500/20 flex items-center justify-center text-fuchsia-400">
