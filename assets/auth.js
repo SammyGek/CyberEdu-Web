@@ -33,6 +33,7 @@ const SECURITY_CONFIG = {
 window.hakiuAuth = {
     user: null,
     session: null,
+    profile: null, // Nuevo: Guardaremos el perfil completo aquí (tabla profiles)
     subscription: null,
     isPremium: false,
     isLoading: true,
@@ -101,18 +102,39 @@ function setupActivityListeners() {
 // ============================================================
 
 /**
- * Registrar nuevo usuario
+ * Registrar nuevo usuario (V5 - Profile Data)
+ * Recibe email, password y un objeto profileData con todo lo necesario
  */
-async function signUp(email, password) {
+async function signUp(email, password, profileData) {
     try {
+        // Estructuramos los datos para que el Trigger de SQL los entienda
+        // Supabase guardará esto en 'raw_user_meta_data'
         const { data, error } = await supabase.auth.signUp({
             email: email,
-            password: password
+            password: password,
+            options: {
+                data: {
+                    first_name: profileData.first_name,
+                    last_name: profileData.last_name,
+                    username: profileData.username,
+                    birthdate: profileData.birthdate,
+                    country: profileData.country,
+                    
+                    // Objeto de acuerdos
+                    agreements: {
+                        terms: profileData.terms_accepted,
+                        privacy: profileData.privacy_accepted,
+                        marketing: profileData.marketing_accepted
+                    },
+                    
+                    referral_source: profileData.referral_source
+                }
+            }
         });
 
         if (error) throw error;
 
-        console.log('✅ Usuario registrado:', data.user.email);
+        console.log('✅ Usuario registrado:', data.user?.email);
         updateActivity(); // Iniciar tracking de actividad
         
         return { success: true, data };
@@ -159,6 +181,7 @@ async function signOut() {
         // Limpiar estado global
         window.hakiuAuth.user = null;
         window.hakiuAuth.session = null;
+        window.hakiuAuth.profile = null;
         window.hakiuAuth.subscription = null;
         window.hakiuAuth.isPremium = false;
         window.hakiuAuth.lastActivity = 0;
@@ -195,32 +218,43 @@ async function getSession() {
 }
 
 /**
- * Cargar subscription del usuario
+ * Cargar subscription y perfil público del usuario
  */
 async function loadUserSubscription(userId) {
     try {
-        const { data, error } = await supabase
+        // 1. Cargar Suscripción
+        const { data: subData, error: subError } = await supabase
             .from('subscriptions')
             .select('*')
             .eq('user_id', userId)
             .single();
 
-        if (error) throw error;
+        if (!subError && subData) {
+            window.hakiuAuth.subscription = subData;
+            window.hakiuAuth.isPremium = subData.plan === 'premium' && subData.status === 'active';
+            console.log('✅ Subscription cargada:', subData.plan);
+        } else {
+            // Fallback simple si no existe (el trigger debería crearlo, pero por seguridad)
+            console.log('⚠️ Creando subscription FREE por defecto...');
+            await createDefaultSubscription(userId);
+        }
 
-        window.hakiuAuth.subscription = data;
-        window.hakiuAuth.isPremium = data.plan === 'premium' && data.status === 'active';
+        // 2. Cargar Perfil Público (nombre, avatar, etc.) de la tabla 'profiles'
+        const { data: profileData, error: profileError } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', userId)
+            .single();
+            
+        if (!profileError && profileData) {
+            window.hakiuAuth.profile = profileData;
+            console.log('✅ Perfil cargado:', profileData.first_name);
+        }
 
-        console.log('✅ Subscription cargada:', data.plan);
-        
-        return data;
+        return window.hakiuAuth.subscription;
     } catch (error) {
-        console.error('❌ Error al cargar subscription:', error.message);
-        
-        // Si no tiene subscription, crear una FREE (por si acaso el trigger falló)
-        console.log('⚠️ Creando subscription FREE por defecto...');
-        await createDefaultSubscription(userId);
-        
-        return null;
+        console.error('❌ Error al cargar datos de usuario:', error.message);
+        return { plan: 'free', status: 'active' }; 
     }
 }
 
@@ -346,6 +380,7 @@ supabase.auth.onAuthStateChange(async (event, session) => {
     } else if (event === 'SIGNED_OUT') {
         window.hakiuAuth.user = null;
         window.hakiuAuth.session = null;
+        window.hakiuAuth.profile = null;
         window.hakiuAuth.subscription = null;
         window.hakiuAuth.isPremium = false;
         window.hakiuAuth.lastActivity = 0;
