@@ -149,14 +149,14 @@ function initAuthUI() {
                             <label class="flex items-start gap-2 cursor-pointer group">
                                 <input type="checkbox" id="check-terms" required class="mt-1 w-4 h-4 rounded bg-slate-800 border-slate-600 text-emerald-500 focus:ring-emerald-500">
                                 <span class="text-xs text-slate-400 group-hover:text-slate-300">
-                                    Acepto los <a href="/legal/terminos.html" target="_blank" class="text-emerald-400 hover:underline">Términos y Condiciones</a> <span class="text-red-400">*</span>
+                                    Acepto los <a href="/terms-of-service" target="_blank" class="text-emerald-400 hover:underline">Términos y Condiciones</a> <span class="text-red-400">*</span>
                                 </span>
                             </label>
                             
                             <label class="flex items-start gap-2 cursor-pointer group">
                                 <input type="checkbox" id="check-privacy" required class="mt-1 w-4 h-4 rounded bg-slate-800 border-slate-600 text-emerald-500 focus:ring-emerald-500">
                                 <span class="text-xs text-slate-400 group-hover:text-slate-300">
-                                    Acepto la <a href="/legal/privacidad.html" target="_blank" class="text-emerald-400 hover:underline">Política de Privacidad</a> <span class="text-red-400">*</span>
+                                    Acepto la <a href="/privacy-policy" target="_blank" class="text-emerald-400 hover:underline">Política de Privacidad</a> <span class="text-red-400">*</span>
                                 </span>
                             </label>
 
