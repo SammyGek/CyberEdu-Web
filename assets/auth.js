@@ -33,7 +33,7 @@ const SECURITY_CONFIG = {
 window.hakiuAuth = {
     user: null,
     session: null,
-    profile: null, // Nuevo: Guardaremos el perfil completo aquí (tabla profiles)
+    profile: null, // Guardaremos el perfil público aquí (tabla profiles)
     subscription: null,
     isPremium: false,
     isLoading: true,
@@ -75,9 +75,7 @@ function checkSessionTimeout() {
     if (timeUntilExpire < SECURITY_CONFIG.INACTIVITY_WARNING && timeUntilExpire > 0) {
         const minutesLeft = Math.floor(timeUntilExpire / 60000);
         console.warn(`⚠️ Tu sesión expirará en ${minutesLeft} minutos`);
-        
-        // Opcional: Mostrar banner de advertencia
-        // showInactivityWarning(minutesLeft);
+        // Aquí se podría mostrar un banner visual si se desea
     }
     
     return false;
@@ -102,13 +100,14 @@ function setupActivityListeners() {
 // ============================================================
 
 /**
- * Registrar nuevo usuario (V5 - Profile Data)
+ * Registrar nuevo usuario (V5 - Full Data)
  * Recibe email, password y un objeto profileData con todo lo necesario
  */
 async function signUp(email, password, profileData) {
     try {
-        // Estructuramos los datos para que el Trigger de SQL los entienda
+        // Estructuramos los datos para enviarlos a Supabase
         // Supabase guardará esto en 'raw_user_meta_data'
+        // El trigger en la base de datos leerá esto y poblará la tabla 'profiles'
         const { data, error } = await supabase.auth.signUp({
             email: email,
             password: password,
@@ -120,7 +119,7 @@ async function signUp(email, password, profileData) {
                     birthdate: profileData.birthdate,
                     country: profileData.country,
                     
-                    // Objeto de acuerdos
+                    // Checks legales (planos para evitar confusion en DB)
                     agreements: {
                         terms: profileData.terms_accepted,
                         privacy: profileData.privacy_accepted,
@@ -138,6 +137,7 @@ async function signUp(email, password, profileData) {
         updateActivity(); // Iniciar tracking de actividad
         
         return { success: true, data };
+        
     } catch (error) {
         console.error('❌ Error al registrar:', error.message);
         return { success: false, error: error.message };
@@ -159,7 +159,7 @@ async function signIn(email, password) {
         console.log('✅ Sesión iniciada:', data.user.email);
         updateActivity(); // Iniciar tracking de actividad
         
-        // Cargar subscription
+        // Cargar datos de usuario
         await loadUserSubscription(data.user.id);
         
         return { success: true, data };
@@ -343,11 +343,10 @@ async function initAuth() {
             window.hakiuAuth.user = session.user;
             window.hakiuAuth.session = session;
 
-            // Cargar subscription
+            // Cargar datos
             await loadUserSubscription(session.user.id);
 
             console.log('✅ Usuario autenticado:', session.user.email);
-            console.log('📊 Plan:', window.hakiuAuth.subscription?.plan);
             
             // Configurar listeners de actividad
             setupActivityListeners();

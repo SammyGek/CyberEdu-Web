@@ -1,10 +1,9 @@
 /**
  * UI MANAGER FOR AUTHENTICATION
- * Version: 5.0 (Full Registration Data - Fixed & Commented)
- * - Nombre y Apellidos obligatorios
- * - País obligatorio
- * - Verificación Edad (+14)
- * - Checks Legales Separados
+ * Version: 5.2 (Strict Requirements)
+ * - Username OBLIGATORIO
+ * - Mensaje legal edad corregido
+ * - Validaciones completas
  */
 
 // 1. INYECCIÓN DEL MODAL EN EL HTML
@@ -21,8 +20,7 @@ function initAuthUI() {
                     <iconify-icon icon="mdi:close" class="text-2xl"></iconify-icon>
                 </button>
                 
-                <!-- LOGIN FORM (Simple) -->
-                <!-- Formulario de inicio de sesión estándar -->
+                <!-- LOGIN FORM -->
                 <div id="login-form" class="auth-form">
                     <div class="text-center mb-6">
                         <div class="w-12 h-12 bg-sky-500/20 rounded-lg flex items-center justify-center mx-auto mb-3 text-sky-400">
@@ -59,8 +57,7 @@ function initAuthUI() {
                     </div>
                 </div>
                 
-                <!-- REGISTER FORM (COMPLETO) -->
-                <!-- Formulario de registro ampliado con validaciones legales y de edad -->
+                <!-- REGISTER FORM (COMPLETO & OBLIGATORIO) -->
                 <div id="register-form" class="auth-form hidden">
                      <div class="text-center mb-4">
                         <h2 class="text-2xl font-bold text-white">Crear Cuenta</h2>
@@ -81,12 +78,12 @@ function initAuthUI() {
                         <!-- 1. Credenciales -->
                         <div class="form-group">
                             <label class="block text-xs font-medium text-slate-400 mb-1 uppercase tracking-wider">Email <span class="text-red-400">*</span></label>
-                            <input type="email" id="register-email" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none">
+                            <input type="email" id="register-email" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-emerald-500 outline-none">
                         </div>
                         
                         <div class="form-group">
                             <label class="block text-xs font-medium text-slate-400 mb-1 uppercase tracking-wider">Contraseña (Min 8) <span class="text-red-400">*</span></label>
-                            <input type="password" id="register-password" required minlength="8" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none" placeholder="********">
+                            <input type="password" id="register-password" required minlength="8" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="********">
                         </div>
 
                         <!-- 2. Identidad (Fila Doble) -->
@@ -101,10 +98,11 @@ function initAuthUI() {
                             </div>
                         </div>
 
-                        <!-- 3. Alias (Opcional) -->
+                        <!-- 3. Alias (OBLIGATORIO) -->
                         <div class="form-group">
-                            <label class="block text-xs font-medium text-slate-400 mb-1 uppercase tracking-wider">Username (Alias)</label>
-                            <input type="text" id="register-username" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Ej: NeoHacker">
+                            <label class="block text-xs font-medium text-slate-400 mb-1 uppercase tracking-wider">Username (Alias) <span class="text-red-400">*</span></label>
+                            <input type="text" id="register-username" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Ej: NeoHacker">
+                            <p class="text-[10px] text-slate-500 mt-1">Debe ser único en la plataforma.</p>
                         </div>
 
                         <!-- 4. Datos Demográficos (Fila Doble) -->
@@ -183,6 +181,7 @@ function initAuthUI() {
     `;
     document.body.insertAdjacentHTML('beforeend', modalsHTML);
 
+    // Event listeners para cerrar modal
     const overlay = document.getElementById('auth-modal');
     if (overlay) {
         overlay.addEventListener('click', (e) => {
@@ -204,7 +203,7 @@ window.openAuthModal = () => {
 window.closeAuthModal = () => {
     const modal = document.getElementById('auth-modal');
     if(modal) modal.classList.add('hidden');
-    // Restaurar scroll de forma robusta
+    // Restaurar scroll
     document.body.style.setProperty('overflow', 'auto', 'important');
     document.body.style.removeProperty('overflow');
     document.body.classList.remove('overflow-hidden', 'menu-open');
@@ -224,7 +223,7 @@ window.switchToLogin = () => {
 
 // 3. HANDLERS (Conectan con auth.js)
 
-// Handler de Inicio de Sesión
+// Login
 window.handleLogin = async (e) => {
     e.preventDefault();
     if (!window.hakiuAuth) return;
@@ -234,7 +233,6 @@ window.handleLogin = async (e) => {
     const btn = e.target.querySelector('button[type="submit"]');
     const originalContent = btn.innerHTML;
     
-    // UI de carga
     btn.disabled = true;
     btn.innerHTML = `<iconify-icon icon="mdi:loading" class="animate-spin text-xl"></iconify-icon><span>Entrando...</span>`;
 
@@ -252,7 +250,7 @@ window.handleLogin = async (e) => {
     btn.innerHTML = originalContent;
 }
 
-// Handler de Registro (Validaciones Críticas)
+// Registro (VALIDACIÓN CRÍTICA)
 window.handleRegister = async (e) => {
     e.preventDefault();
     if (!window.hakiuAuth) return;
@@ -260,7 +258,6 @@ window.handleRegister = async (e) => {
     // 3.1. Obtener valores del formulario
     const email = document.getElementById('register-email').value;
     const password = document.getElementById('register-password').value;
-    
     const firstName = document.getElementById('register-firstname').value;
     const lastName = document.getElementById('register-lastname').value;
     const username = document.getElementById('register-username').value;
@@ -278,14 +275,14 @@ window.handleRegister = async (e) => {
 
     // 3.2. Validaciones previas
     
-    // Campos vacíos (Aunque HTML tiene required, doble check)
-    if (!firstName || !lastName || !country) {
-        errorText.textContent = "Por favor, completa todos los campos obligatorios.";
+    // A. Campos Obligatorios (Nombre, Apellidos, País, Username)
+    if (!firstName || !lastName || !country || !username) {
+        errorText.textContent = "Por favor, completa todos los campos obligatorios (*).";
         errorDiv.classList.remove('hidden');
         return;
     }
 
-    // Validación de Edad (Lógica Crítica +14)
+    // B. Validación de Edad (+14)
     if (!dobValue) {
         errorText.textContent = "Fecha de nacimiento requerida.";
         errorDiv.classList.remove('hidden');
@@ -298,12 +295,13 @@ window.handleRegister = async (e) => {
     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
 
     if (age < 14) {
-        errorText.textContent = "Es necesario el consentimiento de tus padres para poder crear un usuario y navegar por la web. Por favor, pide a un adulto que te ayude.";
+        // MENSAJE SOLICITADO EXACTO:
+        errorText.textContent = "Debes tener al menos 14 años para usar Hakiu según nuestra Política de Privacidad.";
         errorDiv.classList.remove('hidden');
         return;
     }
 
-    // Checks Legales
+    // C. Checks Legales
     if (!termsOk || !privacyOk) {
         errorText.textContent = "Debes aceptar los Términos y la Política de Privacidad.";
         errorDiv.classList.remove('hidden');
@@ -316,24 +314,18 @@ window.handleRegister = async (e) => {
     btn.disabled = true;
     btn.innerHTML = `<iconify-icon icon="mdi:loading" class="animate-spin text-xl"></iconify-icon><span>Creando perfil...</span>`;
 
-    // Estructuramos los metadatos para Supabase
+    // Estructura de datos plana para auth.js
     const metaData = {
         first_name: firstName,
         last_name: lastName,
-        username: username || '',
+        username: username, // OBLIGATORIO Y ÚNICO
         birthdate: dobValue,
         country: country,
-        referral_source: referral || '',
-        app_version: 'v1.0',
-        registered_at: new Date().toISOString(),
-        locale: 'es_ES',
+        referral_source: referral || null,
         
-        // Objeto de consentimientos
-        agreements: {
-            terms: true,
-            privacy: true,
-            marketing: marketingOk
-        }
+        terms_accepted: termsOk,
+        privacy_accepted: privacyOk,
+        marketing_accepted: marketingOk
     };
 
     const result = await window.hakiuAuth.signUp(email, password, metaData);
@@ -351,7 +343,12 @@ window.handleRegister = async (e) => {
             document.querySelector('#register-form form').classList.remove('hidden');
         }, 4000);
     } else {
-        errorText.textContent = result.error || "Error al registrarse. Intenta de nuevo.";
+        // Manejo de error específico de Supabase (username duplicado)
+        if (result.error && result.error.includes("Database error")) {
+             errorText.textContent = "Error: Es posible que el nombre de usuario o email ya estén en uso.";
+        } else {
+             errorText.textContent = result.error || "Error al registrarse.";
+        }
         errorDiv.classList.remove('hidden');
     }
 
@@ -367,10 +364,7 @@ window.updateUserMenu = () => {
 
     authButtons.forEach(btn => {
         if (user) {
-            // Preferir nombre o username del perfil, si no, email
             let displayName = user.email;
-            
-            // Si tenemos el perfil cargado (gracias a initAuth actualizado)
             if (window.hakiuAuth.profile && window.hakiuAuth.profile.first_name) {
                 displayName = window.hakiuAuth.profile.first_name;
             } else if (user.user_metadata?.first_name) {
