@@ -1,9 +1,9 @@
 /**
  * UI MANAGER FOR AUTHENTICATION
- * Version: 5.2 (Strict Requirements)
- * - Username OBLIGATORIO
- * - Mensaje legal edad corregido
- * - Validaciones completas
+ * Version: 5.3 (Country Codes Fix & Clean UI)
+ * - FIX: Lista de países con códigos ISO estándar (2 letras) para cumplir DB constraint.
+ * - FIX: Eliminados emojis y diminutivos en selectores.
+ * - FIX: Limpieza de UI en errores.
  */
 
 // 1. INYECCIÓN DEL MODAL EN EL HTML
@@ -57,7 +57,7 @@ function initAuthUI() {
                     </div>
                 </div>
                 
-                <!-- REGISTER FORM (COMPLETO & OBLIGATORIO) -->
+                <!-- REGISTER FORM (CORREGIDO) -->
                 <div id="register-form" class="auth-form hidden">
                      <div class="text-center mb-4">
                         <h2 class="text-2xl font-bold text-white">Crear Cuenta</h2>
@@ -78,12 +78,12 @@ function initAuthUI() {
                         <!-- 1. Credenciales -->
                         <div class="form-group">
                             <label class="block text-xs font-medium text-slate-400 mb-1 uppercase tracking-wider">Email <span class="text-red-400">*</span></label>
-                            <input type="email" id="register-email" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-emerald-500 outline-none">
+                            <input type="email" id="register-email" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none">
                         </div>
                         
                         <div class="form-group">
                             <label class="block text-xs font-medium text-slate-400 mb-1 uppercase tracking-wider">Contraseña (Min 8) <span class="text-red-400">*</span></label>
-                            <input type="password" id="register-password" required minlength="8" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="********">
+                            <input type="password" id="register-password" required minlength="8" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none" placeholder="********">
                         </div>
 
                         <!-- 2. Identidad (Fila Doble) -->
@@ -113,16 +113,20 @@ function initAuthUI() {
                             </div>
                             <div class="form-group">
                                 <label class="block text-xs font-medium text-slate-400 mb-1 uppercase tracking-wider">País <span class="text-red-400">*</span></label>
+                                <!-- FIX: Valores ISO de 2 letras y nombres limpios -->
                                 <select id="register-country" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:ring-2 focus:ring-emerald-500 outline-none">
                                     <option value="">Seleccionar...</option>
-                                    <option value="ES">🇪🇸 España</option>
-                                    <option value="MX">🇲🇽 México</option>
-                                    <option value="AR">🇦🇷 Argentina</option>
-                                    <option value="CO">🇨🇴 Colombia</option>
-                                    <option value="CL">🇨🇱 Chile</option>
-                                    <option value="PE">🇵🇪 Perú</option>
-                                    <option value="US">🇺🇸 Estados Unidos</option>
-                                    <option value="OTHER">🌍 Otro</option>
+                                    <option value="ES">España</option>
+                                    <option value="MX">México</option>
+                                    <option value="AR">Argentina</option>
+                                    <option value="CO">Colombia</option>
+                                    <option value="CL">Chile</option>
+                                    <option value="PE">Perú</option>
+                                    <option value="US">Estados Unidos</option>
+                                    <option value="EC">Ecuador</option>
+                                    <option value="VE">Venezuela</option>
+                                    <option value="DO">República Dominicana</option>
+                                    <option value="XX">Otro</option> <!-- Código seguro de 2 letras -->
                                 </select>
                             </div>
                         </div>
@@ -223,7 +227,7 @@ window.switchToLogin = () => {
 
 // 3. HANDLERS (Conectan con auth.js)
 
-// Login
+// Handler de Inicio de Sesión
 window.handleLogin = async (e) => {
     e.preventDefault();
     if (!window.hakiuAuth) return;
@@ -233,6 +237,7 @@ window.handleLogin = async (e) => {
     const btn = e.target.querySelector('button[type="submit"]');
     const originalContent = btn.innerHTML;
     
+    // UI de carga
     btn.disabled = true;
     btn.innerHTML = `<iconify-icon icon="mdi:loading" class="animate-spin text-xl"></iconify-icon><span>Entrando...</span>`;
 
@@ -243,14 +248,21 @@ window.handleLogin = async (e) => {
         updateUserMenu();
     } else {
         const errorDiv = document.getElementById('login-error');
+        // Mensaje genérico de seguridad
         document.getElementById('login-error-text').textContent = "Credenciales incorrectas o error de conexión.";
         errorDiv.classList.remove('hidden');
+        
+        // Si el error es persistente, intentamos limpiar caché local
+        if (result.error && result.error.includes("JWT")) {
+             console.warn("Detectado error de token, limpiando sesión...");
+             localStorage.removeItem('sb-' + window.SUPABASE_ANON_KEY.substring(0,10) + '-auth-token');
+        }
     }
     btn.disabled = false;
     btn.innerHTML = originalContent;
 }
 
-// Registro (VALIDACIÓN CRÍTICA)
+// Handler de Registro (Validaciones Críticas)
 window.handleRegister = async (e) => {
     e.preventDefault();
     if (!window.hakiuAuth) return;
@@ -333,22 +345,24 @@ window.handleRegister = async (e) => {
     if (result.success) {
         const successDiv = document.getElementById('register-success');
         successDiv.classList.remove('hidden');
-        // Ocultar form para que no le den click de nuevo
         document.querySelector('#register-form form').classList.add('hidden');
         
         setTimeout(() => { 
             switchToLogin(); 
             successDiv.classList.add('hidden');
-            // Restaurar form por si quieren registrar otro
             document.querySelector('#register-form form').classList.remove('hidden');
         }, 4000);
     } else {
-        // Manejo de error específico de Supabase (username duplicado)
-        if (result.error && result.error.includes("Database error")) {
-             errorText.textContent = "Error: Es posible que el nombre de usuario o email ya estén en uso.";
-        } else {
-             errorText.textContent = result.error || "Error al registrarse.";
+        // Manejo de errores amigable
+        let msg = result.error || "Error al registrarse.";
+        
+        if (msg.includes("Database error") || msg.includes("unique")) {
+             msg = "El nombre de usuario o email ya están en uso.";
+        } else if (msg.includes("constraint")) {
+             msg = "Datos inválidos (país o edad no permitidos).";
         }
+        
+        errorText.textContent = msg;
         errorDiv.classList.remove('hidden');
     }
 
@@ -357,7 +371,6 @@ window.handleRegister = async (e) => {
 }
 
 // 4. ACTUALIZACIÓN DE BOTONES
-// Actualiza el menú de usuario según el estado de autenticación
 window.updateUserMenu = () => {
     const authButtons = document.querySelectorAll('.auth-btn-dynamic');
     const user = window.hakiuAuth?.user;

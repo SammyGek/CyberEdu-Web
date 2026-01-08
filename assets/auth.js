@@ -1,4 +1,4 @@
-/* Hakiu - Authentication System (with Session Timeout) */
+/* Hakiu - Authentication System (with Session Timeout & Cache Cleaner) */
 /* Supabase Auth para login/register/logout */
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
@@ -33,7 +33,7 @@ const SECURITY_CONFIG = {
 window.hakiuAuth = {
     user: null,
     session: null,
-    profile: null, // Guardaremos el perfil público aquí (tabla profiles)
+    profile: null, // Nuevo: Guardaremos el perfil completo aquí (tabla profiles)
     subscription: null,
     isPremium: false,
     isLoading: true,
@@ -75,7 +75,9 @@ function checkSessionTimeout() {
     if (timeUntilExpire < SECURITY_CONFIG.INACTIVITY_WARNING && timeUntilExpire > 0) {
         const minutesLeft = Math.floor(timeUntilExpire / 60000);
         console.warn(`⚠️ Tu sesión expirará en ${minutesLeft} minutos`);
-        // Aquí se podría mostrar un banner visual si se desea
+        
+        // Opcional: Mostrar banner de advertencia
+        // showInactivityWarning(minutesLeft);
     }
     
     return false;
@@ -93,6 +95,29 @@ function setupActivityListeners() {
     
     // Verificar timeout periódicamente
     setInterval(checkSessionTimeout, SECURITY_CONFIG.ACTIVITY_CHECK_INTERVAL);
+}
+
+// ============================================================
+// HELPERS: Limpieza de Caché (Nuke Local Session)
+// ============================================================
+
+/**
+ * Limpieza profunda de sesión local corrupta
+ */
+function nukeLocalSession() {
+    console.warn("☢️ Nuke Local Session: Limpiando residuos de auth...");
+    window.hakiuAuth.user = null;
+    window.hakiuAuth.session = null;
+    window.hakiuAuth.subscription = null;
+    window.hakiuAuth.isPremium = false;
+    window.hakiuAuth.profile = null;
+    
+    // Limpia todo lo que empiece por 'sb-' (keys de Supabase)
+    Object.keys(localStorage).forEach(key => {
+        if (key.startsWith('sb-') || key === 'lastActivity') {
+            localStorage.removeItem(key);
+        }
+    });
 }
 
 // ============================================================
@@ -179,15 +204,7 @@ async function signOut() {
         if (error) throw error;
 
         // Limpiar estado global
-        window.hakiuAuth.user = null;
-        window.hakiuAuth.session = null;
-        window.hakiuAuth.profile = null;
-        window.hakiuAuth.subscription = null;
-        window.hakiuAuth.isPremium = false;
-        window.hakiuAuth.lastActivity = 0;
-        
-        // Limpiar localStorage
-        localStorage.removeItem('lastActivity');
+        nukeLocalSession();
 
         console.log('✅ Sesión cerrada');
         
@@ -197,6 +214,9 @@ async function signOut() {
         return { success: true };
     } catch (error) {
         console.error('❌ Error al cerrar sesión:', error.message);
+        // Incluso si falla en el servidor, limpiamos localmente
+        nukeLocalSession();
+        window.location.reload();
         return { success: false, error: error.message };
     }
 }
@@ -213,6 +233,7 @@ async function getSession() {
         return data.session;
     } catch (error) {
         console.error('❌ Error al obtener sesión:', error.message);
+        nukeLocalSession();
         return null;
     }
 }
@@ -249,6 +270,8 @@ async function loadUserSubscription(userId) {
         if (!profileError && profileData) {
             window.hakiuAuth.profile = profileData;
             console.log('✅ Perfil cargado:', profileData.first_name);
+        } else {
+            console.warn('⚠️ No se pudo cargar el perfil público', profileError);
         }
 
         return window.hakiuAuth.subscription;
@@ -333,7 +356,7 @@ async function initAuth() {
     window.hakiuAuth.isLoading = true;
 
     // Obtener sesión actual
-    const session = await getSession();
+    let session = await getSession();
 
     if (session) {
         // Verificar si la sesión ha expirado por inactividad
@@ -343,14 +366,19 @@ async function initAuth() {
             window.hakiuAuth.user = session.user;
             window.hakiuAuth.session = session;
 
-            // Cargar datos
-            await loadUserSubscription(session.user.id);
-
-            console.log('✅ Usuario autenticado:', session.user.email);
-            
-            // Configurar listeners de actividad
-            setupActivityListeners();
-            updateActivity();
+            // Cargar datos (con manejo de errores)
+            try {
+                await loadUserSubscription(session.user.id);
+                console.log('✅ Usuario autenticado:', session.user.email);
+                
+                // Configurar listeners de actividad
+                setupActivityListeners();
+                updateActivity();
+            } catch (err) {
+                console.error("Error inicializando datos de usuario", err);
+                // Si falla catastróficamente, limpiamos sesión por seguridad
+                nukeLocalSession();
+            }
         }
     } else {
         console.log('ℹ️ No hay sesión activa');
@@ -384,6 +412,7 @@ supabase.auth.onAuthStateChange(async (event, session) => {
         window.hakiuAuth.isPremium = false;
         window.hakiuAuth.lastActivity = 0;
         localStorage.removeItem('lastActivity');
+        nukeLocalSession(); // Asegurar limpieza total
     }
 
     // Disparar evento personalizado
