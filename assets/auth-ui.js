@@ -1,8 +1,8 @@
 /**
  * UI MANAGER FOR AUTHENTICATION
+ * Version: 3.1 (Fix Scroll Freeze)
  * Se encarga de la parte visual: Modales, Botones y Formularios.
  * Depende de: assets/auth.js (window.hakiuAuth)
- * Actualizado: Iconify + Fix Z-Index + Click Outside
  */
 
 // 1. INYECCIÓN DEL MODAL EN EL HTML
@@ -16,7 +16,7 @@ function initAuthUI() {
             <!-- Click outside handler se añade via JS al overlay -->
             <div class="modal-container bg-slate-900 border border-slate-700 rounded-xl w-full max-w-md p-6 relative shadow-2xl transform transition-all scale-100" onclick="event.stopPropagation()">
                 
-                <!-- Botón Cerrar Corregido -->
+                <!-- Botón Cerrar -->
                 <button onclick="closeAuthModal()" class="modal-close absolute top-4 right-4 text-slate-400 hover:text-white transition-colors p-1">
                     <iconify-icon icon="mdi:close" class="text-2xl"></iconify-icon>
                 </button>
@@ -108,6 +108,7 @@ function initAuthUI() {
     if (overlay) {
         overlay.addEventListener('click', (e) => {
             if (e.target === overlay) {
+                e.preventDefault();
                 closeAuthModal();
             }
         });
@@ -119,7 +120,7 @@ window.openAuthModal = () => {
     const modal = document.getElementById('auth-modal');
     if(modal) {
         modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden'; // Evitar scroll del body
+        document.body.style.overflow = 'hidden'; // Bloquear scroll
     }
 };
 
@@ -127,8 +128,10 @@ window.closeAuthModal = () => {
     const modal = document.getElementById('auth-modal');
     if(modal) {
         modal.classList.add('hidden');
-        document.body.style.overflow = ''; // Restaurar scroll
     }
+    // FIX IMPERATIVO: Restaurar scroll SIEMPRE, incluso si falla lo anterior
+    document.body.style.overflow = ''; 
+    document.body.style.removeProperty('overflow');
 };
 
 window.switchToRegister = () => {
@@ -152,10 +155,10 @@ window.handleLogin = async (e) => {
     const password = document.getElementById('login-password').value;
     const btn = e.target.querySelector('button[type="submit"]');
     
-    // Guardar contenido original (icono + texto)
+    // Guardar contenido original
     const originalContent = btn.innerHTML;
     
-    // Loading state UI (Iconify animate-spin)
+    // Loading state UI
     btn.disabled = true;
     btn.innerHTML = `
         <iconify-icon icon="mdi:loading" class="animate-spin text-xl"></iconify-icon>
@@ -247,7 +250,6 @@ window.updateUserMenu = () => {
             // Comportamiento: Login
             btn.onclick = () => {
                 openAuthModal();
-                // Cerrar menú móvil si está abierto
                 const mobileMenu = document.getElementById('mobile-menu');
                 if (mobileMenu && !mobileMenu.classList.contains('max-h-0')) {
                    document.getElementById('mobile-menu-btn').click();
@@ -265,12 +267,9 @@ window.updateUserMenu = () => {
 document.addEventListener('DOMContentLoaded', () => {
     initAuthUI();
     if (window.hakiuAuth) updateUserMenu();
-    
-    // Escuchar el evento que emite auth.js
     window.addEventListener('authStateChanged', updateUserMenu);
 });
 
-// Fallback por si el script carga tarde
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
     initAuthUI();
     if (window.hakiuAuth) updateUserMenu();
