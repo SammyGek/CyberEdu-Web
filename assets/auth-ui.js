@@ -1,7 +1,8 @@
 /**
  * UI MANAGER FOR AUTHENTICATION
- * Version: 3.3 (Nuclear Scroll Fix)
- * Solución agresiva para forzar la reaparición del scroll.
+ * Version: 3.4 (Scroll Fix: Priority Important)
+ * Fix: Usa setProperty con 'important' para forzar al navegador.
+ * Fix: Limpia clases de menú móvil (menu-open) por si hay conflicto.
  */
 
 // 1. INYECCIÓN DEL MODAL EN EL HTML
@@ -127,22 +128,18 @@ window.closeAuthModal = () => {
     }
     
     // =========================================================
-    // FIX AGRESIVO PARA RESTAURAR SCROLL
+    // FIX AGRESIVO PARA RESTAURAR SCROLL (V3.4 - setProperty Important)
     // =========================================================
     
-    // 1. Forzar propiedad visible/auto
-    document.body.style.overflow = 'auto'; 
-    document.documentElement.style.overflow = 'auto';
+    // 1. Forzar overflow auto con prioridad máxima
+    document.body.style.setProperty('overflow', 'auto', 'important');
+    document.documentElement.style.setProperty('overflow', 'auto', 'important');
     
-    // 2. Eliminar estilo inline por si acaso
-    document.body.style.removeProperty('overflow');
-    document.documentElement.style.removeProperty('overflow');
-
-    // 3. Eliminar clase de Tailwind si existiera
-    document.body.classList.remove('overflow-hidden');
+    // 2. Limpiar clases conflictivas de otros scripts (ej: mobile-menu)
+    document.body.classList.remove('overflow-hidden', 'menu-open');
     document.documentElement.classList.remove('overflow-hidden');
     
-    console.log('🔓 Scroll liberado (Fix Agresivo Aplicado)');
+    console.log('🔓 Scroll liberado (Fix V3.4: Priority Important)');
 };
 
 window.switchToRegister = () => {
