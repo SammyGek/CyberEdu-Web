@@ -150,6 +150,10 @@
   
       // 3. Enviar a API (Background)
       try {
+        // FIX: Normalizar source a mayúsculas para cumplir CHECK CONSTRAINT de DB
+        // ui_accept -> UI_ACCEPT
+        const method = source ? source.toUpperCase() : 'UNKNOWN';
+
         await fetch(CONFIG.API_ENDPOINT, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -157,7 +161,7 @@
             session_id: sid,
             accepted_categories: prefs,
             consent_version: CONFIG.CONSENT_VERSION,
-            consent_method: source,
+            consent_method: method, // Enviamos valor normalizado
             page_url: window.location.href,
             website: honeypotVal // Enviamos el campo trampa
           }),
@@ -166,6 +170,7 @@
       } catch (err) { 
           /* Fallo silencioso: Si la API cae, no molestamos al usuario. 
              La preferencia se guardó localmente y los scripts cargaron, que es lo importante. */
+          console.warn('[Core Data] Error enviando log de consentimiento (no crítico):', err);
       }
     }
   
